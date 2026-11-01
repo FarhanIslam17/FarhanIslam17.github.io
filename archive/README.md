@@ -17,7 +17,8 @@ live site, check out the tag and redeploy (or revert `main` to that commit).
 | i13b   | 6:57 AM                 | Width-adaptive mobile hero framing (accepted) |
 | i14b   | 7:25 AM                 | Mobile hero eyebrow phrase-lock (accepted) |
 | i16    | 8:16 AM                 | Combined i14b + i15 mobile text scrim (accepted; live until i18e) |
-| i18e   | 3:09 PM                 | Responsive breakpoint delta (1050/1051), five projects (reviewed; current live) |
+| i18e   | 3:09 PM                 | Responsive breakpoint delta (1050/1051), five projects (reviewed) |
+| i19    | 4:40 PM                 | Refined environment and typography: dark lab background, GT America + KMR Melange Grotesk kit fonts, decorative wiring, pin declutter, integrated scrollbar (reviewed; current live) |
 
 ## Source snapshots (archive/sources/)
 
@@ -28,7 +29,10 @@ publicly:
 - `i13` - rejected mobile hero experiment, superseded by i13b, kept for reference
 - `i17m` - published preview baseline immediately before i18e (main rollback point)
 - `i18-draft1..3` - same-day intermediate responsive candidates, superseded by i18e
-- `i18e` - current live version
+- `i18e` - previous live version
+- `i19` - reviewed refined-environment experiment, superseded by i19b
+- `i19b-draft1`, `i19b-draft2` - same-day pin-declutter candidates, superseded by i19b
+- `i19b` - current live version
 
 Content hashes (sha256, first 12 chars) so snapshots can be told apart:
 
@@ -44,3 +48,7 @@ Content hashes (sha256, first 12 chars) so snapshots can be told apart:
 | i18-draft2 | 2eb3215032f0 | 9074d884b724 | 68d649407adf |
 | i18-draft3 | 2eb3215032f0 | 9074d884b724 | eabdda63c3ca |
 | i18e       | b5a480dba940 | e92129837750 | c4b03b5c9a01 |
+| i19        | 777d5ac90b74 | ac71f7c96c91 | 989ab2a3074e |
+| i19b-draft1 | c375a9f3ee21 | ac71f7c96c91 | 989ab2a3074e |
+| i19b-draft2 | c640f885a44f | ac71f7c96c91 | 989ab2a3074e |
+| i19b       | deae658f91a2 | ac71f7c96c91 | 989ab2a3074e |

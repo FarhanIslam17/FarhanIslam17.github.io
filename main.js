@@ -11302,14 +11302,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/content.ts
   var stages = [
-    { n: "00", node: "", label: "SYSTEM", at: 0, title: "Farhan Islam", sub: "ELECTRICAL ENGINEERING / EMBEDDED SYSTEMS / AVIONICS", copy: "An interactive map of an engineering journey: seven blocks on one connected board. The glowing wires are the route. Scroll to power the system up." },
-    { n: "01", node: "INTERN", label: "INTERNSHIPS", at: 0.14, title: "Internships", sub: "GENERAL MOTORS \xB7 REACTION DYNAMICS", copy: "Two industry placements: incoming body-controls calibration and system test at General Motors, and avionics instrumentation at Reaction Dynamics." },
-    { n: "02", node: "TEAMS", label: "DESIGN TEAMS", at: 0.28, title: "Design teams", sub: "SOLAR CAR \xB7 ROCKETRY \xB7 FRC 9659", copy: "Design teams are where the hardware gets built: low-voltage vehicle systems, launch avionics and a competition robot." },
-    { n: "03", node: "PROJ", label: "PROJECTS", at: 0.42, title: "Projects", sub: "BUILDS \xB7 LAB STUDIES \xB7 MEASUREMENT", copy: "Selected engineering projects. Each block on the board is one project: hover or tap a block to inspect it." },
-    { n: "04", node: "SKILLS", label: "SKILLS", at: 0.56, title: "Skills", sub: "GROUPED BY DISCIPLINE", copy: "Every skill here is backed by a block already on the map - an internship, a team or a build. Nothing decorative." },
-    { n: "05", node: "ABOUT", label: "ABOUT", at: 0.7, title: "About", sub: "THE ENGINEER", copy: "Electrical Engineering co-op student at McMaster University, B.Eng expected April 2028. Drawn to avionics, instrumentation and embedded hardware - systems where measurement quality decides the outcome." },
-    { n: "06", node: "RESUME", label: "RESUME", at: 0.84, title: "Resume", sub: "THE FORMAL DOCUMENT", copy: "" },
-    { n: "07", node: "CONTACT", label: "CONTACT", at: 0.96, title: "Contact", sub: "GET IN TOUCH", copy: "Interested in embedded hardware, instrumentation and test. The board connects the work; the person behind it is reachable below." }
+    { n: "00", node: "", label: "SYSTEM", at: 0, title: "Farhan Islam", sub: "ELECTRICAL ENGINEERING / EMBEDDED SYSTEMS / AVIONICS", copy: "Electrical engineering co-op student at McMaster University, B.Eng April 2028." },
+    { n: "01", node: "INTERN", label: "INTERNSHIPS", at: 0.16, title: "Internships", sub: "GENERAL MOTORS \xB7 REACTION DYNAMICS", copy: "" },
+    { n: "02", node: "TEAMS", label: "DESIGN TEAMS", at: 0.32, title: "Design teams", sub: "SOLAR CAR \xB7 ROCKETRY \xB7 FRC 9659", copy: "" },
+    { n: "03", node: "PROJ", label: "PROJECTS", at: 0.48, title: "Projects", sub: "BUILDS \xB7 LAB STUDIES \xB7 MEASUREMENT", copy: "" },
+    { n: "04", node: "SKILLS", label: "SKILLS", at: 0.64, title: "Skills", sub: "GROUPED BY DISCIPLINE", copy: "" },
+    { n: "05", node: "RESUME", label: "RESUME", at: 0.8, title: "Resume", sub: "THE FORMAL DOCUMENT", copy: "" },
+    { n: "06", node: "CONTACT", label: "CONTACT", at: 0.94, title: "Contact", sub: "GET IN TOUCH", copy: "Interested in embedded hardware, instrumentation and test." }
   ];
   var internships = [
     { org: "GENERAL MOTORS", role: "Body Controls Calibration and System Test Developer", meta: "INCOMING \xB7 JAN 2027 - DEC 2027 \xB7 OSHAWA, ON", line: "Incoming twelve-month placement in body controls calibration and system test, starting January 2027." },
@@ -11334,7 +11333,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     { key: "AMP", short: "CE AMPLIFIER", accent: [1, 0.47, 0.6], type: "COURSE LAB \xB7 3EJ4 \xB7 LAB 2", heading: "Single stage amplifier characterization", body: "Common emitter amplifier compared across simulation and bench measurements, with gain and loading sensitivity examined.", flow: ["SIMULATE", "MEASURE", "COMPARE"], url: "https://fancy-brook-b6f.notion.site/Single-Stage-Amplifiers-Simulation-vs-Bench-40b44bb53cc98185b0e0f0c9b5042a39" },
     { key: "XOR", short: "CMOS XOR", accent: [0.4, 0.68, 1], type: "COURSE PROJECT \xB7 2EI4 \xB7 PROJECT 4", heading: "CMOS XOR gate on a breadboard", body: "Two input XOR gate built from 12 MOSFETs on two MC14007B chips, with the truth table and loaded rise and fall time tested on an Analog Discovery 2.", flow: ["BUILD", "TEST", "MEASURE"], url: "https://fancy-brook-b6f.notion.site/CMOS-XOR-Gate-Built-from-Two-MC14007B-Chips-40b44bb53cc9814ebbf8ce7cfa5f9da4" }
   ];
-  var projectFacts = [];
 
   // src/App.tsx
   var import_jsx_runtime21 = __toESM(require_jsx_runtime());
@@ -11345,39 +11343,37 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     { name: "TEAMS", x: 0, z: -27, w: 19, d: 10, h: 2.8, color: "package", detail: "Design teams \xB7 Solar Car, Rocketry, FRC 9659" },
     { name: "PROJ", x: 44, z: -26, w: 22, d: 9, h: 3.4, color: "package", detail: "Projects \xB7 hover a block to inspect it" },
     { name: "SKILLS", x: 46, z: 22, w: 18, d: 10, h: 2.6, color: "package", detail: "Skills \xB7 grouped by discipline" },
-    { name: "ABOUT", x: 0, z: 27, w: 16, d: 10, h: 2.4, color: "package", detail: "About \xB7 the engineer behind the board" },
     { name: "RESUME", x: -44, z: 22, w: 17, d: 10, h: 2.6, color: "package", detail: "Resume \xB7 the actual PDF opens in a new tab" },
     { name: "CONTACT", x: -30, z: -1, w: 14, d: 9, h: 2.4, color: "package", detail: "Contact \xB7 email, LinkedIn, GitHub" }
   ];
-  var SECTION_NODES = ["INTERN", "TEAMS", "PROJ", "SKILLS", "ABOUT", "RESUME", "CONTACT"];
+  var SECTION_NODES = ["INTERN", "TEAMS", "PROJ", "SKILLS", "RESUME", "CONTACT"];
+  var CHIPS = { includes: (n) => typeof n === "string" && n.startsWith("PB") };
   var DISPLAY = { INTERN: "INTERNSHIPS", TEAMS: "DESIGN TEAMS", PROJ: "PROJECTS", SKILLS: "SKILLS", ABOUT: "ABOUT", RESUME: "RESUME", CONTACT: "CONTACT" };
   var ROUTE_WAYPOINTS = [
     [[-62, -22], [-61.2, -28], [-57.5, -32.6], [-52.4, -33.3], [-49.6, -31.9], [-49, -29.9]],
     [[-33.5, -24], [-27.5, -24.8], [-21.5, -22.8], [-16.5, -25.2], [-12.6, -27.2], [-9.8, -27]],
     [[9.8, -27], [15.5, -27.6], [21.5, -24.4], [27.5, -25.6], [32.6, -26]],
     [[55, -26], [60.5, -26.4], [64.2, -22], [64.6, -12], [63.6, -1], [61, 8.5], [56.5, 14], [52, 16.4]],
-    [[37, 22], [31, 21.2], [25, 23.8], [19, 25.8], [13.5, 26.4], [8.4, 27]],
-    [[-8.4, 27], [-14, 26.4], [-20, 24.6], [-26, 23.3], [-31, 22.5], [-35.4, 22]],
+    [[37, 22], [31, 21.2], [25, 23.8], [19, 25.8], [13.5, 26.6], [0, 27.4], [-14, 26.4], [-20, 24.6], [-26, 23.3], [-31, 22.5], [-35.4, 22]],
     [[-44, 16.4], [-44.6, 11.5], [-42, 7.2], [-36.5, 4.6], [-30, 4.2]],
     [[-37, -1], [-43.5, -1.6], [-50, 0.2], [-58, -1]]
   ];
   var RETURN_WAYPOINTS = [[-58, -1], [-62.6, -7.5], [-63.6, -15.5], [-62, -22]];
   var PROJECT_N = projects.length;
-  var projectBlocks = projects.map((p, k) => {
+  var projectBlocks = projects.map((p, k2) => {
     let n = PROJECT_N, pitch = 7.2, cx = 44.2;
-    return { x: cx + (k - (n - 1) / 2) * pitch, z: -14, w: 6, d: 6, h: 1.7 };
+    return { x: cx + (k2 - (n - 1) / 2) * pitch, z: -14, w: 6, d: 6, h: 1.7 };
   });
   var supportEdges = [
     [[-44, -29.9], [-44.8, -32], [-43.4, -34.2]],
     [[0, -32.4], [0.8, -34.4], [-0.6, -36.4]],
     [[46, 27.4], [45.2, 29.6], [46.6, 31.6]]
   ];
-  projectBlocks.forEach((b, k) => {
-    let xp = 43 + (k - (PROJECT_N - 1) / 2) * 5.2;
+  projectBlocks.forEach((b, k2) => {
+    let xp = 43 + (k2 - (PROJECT_N - 1) / 2) * 5.2;
     supportEdges.push([[xp, -21.4], [xp, -19.8], [b.x, -18.8], [b.x, b.z - b.d / 2 + 0.2]]);
   });
-  var navRoutes = ROUTE_WAYPOINTS.map((w, ri) => ({ pts: densify(w, ri), hold: [0.35, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.55][ri] }));
-  var CHIPS = { includes: (n) => typeof n === "string" && n.startsWith("PB") };
+  var navRoutes = ROUTE_WAYPOINTS.map((w, ri) => ({ pts: densify(w, ri), hold: [0.35, 0.3, 0.3, 0.3, 0.3, 0.3, 0.55][ri] }));
   function sstep(a, b, x) {
     let t = Math.max(0, Math.min(1, (x - a) / (b - a)));
     return t * t * (3 - 2 * t);
@@ -11399,17 +11395,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
   function pickBlock(mat, px, py, eye) {
     let best = -1, bestD = 1e9;
-    projectBlocks.forEach((b, k) => {
+    projectBlocks.forEach((b, k2) => {
       let x0 = b.x - b.w / 2 - 0.4, x1 = b.x + b.w / 2 + 0.4, z0 = b.z - b.d / 2 - 0.4, z1 = b.z + b.d / 2 + 0.4, y0 = 0.4, y1 = 0.42 + b.h + 0.75;
       let faces = [[[x0, y1, z0], [x1, y1, z0], [x1, y1, z1], [x0, y1, z1]], [[x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1]], [[x0, y0, z0], [x0, y0, z1], [x0, y1, z1], [x0, y1, z0]], [[x1, y0, z0], [x1, y0, z1], [x1, y1, z1], [x1, y1, z0]], [[x0, y0, z0], [x1, y0, z0], [x1, y1, z0], [x0, y1, z0]]];
-      for (let f of faces) {
-        let pp = f.map((v2) => project(v2, mat, 1, 1));
+      for (let f2 of faces) {
+        let pp = f2.map((v2) => project(v2, mat, 1, 1));
         if (pp.some((q2) => !q2.visible)) continue;
         if (inPoly([px, py], pp)) {
-          let dd = Math.hypot(b.x - eye[0], 1 - eye[1], b.z - eye[2]);
-          if (dd < bestD) {
-            bestD = dd;
-            best = k;
+          let dd2 = Math.hypot(b.x - eye[0], 1 - eye[1], b.z - eye[2]);
+          if (dd2 < bestD) {
+            bestD = dd2;
+            best = k2;
           }
         }
       }
@@ -11495,7 +11491,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     for (let i = 0; i <= n; i++) {
       let d = tot * i / n;
       while (j2 < pts.length - 2 && cum[j2 + 1] < d) j2++;
-      let t = (d - cum[j2]) / ((cum[j2 + 1] - cum[j2]) || 1);
+      let t = (d - cum[j2]) / (cum[j2 + 1] - cum[j2] || 1);
       out.push([tween(pts[j2][0], pts[j2 + 1][0], t), tween(pts[j2][1], pts[j2 + 1][1], t)]);
     }
     return out;
@@ -11511,9 +11507,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       for (let i = 0; i < n; i++) {
         let t = t1 + (t2 - t1) * i / n;
         let lp = (a, b, ta, tb) => [0, 1].map((c) => a[c] * (tb - t) / (tb - ta) + b[c] * (t - ta) / (tb - ta));
-        let A1 = lp(p0, p1, t0, t1), A2 = lp(p1, p2, t1, t2), A3 = lp(p2, p3, t2, t3);
-        let B1 = lp(A1, A2, t0, t2), B2 = lp(A2, A3, t1, t3);
-        out.push(lp(B1, B2, t1, t2));
+        let A1 = lp(p0, p1, t0, t1), A22 = lp(p1, p2, t1, t2), A3 = lp(p2, p3, t2, t3);
+        let B1 = lp(A1, A22, t0, t2), B22 = lp(A22, A3, t1, t3);
+        out.push(lp(B1, B22, t1, t2));
       }
     }
     out.push(w[w.length - 1]);
@@ -11555,26 +11551,26 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var spineFlat = [];
   spineSegs.forEach((sg) => sg.pts.forEach((p, i) => spineFlat.push([p[0], p[1], p[2], sg.d0 + sg.cum[i]])));
   function spinePoint3(d) {
-    d = ((d % spineLen) + spineLen) % spineLen;
-    let lo = 0, hi = spineFlat.length - 1;
-    while (hi - lo > 1) {
-      let mid = lo + hi >> 1;
-      if (spineFlat[mid][3] <= d) lo = mid;
+    d = (d % spineLen + spineLen) % spineLen;
+    let lo2 = 0, hi = spineFlat.length - 1;
+    while (hi - lo2 > 1) {
+      let mid = lo2 + hi >> 1;
+      if (spineFlat[mid][3] <= d) lo2 = mid;
       else hi = mid;
     }
-    let a = spineFlat[lo], b = spineFlat[hi], t = (d - a[3]) / ((b[3] - a[3]) || 1);
+    let a = spineFlat[lo2], b = spineFlat[hi], t = (d - a[3]) / (b[3] - a[3] || 1);
     return [tween(a[0], b[0], t), tween(a[2], b[2], t), tween(a[1], b[1], t)];
   }
   function tubeVerts(out, pts, attr, r, col, segs) {
     let rings = [];
     for (let i = 0; i < pts.length; i++) {
       let a = pts[Math.max(0, i - 1)], b = pts[Math.min(pts.length - 1, i + 1)];
-      let T = norm([b[0] - a[0], (b[2] - a[2]) || 0, b[1] - a[1]]);
-      let B3 = norm(cross([0, 1, 0], T)), U = cross(T, B3);
+      let T2 = norm([b[0] - a[0], b[2] - a[2] || 0, b[1] - a[1]]);
+      let B3 = norm(cross([0, 1, 0], T2)), U2 = cross(T2, B3);
       let ring = [];
       for (let k2 = 0; k2 < segs; k2++) {
         let th = k2 / segs * Math.PI * 2, c = Math.cos(th), s = Math.sin(th);
-        let nrm = [B3[0] * c + U[0] * s, B3[1] * c + U[1] * s, B3[2] * c + U[2] * s];
+        let nrm = [B3[0] * c + U2[0] * s, B3[1] * c + U2[1] * s, B3[2] * c + U2[2] * s];
         ring.push({ p: [pts[i][0] + nrm[0] * r, pts[i][2] + nrm[1] * r * 0.92, pts[i][1] + nrm[2] * r], n: nrm });
       }
       rings.push(ring);
@@ -11582,10 +11578,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     for (let i = 0; i < pts.length - 1; i++) {
       for (let k2 = 0; k2 < segs; k2++) {
         let k3 = (k2 + 1) % segs;
-        let q = [[i, k2], [i + 1, k2], [i + 1, k3], [i, k2], [i + 1, k3], [i, k3]];
-        for (let [ri2, kk] of q) {
-          let v2 = rings[ri2][kk];
-          out.push(...v2.p, ...v2.n, ...col, 0, ...attr(ri2));
+        let q2 = [[i, k2], [i + 1, k2], [i + 1, k3], [i, k2], [i + 1, k3], [i, k3]];
+        for (let [ri, kk] of q2) {
+          let v2 = rings[ri][kk];
+          out.push(...v2.p, ...v2.n, ...col, 0, ...attr(ri));
         }
       }
     }
@@ -11605,13 +11601,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   function darkRibbon(out, pts, hw, y2) {
     for (let i = 0; i < pts.length - 1; i++) {
       let nrm = (j2) => {
-        let a = pts[Math.max(0, j2 - 1)], b = pts[Math.min(pts.length - 1, j2 + 1)];
-        let dx = b[0] - a[0], dz = b[1] - a[1], L = Math.hypot(dx, dz) || 1;
+        let a2 = pts[Math.max(0, j2 - 1)], b2 = pts[Math.min(pts.length - 1, j2 + 1)];
+        let dx = b2[0] - a2[0], dz = b2[1] - a2[1], L = Math.hypot(dx, dz) || 1;
         return [-dz / L * hw, dx / L * hw];
       };
       let n0 = nrm(i), n1 = nrm(i + 1), a = pts[i], b = pts[i + 1];
-      let cs = [[a[0] + n0[0], a[1] + n0[1]], [b[0] + n1[0], b[1] + n1[1]], [b[0] - n1[0], b[1] - n1[1]], [a[0] - n0[0], a[1] - n0[1]]];
-      for (let k2 of [0, 1, 2, 0, 2, 3]) out.push(cs[k2][0], y2, cs[k2][1], 0, 1, 0, 0.018, 0.05, 0.045, 0);
+      let cs2 = [[a[0] + n0[0], a[1] + n0[1]], [b[0] + n1[0], b[1] + n1[1]], [b[0] - n1[0], b[1] - n1[1]], [a[0] - n0[0], a[1] - n0[1]]];
+      for (let k2 of [0, 1, 2, 0, 2, 3]) out.push(cs2[k2][0], y2, cs2[k2][1], 0, 1, 0, 0.018, 0.05, 0.045, 0);
     }
   }
   function rectPerim(b) {
@@ -11626,8 +11622,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return [b.x + tween(c[0], c[2], t), b.h + 0.7, b.z + tween(c[1], c[3], t)];
   }
   var PERIM_LEN = rectPerim(projectBlocks[0] || { w: 7, d: 6 }).tot;
+  function mulberry32(a) {
+    return function() {
+      a |= 0;
+      a = a + 1831565813 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
   function createGeometry(mobile) {
-    let d = [], dw = [], hl = [];
+    let d = [], dw = [], hl2 = [];
     let add = (v2) => d.push(...v2);
     add(cube(0, -1.3, 0, 134, 2.2, 84, PALETTE.edge, 0));
     add(cube(0, -0.13, 0, 132, 0.22, 82, PALETTE.board, 5e-3));
@@ -11644,17 +11649,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       tubeVerts(dw, r.pts, attr, 0.4, COPPER, 8);
       darkRibbon(d, r.pts, 1.35, 0.04);
       let ra = (i) => [sg.d0 + cum[i], ri, cum[i]];
-      ribbonVerts(hl, r.pts.map((p) => [p[0], p[1]]), ra, 2.7, 0.07);
+      ribbonVerts(hl2, r.pts.map((p) => [p[0], p[1]]), ra, 2.7, 0.07);
     });
     spineSegs.filter((s) => s.kind !== "route").forEach((sg) => {
       let attr = (i) => [sg.d0 + sg.cum[i], -3, -1, 0];
       tubeVerts(dw, sg.pts, attr, sg.kind === "ret" ? 0.34 : 0.3, COPPER_DIM, 6);
-      if (sg.kind === "ret") ribbonVerts(hl, sg.pts.map((p) => [p[0], p[1]]), (i) => [sg.d0 + sg.cum[i], -3, 0], 2.4, 0.07);
+      if (sg.kind === "ret") ribbonVerts(hl2, sg.pts.map((p) => [p[0], p[1]]), (i) => [sg.d0 + sg.cum[i], -3, 0], 2.4, 0.07);
     });
     supportEdges.forEach((e2) => {
       let sp = densifyStub(e2);
       tubeVerts(dw, sp, () => [-1, -2, -1, 0], 0.27, COPPER_DIM, 6);
-      ribbonVerts(hl, sp.map((p) => [p[0], p[1]]), () => [-1, -2, 0], 1.7, 0.07);
+      ribbonVerts(hl2, sp.map((p) => [p[0], p[1]]), () => [-1, -2, 0], 1.7, 0.07);
     });
     for (let r of navRoutes) for (let p of [r.pts[0], r.pts[r.pts.length - 1]]) add(cylinder(p[0], 0.4, p[1], 0.82, 0.22, PALETTE.copper, 14));
     for (let e2 of supportEdges) add(cylinder(e2[e2.length - 1][0], 0.4, e2[e2.length - 1][1], 0.62, 0.2, PALETTE.copper, 10));
@@ -11677,19 +11682,22 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const wireDist = (x, z3) => {
       let best = 1e9;
       for (let p of spineFlat) {
-        let dd = Math.hypot(x - p[0], z3 - p[1]);
-        if (dd < best) best = dd;
+        let dd2 = Math.hypot(x - p[0], z3 - p[1]);
+        if (dd2 < best) best = dd2;
       }
       return best;
     };
     const nearBlocks = (x, z3, m) => projectBlocks.some((b) => Math.abs(x - b.x) < b.w / 2 + m && Math.abs(z3 - b.z) < b.d / 2 + m);
     let count = mobile ? 46 : 170;
+    let pads = [];
     for (let i = 0; i < count; i++) {
       let band = i % 3, t = Math.floor(i / 3);
+      let row = band === 2 ? Math.floor(t / 8) : Math.floor(t / 10);
       let x = band === 0 ? -18 + t % 10 * 2.3 : band === 1 ? 6 + t % 10 * 2.3 : -20 + t % 8 * 2.4;
       let z3 = band === 0 || band === 1 ? -16 + Math.floor(t / 10) * 2.7 : 6 + Math.floor(t / 8) * 2.5;
       if (parts.some((p) => Math.abs(x - p.x) < p.w / 2 + 1 && Math.abs(z3 - p.z) < p.d / 2 + 1)) continue;
       if (wireDist(x, z3) < 2.2) continue;
+      pads.push({ x, z: z3, band, row });
       add(cube(x, 0.51, z3, 1.4, 0.6, 0.73, i % 5 === 0 ? PALETTE.metal : PALETTE.package));
       add(cube(x - 0.85, 0.24, z3, 0.32, 0.18, 0.8, PALETTE.copper));
       add(cube(x + 0.85, 0.24, z3, 0.32, 0.18, 0.8, PALETTE.copper));
@@ -11699,6 +11707,45 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (parts.some((p) => Math.abs(x - p.x) < p.w / 2 + 2 && Math.abs(z3 - p.z) < p.d / 2 + 2)) continue;
       if (nearBlocks(x, z3, 2) || wireDist(x, z3) < 2) continue;
       add(cylinder(x, 0.34, z3, 0.37, 0.18, PALETTE.copper, 8));
+    }
+    const DECO_CU = [0.5, 0.3, 0.14];
+    for (let j2 = 1; j2 < pads.length; j2++) {
+      let a = pads[j2 - 1], b = pads[j2];
+      if (a.band === b.band && a.row === b.row && Math.abs(a.z - b.z) < 0.01 && b.x - a.x < 4.5) {
+        let sp = linkPts([a.x, a.z], [b.x, b.z]).map((p) => [p[0], p[1], 0.3]);
+        tubeVerts(dw, sp, () => [-2, -2, -1, 0], 0.11, DECO_CU, 5);
+        ribbonVerts(hl2, sp.map((p) => [p[0], p[1]]), () => [-2, -2, 0], 0.75, 0.07);
+      }
+    }
+    let rng = mulberry32(20261101), made = 0, tries = 0;
+    const decoN = mobile ? 8 : 16;
+    while (made < decoN && tries < 500) {
+      tries++;
+      let x0 = -56 + rng() * 112, z0 = -31 + rng() * 62;
+      if (parts.some((p) => Math.abs(x0 - p.x) < p.w / 2 + 3.5 && Math.abs(z0 - p.z) < p.d / 2 + 3.5)) continue;
+      if (nearBlocks(x0, z0, 3) || wireDist(x0, z0) < 2.8) continue;
+      let pts = [[x0, z0]], ang = Math.floor(rng() * 8) * Math.PI / 4, ok = true, segs = 2 + Math.floor(rng() * 3);
+      for (let s2 = 0; s2 < segs; s2++) {
+        let len = 5 + rng() * 9;
+        ang += (Math.floor(rng() * 3) - 1) * Math.PI / 4;
+        let px = pts[pts.length - 1][0] + Math.cos(ang) * len, pz = pts[pts.length - 1][1] + Math.sin(ang) * len;
+        if (px < -59 || px > 59 || pz < -33 || pz > 33) {
+          ok = false;
+          break;
+        }
+        if (parts.some((p) => Math.abs(px - p.x) < p.w / 2 + 3 && Math.abs(pz - p.z) < p.d / 2 + 3) || nearBlocks(px, pz, 2.5) || wireDist(px, pz) < 2.4) {
+          ok = false;
+          break;
+        }
+        pts.push([px, pz]);
+      }
+      if (!ok || pts.length < 2) continue;
+      let sp = liftY(smoothPath(pts, 0.85), 0.08 + rng() * 0.1, 1 + rng() * 0.5, rng() * 6, 0.3);
+      tubeVerts(dw, sp, () => [-2, -2, -1, 0], 0.11 + rng() * 0.05, DECO_CU, 5);
+      ribbonVerts(hl2, sp.map((p) => [p[0], p[1]]), () => [-2, -2, 0], 0.8, 0.07);
+      add(cylinder(sp[0][0], 0.3, sp[0][1], 0.26, 0.13, PALETTE.copper, 8));
+      add(cylinder(sp[sp.length - 1][0], 0.3, sp[sp.length - 1][1], 0.26, 0.13, PALETTE.copper, 8));
+      made++;
     }
     for (let z3 of [-38, 38]) add(trace([-57, z3], [57, z3], 0.11, PALETTE.metal, 0.23, 0));
     for (let [pi, p] of parts.entries()) {
@@ -11720,18 +11767,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const pushBlock = (v2, gz, auxFn) => {
       for (let i = 0; i < v2.length; i += 10) dw.push(...v2.slice(i, i + 10), -1, -1, gz, auxFn ? auxFn(v2[i], v2[i + 2]) : 0);
     };
-    projectBlocks.forEach((b, k) => {
-      pushBlock(cube(b.x, 0.42 + b.h / 2, b.z, b.w, b.h, b.d, [0.36, 0.385, 0.385]), k + 0.25);
-      pushBlock(cube(b.x, 0.46 + b.h, b.z, b.w * 0.84, 0.055, b.d * 0.84, [0.045, 0.13, 0.11]), k + 0.5);
+    projectBlocks.forEach((b, k2) => {
+      pushBlock(cube(b.x, 0.42 + b.h / 2, b.z, b.w, b.h, b.d, [0.36, 0.385, 0.385]), k2 + 0.25);
+      pushBlock(cube(b.x, 0.46 + b.h, b.z, b.w * 0.84, 0.055, b.d * 0.84, [0.045, 0.13, 0.11]), k2 + 0.5);
       let rp = rectPerim(b), y2 = b.h + 0.66, rw = 0.46;
       let sides = [[0, -rp.hd, rp.hw * 2 + rw, rw], [rp.hw, 0, rw, rp.hd * 2 + rw], [0, rp.hd, rp.hw * 2 + rw, rw], [-rp.hw, 0, rw, rp.hd * 2 + rw]];
-      sides.forEach((sd, si) => {
+      sides.forEach((sd2, si) => {
         let auxFn = (vx, vz) => {
           let rx = vx - b.x, rz = vz - b.z, t = si === 0 ? (rx + rp.hw) / (2 * rp.hw) : si === 1 ? (rz + rp.hd) / (2 * rp.hd) : si === 2 ? (rp.hw - rx) / (2 * rp.hw) : (rp.hd - rz) / (2 * rp.hd);
           t = Math.max(0, Math.min(1, t));
           return (rp.cum[si] + t * rp.lens[si]) / rp.tot;
         };
-        pushBlock(cube(b.x + sd[0], y2, b.z + sd[1], sd[2], 0.2, sd[3], [0.6, 0.6, 0.6]), k + 0.75, auxFn);
+        pushBlock(cube(b.x + sd2[0], y2, b.z + sd2[1], sd2[2], 0.2, sd2[3], [0.6, 0.6, 0.6]), k2 + 0.75, auxFn);
       });
       for (let i = -2; i <= 2; i++) pushBlock(cube(b.x + i * b.w / 7, 0.6, b.z + b.d / 2 - 1, 0.9, 0.6, 1.6, PALETTE.copper), -1);
     });
@@ -11744,7 +11791,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       all[i * 14 + 13] = 0;
     }
     all.set(dw, n10 * 14);
-    return { main: all, halo: new Float32Array(hl) };
+    return { main: all, halo: new Float32Array(hl2) };
   }
   function densifyStub(e2) {
     return e2.length === 2 ? linkPts(e2[0], e2[1]).map((p) => [p[0], p[1], 0.5]) : liftY(smoothPath(e2, 0.7), 0.25, 1, 0, 0.5);
@@ -11757,22 +11804,22 @@ precision mediump float;
 #endif
 `;
   var fragUniforms = `uniform float uHotK;uniform float uDir;uniform float uEnv;uniform float uWireBase;uniform float uPulseOn;uniform vec2 uPulseWorld;uniform vec3 uPhoton;uniform float uAll;uniform float uRouteIdx;uniform float uRouteOn;uniform float uNavHead;uniform float uIdleOn;uniform float uIdleHead;uniform float uSpineLen;`;
-  var fragment = fragHead + `varying vec3 col;varying float emit;varying vec3 place;varying vec3 normal;varying vec4 gA;varying float lf;uniform float phase;uniform float uNode;uniform float uNodeOn;uniform float uPerim;uniform float uHov[8];uniform float uPh[8];uniform vec3 uAcc[8];` + fragUniforms + `void main(){vec3 cm=col;float pd=distance(place.xz,uPulseWorld);float boardM=(emit>.002&&emit<.01)?1.:0.;if(boardM>.5){float sn=fract(sin(dot(floor(place.xz*.22),vec2(12.9898,78.233)))*43758.5453);float sn2=fract(sin(dot(floor(place.xz*.055),vec2(39.346,11.135)))*24634.6345);float sn3=fract(sin(dot(floor(place.xz*1.1),vec2(26.651,84.131)))*31459.2653);float mot=.45*sn+.35*sn2+.20*sn3;float ed=mix(.46,1.,uEnv);cm*=1.+(mot-.5)*.34;cm+=(mot-.5)*.05/ed*vec3(.7,1.,.85);cm+=vec3(.9,.52,.18)*uPulseOn*.38*exp(-pd*pd/72.);}float baseTrace=emit>0.&&emit<1.?emit*.13:0.;float nodeGlow=0.;if(uNode>0.&&abs(emit-uNode)<.4)nodeGlow=uNodeOn*(.34+.62*pow(max(0.,sin(phase*2.2)),3.));vec3 amber=vec3(1.,.62,.26);vec3 hot=vec3(1.,.9,.72);vec3 em=vec3(0.);float wire=(gA.y>-.5||gA.y<-1.5)?1.:0.;if(wire>.5&&gA.z<-.5){float nm=(uRouteIdx>-.5&&abs(gA.y-uRouteIdx)<.5)?1.:0.;float dd=gA.w-uNavHead;float bh=exp(-dd*dd/1.7);float tl=(dd*uDir<0.)?exp(dd*uDir/13.):0.;float nav=nm*uRouteOn*(bh*2.4*uHotK+tl*.9+.1);float ds=gA.x-uIdleHead;ds=mod(ds+.5*uSpineLen,uSpineLen)-.5*uSpineLen;float inS=gA.x>-.5?1.:0.;float ih=inS*exp(-ds*ds/1.7);float it=(inS>.5&&ds<0.)?exp(ds/12.):0.;float idle=uIdleOn*(ih*2.4*uHotK+it*.8);vec3 dp=place-uPhoton;float nr=exp(-dot(dp,dp)/60.)*uPulseOn*.4*uHotK;em=amber*(uWireBase*.07+uAll*.55+nav*.75+idle*.75+nr)+hot*((bh*nm*uRouteOn*1.1+ih*uIdleOn*1.1)*uHotK+uAll*.04);}if(gA.z>-.5){float k=floor(gA.z);float sub=gA.z-k;float hv=0.;float ph=0.;vec3 ac=vec3(1.);for(int i=0;i<8;i++){if(float(i)==k){hv=uHov[i];ph=uPh[i];ac=uAcc[i];}}vec3 tgt=ac*.46+vec3(.075,.085,.085);if(sub<.4){cm=mix(cm,tgt*lf,hv);em+=tgt*.2*hv;}else if(sub<.6){cm+=tgt*.3*hv;}else{float dq=gA.w-ph;dq=dq-floor(dq+.5);float dl=dq*uPerim;float head=exp(-dl*dl/1.5);float tr=dl<0.?exp(dl/5.):0.;cm=ac*.5*lf;em+=ac*(.2+.5*hv)+mix(ac,vec3(1.),.55)*hv*head*2.6+ac*hv*tr*.9;}}float envDim=mix(.46,1.,uEnv);vec3 spec=vec3(.18,.22,.18)*pow(max(0.,dot(reflect(normalize(vec3(.55,-.86,-.38)),normalize(normal)),normalize(vec3(.2,.6,.8)))),18.);gl_FragColor=vec4(cm*envDim+spec*.12*(.45+.55*uEnv)+amber*baseTrace+em+vec3(.34,.88,.62)*nodeGlow,1.);}`;
+  var fragment = fragHead + `varying vec3 col;varying float emit;varying vec3 place;varying vec3 normal;varying vec4 gA;varying float lf;uniform float phase;uniform float uNode;uniform float uNodeOn;uniform float uPerim;uniform float uHov[8];uniform float uPh[8];uniform vec3 uAcc[8];` + fragUniforms + `void main(){vec3 cm=col;float pd=distance(place.xz,uPulseWorld);float boardM=(emit>.002&&emit<.01)?1.:0.;if(boardM>.5){float sn=fract(sin(dot(floor(place.xz*.22),vec2(12.9898,78.233)))*43758.5453);float sn2=fract(sin(dot(floor(place.xz*.055),vec2(39.346,11.135)))*24634.6345);float sn3=fract(sin(dot(floor(place.xz*1.1),vec2(26.651,84.131)))*31459.2653);float mot=.45*sn+.35*sn2+.20*sn3;float ed=mix(.46,1.,uEnv);cm*=1.+(mot-.5)*.34;cm+=(mot-.5)*.05/ed*vec3(.7,1.,.85);cm+=vec3(.9,.52,.18)*uPulseOn*.38*exp(-pd*pd/72.);}float baseTrace=emit>0.&&emit<1.?emit*.13:0.;float nodeGlow=0.;if(uNode>0.&&abs(emit-uNode)<.4)nodeGlow=uNodeOn*(.34+.62*pow(max(0.,sin(phase*2.2)),3.));vec3 amber=vec3(1.,.62,.26);vec3 hot=vec3(1.,.9,.72);vec3 em=vec3(0.);float wire=(gA.y>-.5||gA.y<-1.5)?1.:0.;if(wire>.5&&gA.z<-.5){float nm=(uRouteIdx>-.5&&abs(gA.y-uRouteIdx)<.5)?1.:0.;float dd=gA.w-uNavHead;float bh=exp(-dd*dd/1.7);float tl=(dd*uDir<0.)?exp(dd*uDir/13.):0.;float nav=nm*uRouteOn*(bh*2.4*uHotK+tl*.9+.1);float ds=gA.x-uIdleHead;ds=mod(ds+.5*uSpineLen,uSpineLen)-.5*uSpineLen;float inS=gA.x>-.5?1.:0.;float ih=inS*exp(-ds*ds/1.7);float it=(inS>.5&&ds<0.)?exp(ds/12.):0.;float idle=uIdleOn*(ih*2.4*uHotK+it*.8);vec3 dp=place-uPhoton;float nr=exp(-dot(dp,dp)/60.)*uPulseOn*.4*uHotK;float decK=gA.x<-1.5?.45:1.;em=amber*((uWireBase*.07+uAll*.55)*decK+nav*.75+idle*.75+nr)+hot*((bh*nm*uRouteOn*1.1+ih*uIdleOn*1.1)*uHotK+uAll*.04*decK);}if(gA.z>-.5){float k=floor(gA.z);float sub=gA.z-k;float hv=0.;float ph=0.;vec3 ac=vec3(1.);for(int i=0;i<8;i++){if(float(i)==k){hv=uHov[i];ph=uPh[i];ac=uAcc[i];}}vec3 tgt=ac*.46+vec3(.075,.085,.085);if(sub<.4){cm=mix(cm,tgt*lf,hv);em+=tgt*.2*hv;}else if(sub<.6){cm+=tgt*.3*hv;}else{float dq=gA.w-ph;dq=dq-floor(dq+.5);float dl=dq*uPerim;float head=exp(-dl*dl/1.5);float tr=dl<0.?exp(dl/5.):0.;cm=ac*.5*lf;em+=ac*(.2+.5*hv)+mix(ac,vec3(1.),.55)*hv*head*2.6+ac*hv*tr*.9;}}float envDim=mix(.46,1.,uEnv);vec3 spec=vec3(.18,.22,.18)*pow(max(0.,dot(reflect(normalize(vec3(.55,-.86,-.38)),normalize(normal)),normalize(vec3(.2,.6,.8)))),18.);gl_FragColor=vec4(cm*envDim+spec*.12*(.45+.55*uEnv)+amber*baseTrace+em+vec3(.34,.88,.62)*nodeGlow,1.);}`;
   var haloVS = `attribute vec3 p;attribute vec4 h;uniform mat4 m;varying vec3 pl;varying vec4 hh;void main(){pl=p;hh=h;gl_Position=m*vec4(p,1.);}`;
-  var haloFS = fragHead + `varying vec3 pl;varying vec4 hh;` + fragUniforms + `void main(){float fall=exp(-hh.w*hh.w*3.2)*(1.-smoothstep(.75,1.,abs(hh.w)));vec3 amber=vec3(1.,.62,.26);float nm=(uRouteIdx>-.5&&abs(hh.y-uRouteIdx)<.5)?1.:0.;float dd=hh.z-uNavHead;float head=exp(-dd*dd/34.);float tl=(dd*uDir<0.)?exp(dd*uDir/16.):0.;float ds=hh.x-uIdleHead;ds=mod(ds+.5*uSpineLen,uSpineLen)-.5*uSpineLen;float inS=hh.x>-.5?1.:0.;float ih=inS*exp(-ds*ds/34.);float it=(inS>.5&&ds<0.)?exp(ds/14.):0.;vec3 dp=pl-uPhoton;float nr=exp(-dot(dp,dp)/120.)*uPulseOn;float I=uAll*.55+(nm*uRouteOn*(head*.8+tl*.4+.05)+uIdleOn*(ih*.8+it*.35)+nr*.45)*uHotK;gl_FragColor=vec4(amber*fall*I*(1.-.4*uEnv),1.);}`;
+  var haloFS = fragHead + `varying vec3 pl;varying vec4 hh;` + fragUniforms + `void main(){float fall=exp(-hh.w*hh.w*3.2)*(1.-smoothstep(.75,1.,abs(hh.w)));vec3 amber=vec3(1.,.62,.26);float nm=(uRouteIdx>-.5&&abs(hh.y-uRouteIdx)<.5)?1.:0.;float dd=hh.z-uNavHead;float head=exp(-dd*dd/34.);float tl=(dd*uDir<0.)?exp(dd*uDir/16.):0.;float ds=hh.x-uIdleHead;ds=mod(ds+.5*uSpineLen,uSpineLen)-.5*uSpineLen;float inS=hh.x>-.5?1.:0.;float ih=inS*exp(-ds*ds/34.);float it=(inS>.5&&ds<0.)?exp(ds/14.):0.;vec3 dp=pl-uPhoton;float nr=exp(-dot(dp,dp)/120.)*uPulseOn;float dK=hh.x<-1.5?.4:1.;float I=uAll*.55*dK+(nm*uRouteOn*(head*.8+tl*.4+.05)+uIdleOn*(ih*.8+it*.35)+nr*.45)*uHotK;gl_FragColor=vec4(amber*fall*I*(1.-.4*uEnv),1.);}`;
   var spriteVS = `attribute vec3 p;attribute vec2 q;attribute vec3 sc;uniform mat4 m;varying vec2 uv;varying vec3 scol;void main(){uv=q;scol=sc;gl_Position=m*vec4(p,1.);}`;
   var spriteFS = `precision mediump float;varying vec2 uv;varying vec3 scol;void main(){float r2=dot(uv,uv);float edge=1.-smoothstep(.7,1.,sqrt(r2));float core=exp(-r2*34.);float halo=exp(-r2*4.)*.55;float lum=max(scol.r,max(scol.g,scol.b));gl_FragColor=vec4((scol*halo+mix(scol,vec3(1.,.95,.86)*lum,.65)*core*1.5)*edge,1.);}`;
   var bgVS = `attribute vec2 p;varying vec2 ndc;void main(){ndc=p;gl_Position=vec4(p,0.,1.);}`;
   var blitVS = `attribute vec2 p;varying vec2 uv;void main(){uv=p*.5+.5;gl_Position=vec4(p,0.,1.);}`;
   var blitFS = `precision mediump float;varying vec2 uv;uniform sampler2D tex;void main(){gl_FragColor=texture2D(tex,uv);}`;
   function bgFS(deriv) {
-    return (deriv ? "#extension GL_OES_standard_derivatives : enable\n" : "") + `precision mediump float;varying vec2 ndc;uniform mat4 inv;uniform vec3 eye;uniform float opening;uniform float time;void main(){vec4 w0=inv*vec4(ndc,-1.,1.);vec4 w1=inv*vec4(ndc,1.,1.);vec3 rd=normalize(w1.xyz/w1.w-w0.xyz/w0.w);float h=clamp(rd.y*.5+.5,0.,1.);float env=.38+.62*opening;vec3 col=mix(vec3(.085,.175,.195),vec3(.018,.038,.058),pow(h,1.35));float hy=rd.y*3.4;col+=vec3(.07,.19,.17)*exp(-hy*hy)*.85;col*=env;float tp=(-2.3-eye.y)/rd.y;if(tp>0.){vec3 p=eye+rd*tp;float r=length(p.xz);col+=vec3(.13,.30,.23)*exp(-pow(r/40.,2.))*(.18+.92*opening);col+=vec3(.38,.20,.06)*exp(-pow(r/22.,2.))*(.06+.54*opening);col+=vec3(.10,.24,.21)*exp(-pow((r-72.)/22.,2.))*(.10+.32*opening)*(.85+.15*sin(time*.18));}float tg=(-13.5-eye.y)/rd.y;if(tg>0.){vec3 p=eye+rd*tg;vec2 q=p.xz/9.;vec2 g=abs(fract(q)-.5);
+    return (deriv ? "#extension GL_OES_standard_derivatives : enable\n" : "") + `precision mediump float;varying vec2 ndc;uniform mat4 inv;uniform vec3 eye;uniform float opening;uniform float time;void main(){vec4 w0=inv*vec4(ndc,-1.,1.);vec4 w1=inv*vec4(ndc,1.,1.);vec3 rd=normalize(w1.xyz/w1.w-w0.xyz/w0.w);float h=clamp(rd.y*.5+.5,0.,1.);float env=.38+.62*opening;vec3 col=mix(vec3(.052,.108,.122),vec3(.010,.022,.036),pow(h,1.5));float hy=rd.y*3.1;col+=vec3(.05,.125,.115)*exp(-hy*hy)*.75;col*=env;float tp=(-2.3-eye.y)/rd.y;if(tp>0.){vec3 p=eye+rd*tp;float r=length(p.xz);col+=vec3(.11,.25,.19)*exp(-pow(r/40.,2.))*(.16+.84*opening);col+=vec3(.34,.18,.05)*exp(-pow(r/22.,2.))*(.05+.48*opening);col+=vec3(.09,.21,.18)*exp(-pow((r-72.)/22.,2.))*(.09+.30*opening)*(.85+.15*sin(time*.18));}float tg=(-13.5-eye.y)/rd.y;if(tg>0.){vec3 p=eye+rd*tg;float fade=exp(-tg*.009);float r=length(p.xz);
 #ifdef GL_OES_standard_derivatives
-float fw=fwidth(q.x)+fwidth(q.y);
+vec2 q=p.xz/56.;vec2 gg=abs(fract(q)-.5);float fw=max(fwidth(q.x)+fwidth(q.y),.006);float seam=smoothstep(.5-.014-fw,.5,max(gg.x,gg.y));vec2 q2=p.xz/14.;vec2 g2=abs(fract(q2)-.5);float fw2=max(fwidth(q2.x)+fwidth(q2.y),.006);float seam2=smoothstep(.5-.009-fw2,.5,max(g2.x,g2.y));
 #else
-float fw=.01;
+float seam=0.;float seam2=0.;
 #endif
-float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fade=exp(-tg*.008);col+=vec3(.13,.27,.25)*line*fade*(.25+.75*opening);vec2 q2=p.xz/45.;vec2 g2=abs(fract(q2)-.5);float line2=smoothstep(.48,.5,max(g2.x,g2.y));col+=vec3(.16,.33,.30)*line2*fade*.8*(.25+.75*opening);vec2 q3=p.xz/27.+vec2(time*.006,time*.0035);vec2 cell=floor(q3);vec2 f=fract(q3)-.5;float hsh=fract(sin(dot(cell,vec2(127.1,311.7)))*43758.55);vec2 off=(vec2(fract(hsh*7.13),fract(hsh*3.71))-.5)*.72;float dd=length(f-off);float tw=.45+.55*sin(time*(.5+hsh*1.7)+hsh*43.);col+=vec3(.30,.44,.42)*smoothstep(.10,.01,dd)*.16*tw*fade*step(.15,hsh)*(.3+.7*opening);}float vig=1.-.42*pow(length(ndc*vec2(1.15,1.)),2.4);gl_FragColor=vec4(col*max(vig,0.),1.);}`;
+float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float n2=fract(sin(dot(floor(p.xz*.023),vec2(39.346,11.135)))*24634.6345);col+=vec3(.085,.145,.135)*seam*fade*(.16+.5*opening);col+=vec3(.05,.09,.085)*seam2*fade*(.10+.3*opening);col+=vec3(.05,.08,.075)*(n1*.5+n2-.75)*.13*fade*(.3+.7*opening);col+=vec3(.09,.185,.15)*exp(-pow(r/80.,2.))*(.10+.5*opening);col+=vec3(.28,.15,.045)*exp(-pow(r/36.,2.))*(.04+.28*opening);}float vig=1.-.42*pow(length(ndc*vec2(1.15,1.)),2.4);gl_FragColor=vec4(col*max(vig,0.),1.);}`;
   }
   function compile(gl2, type, src) {
     let s = gl2.createShader(type);
@@ -11786,13 +11833,12 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
   }
   var keys = [
     { t: 0, eye: [78, 92, 122], to: [0, 0, -2] },
-    { t: 0.14, eye: [-14, 38, 30], to: [-44, 0, -24] },
-    { t: 0.28, eye: [0, 32, 4], to: [0, 0, -27] },
-    { t: 0.42, eye: [30, 54, 32], to: [31, 0, -17] },
-    { t: 0.56, eye: [22, 36, 54], to: [46, 0, 22] },
-    { t: 0.7, eye: [0, 34, 58], to: [0, 0, 27] },
-    { t: 0.84, eye: [-16, 38, 56], to: [-44, 0, 22] },
-    { t: 0.95, eye: [-4, 36, 38], to: [-30, 0, -1] },
+    { t: 0.16, eye: [-14, 38, 30], to: [-44, 0, -24] },
+    { t: 0.32, eye: [0, 32, 4], to: [0, 0, -27] },
+    { t: 0.48, eye: [30, 54, 32], to: [31, 0, -17] },
+    { t: 0.64, eye: [22, 36, 54], to: [46, 0, 22] },
+    { t: 0.8, eye: [-16, 38, 56], to: [-44, 0, 22] },
+    { t: 0.94, eye: [-4, 36, 38], to: [-30, 0, -1] },
     { t: 1, eye: [86, 90, 102], to: [0, 0, 0] }
   ];
   function cameraAt(p) {
@@ -11804,13 +11850,12 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
   }
   var anchors = [
     { t: 0, node: "OV", eye: [75, 91, 124], to: [2, 0, 0] },
-    { t: 0.14, node: "INTERN", eye: [-44, 30, 8], to: [-44, 0, -24] },
-    { t: 0.28, node: "TEAMS", eye: [0, 27, -4], to: [0, 0, -27] },
-    { t: 0.42, node: "PROJ", eye: [34, 52, 30], to: [32, 0, -17] },
-    { t: 0.56, node: "SKILLS", eye: [46, 27, 46], to: [46, 0, 22] },
-    { t: 0.7, node: "ABOUT", eye: [0, 26, 50], to: [0, 0, 27] },
-    { t: 0.84, node: "RESUME", eye: [-44, 27, 46], to: [-44, 0, 22] },
-    { t: 0.955, node: "CONTACT", eye: [-30, 24, 22], to: [-30, 0, -1] },
+    { t: 0.16, node: "INTERN", eye: [-44, 30, 8], to: [-44, 0, -24] },
+    { t: 0.32, node: "TEAMS", eye: [0, 27, -4], to: [0, 0, -27] },
+    { t: 0.48, node: "PROJ", eye: [34, 52, 30], to: [32, 0, -17] },
+    { t: 0.64, node: "SKILLS", eye: [46, 27, 46], to: [46, 0, 22] },
+    { t: 0.8, node: "RESUME", eye: [-44, 27, 46], to: [-44, 0, 22] },
+    { t: 0.94, node: "CONTACT", eye: [-30, 24, 22], to: [-30, 0, -1] },
     { t: 1, node: "OV", eye: [86, 90, 102], to: [0, 0, 0] }
   ];
   var routeData = navRoutes.map((r) => {
@@ -11835,11 +11880,11 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
   }
   function wireCam(p, dirB) {
     {
-      let asp = innerWidth / Math.max(1, innerHeight), kk = 1 + Math.max(0, 1.0 - asp) * 0.95;
+      let asp = innerWidth / Math.max(1, innerHeight), kk = 1 + Math.max(0, 1 - asp) * 0.95;
       for (const an of anchors) if (an.node === "PROJ") {
         if (!an.eye0) an.eye0 = [...an.eye];
-        const tt = an.to;
-        an.eye = [tt[0] + (an.eye0[0] - tt[0]) * kk, tt[1] + (an.eye0[1] - tt[1]) * kk, tt[2] + (an.eye0[2] - tt[2]) * kk];
+        const tt3 = an.to;
+        an.eye = [tt3[0] + (an.eye0[0] - tt3[0]) * kk, tt3[1] + (an.eye0[1] - tt3[1]) * kk, tt3[2] + (an.eye0[2] - tt3[2]) * kk];
       }
     }
     let i = anchors.findIndex((a) => a.t >= p);
@@ -11904,140 +11949,8 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
     if (p.x < (p.name.startsWith("PB") ? 330 : 580) && p.y > h * 0.57) return false;
     return true;
   }
-  function ProjectEvidence({ node }) {
-    if (node === "CTRL") return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "evidence-figure evidence-ctrl", "aria-label": "Explanatory controller signal topology", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "sensor-stack", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "HC-SR04 / LEFT" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "HC-SR04 / CENTRE" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "HC-SR04 / RIGHT" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "evidence-arrow", children: "\u2192" }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "evidence-unit", children: [
-        "ESP32",
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("br", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("small", { children: "BUTTON SELECTION" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "evidence-arrow", children: "WEBSOCKET \u2192" }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "evidence-unit", children: [
-        "PHONE / WEB",
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("br", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("small", { children: "SPOKEN FEEDBACK" })
-      ] })
-    ] });
-    if (node === "SENS") return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "evidence-figure evidence-sens", "aria-label": "Explanatory range-to-point-cloud transformation", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "scan-radar", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
-          "VL53L1X",
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("br", {}),
-          "ROTATE / SAMPLE"
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "evidence-arrow", children: "DISTANCE + ANGLE \u2192" }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "spatial-grid", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "X / Y / Z" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "evidence-unit", children: [
-        "PYTHON",
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("br", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("small", { children: "POLAR \u2192 CARTESIAN" })
-      ] })
-    ] });
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "evidence-figure evidence-daq", "aria-label": "Explanatory twenty-channel acquisition topology", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "channel-groups", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("b", { children: "10" }),
-          " PRESSURE"
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("b", { children: "10" }),
-          " THERMOCOUPLE"
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "evidence-arrow", children: "\u2192" }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "evidence-unit", children: [
-        "MUX80",
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("br", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("small", { children: "CHANNEL EXPANSION" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "evidence-arrow", children: "\u2192" }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "evidence-unit", children: [
-        "LABJACK T7",
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("br", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("small", { children: "ACQUISITION" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "evidence-arrow", children: "\u2194" }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "evidence-unit", children: [
-        "SHUNT TAP",
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("br", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("small", { children: "CORRELATION" })
-      ] })
-    ] });
-  }
-  function CaseStudy({ project: project2, close }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "case-view", role: "dialog", "aria-modal": "true", "aria-label": `${project2.heading} technical case study`, children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("article", { className: "case-page", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("header", { className: "case-head", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
-          "F/I \xB7 ENGINEERING / ",
-          project2.node
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: close, "aria-label": "Close technical case study", children: "CLOSE \xD7" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "case-hero", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("p", { children: [
-          project2.type,
-          " / TECHNICAL CASE STUDY"
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h2", { children: project2.heading }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: project2.body })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("section", { className: "case-section", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "case-index", children: "01 / SYSTEM ARCHITECTURE" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: project2.diagramTitle }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProjectEvidence, { node: project2.node }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: `case-flow case-${project2.node.toLowerCase()}`, "aria-label": `${project2.heading} architecture`, children: project2.architecture.map((step, i) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "case-step", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
-            String(i + 1).padStart(2, "0"),
-            " / ",
-            step.name
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: step.detail })
-        ] }, step.name)) }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("small", { children: "EXPLANATORY DIAGRAM \xB7 NOT A PHOTOGRAPH, WIRING SCHEMATIC OR MEASURED DATA" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("section", { className: "case-section case-split", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "case-index", children: "02 / ENGINEERING CHOICE" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: project2.decisionTitle }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: project2.decision })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "case-index", children: "03 / EVIDENCE & LIMITS" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: project2.verificationTitle }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: project2.verification })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("footer", { className: "case-footer", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "CONCEPTUAL SYSTEM MAP \xB7 NOT A REAL BOARD DESIGN" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { children: project2.projectUrl && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: project2.projectUrl, target: "_blank", rel: "noopener noreferrer", children: "Farhan's project page \u2197" }) })
-      ] })
-    ] }) });
-  }
   function Board({ progress, active, mobile, selected, onSelect, lowMotion, wire, hoverExt, onHover, onTap }) {
-    const ref = (0, import_react23.useRef)(null), state = (0, import_react23.useRef)({ progress, active, selected, mobile, lowMotion, wire, hoverExt, onHover, onTap }), ptr = (0, import_react23.useRef)({ x: -1, y: -1, type: "mouse", tap: false, hit: -1 });
+    const ref = (0, import_react23.useRef)(null), state = (0, import_react23.useRef)({ progress, active, selected, mobile, lowMotion, wire, hoverExt, onHover, onTap }), ptr = (0, import_react23.useRef)({ x: -1, y: -1, type: "mouse", tap: false, hit: -1, pinH: -1 });
     state.current = { progress, active, selected, mobile, lowMotion, wire, hoverExt, onHover, onTap };
     const [labels, setLabels] = (0, import_react23.useState)([]), [fallback, setFallback] = (0, import_react23.useState)(false);
     (0, import_react23.useEffect)(() => {
@@ -12099,13 +12012,13 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
           gl2.vertexAttribPointer(loc, size, gl2.FLOAT, false, stride, offset * 4);
         }
       };
-      let mkProg = (vs, fs) => {
-        let pr = gl2.createProgram();
-        gl2.attachShader(pr, compile(gl2, gl2.VERTEX_SHADER, vs));
-        gl2.attachShader(pr, compile(gl2, gl2.FRAGMENT_SHADER, fs));
-        gl2.linkProgram(pr);
-        if (!gl2.getProgramParameter(pr, gl2.LINK_STATUS)) throw Error("link");
-        return pr;
+      let mkProg = (vs, fs2) => {
+        let pr2 = gl2.createProgram();
+        gl2.attachShader(pr2, compile(gl2, gl2.VERTEX_SHADER, vs));
+        gl2.attachShader(pr2, compile(gl2, gl2.FRAGMENT_SHADER, fs2));
+        gl2.linkProgram(pr2);
+        if (!gl2.getProgramParameter(pr2, gl2.LINK_STATUS)) throw Error("link");
+        return pr2;
       };
       let haloProg, sprProg;
       try {
@@ -12123,7 +12036,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
       let sprLoc = { p: gl2.getAttribLocation(sprProg, "p"), q: gl2.getAttribLocation(sprProg, "q"), sc: gl2.getAttribLocation(sprProg, "sc") };
       let sprM = gl2.getUniformLocation(sprProg, "m");
       let fxNames = ["m", "uHotK", "uDir", "uEnv", "uWireBase", "uPulseOn", "uPulseWorld", "uPhoton", "uAll", "uRouteIdx", "uRouteOn", "uNavHead", "uIdleOn", "uIdleHead", "uSpineLen"];
-      let mkLocs = (pr, extra) => Object.fromEntries([...fxNames, ...extra].map((n) => [n, gl2.getUniformLocation(pr, n)]));
+      let mkLocs = (pr2, extra) => Object.fromEntries([...fxNames, ...extra].map((n) => [n, gl2.getUniformLocation(pr2, n)]));
       let locMain = mkLocs(program, ["phase", "uNode", "uNodeOn", "uPerim", "uHov[0]", "uPh[0]", "uAcc[0]"]);
       locMain.uHov = locMain["uHov[0]"];
       locMain.uPh = locMain["uPh[0]"];
@@ -12132,8 +12045,8 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
       let hovAmt = new Array(8).fill(0), hovPh = new Array(8).fill(0), hovOn = new Array(8).fill(0), hovStart = new Array(8).fill(0), lastHit = -1;
       let accArr = new Float32Array(24);
       projects.forEach((pr2, k2) => accArr.set(pr2.accent, k2 * 3));
+      let uOpen0 = gl2.getUniformLocation(program, "opening"), uEV0 = gl2.getUniformLocation(program, "uEnv");
       setAttribs();
-      let uM = gl2.getUniformLocation(program, "m"), uP = gl2.getUniformLocation(program, "pulse"), uT = gl2.getUniformLocation(program, "phase"), uS = gl2.getUniformLocation(program, "section"), uTarget = gl2.getUniformLocation(program, "target"), uOpen = gl2.getUniformLocation(program, "opening"), uRB = gl2.getUniformLocation(program, "uRouteBase"), uTV = gl2.getUniformLocation(program, "uTravel"), uRO = gl2.getUniformLocation(program, "uRouteOn"), uND = gl2.getUniformLocation(program, "uNode"), uNO = gl2.getUniformLocation(program, "uNodeOn"), uDR = gl2.getUniformLocation(program, "uDir"), uEV = gl2.getUniformLocation(program, "uEnv"), uWB = gl2.getUniformLocation(program, "uWireBase"), uPP = gl2.getUniformLocation(program, "uPulsePos"), uPN = gl2.getUniformLocation(program, "uPulseOn"), uPW2 = gl2.getUniformLocation(program, "uPulseWorld");
       gl2.enable(gl2.DEPTH_TEST);
       gl2.disable(gl2.CULL_FACE);
       let raf = 0, dirB = 1, lastLabel = 0, lastPoints = [], pinHide = false, showAt = 0, slow = false, probeN = 0, probeAcc = 0, lastMs = 0, smooth = parseFloat((location.hash.match(/p=([\d.]+)/) || [])[1] || "0"), focus = null, focusStart = 0, modeBlend = state.current.wire ? 1 : 0;
@@ -12226,7 +12139,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         let bw = Math.max(1, W >> (slow ? 2 : 1)), bh = Math.max(1, H >> (slow ? 2 : 1));
         if (bw !== bgW || bh !== bgH) {
           bgW = bw;
-          bgH = bh;
+          bh = bh;
           gl2.bindTexture(gl2.TEXTURE_2D, bgTex);
           gl2.texImage2D(gl2.TEXTURE_2D, 0, gl2.RGBA, bw, bh, 0, gl2.RGBA, gl2.UNSIGNED_BYTE, null);
           gl2.texParameteri(gl2.TEXTURE_2D, gl2.TEXTURE_MIN_FILTER, gl2.LINEAR);
@@ -12264,10 +12177,10 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         gl2.enable(gl2.DEPTH_TEST);
         gl2.useProgram(program);
         setAttribs();
-        gl2.uniform1f(uOpen, open);
-        gl2.uniform1f(uEV, env);
+        gl2.uniform1f(uOpen0, open);
+        gl2.uniform1f(uEV0, env);
         let allPulse = s.lowMotion ? 0.7 : Math.pow(0.5 - 0.5 * Math.cos(ms2 * 21e-4), 1.3);
-        let allOn = (1 - sstep(4e-3, 0.032, smooth)) * (1 - Math.min(1, wc.routeOn * 1.0)) * allPulse * Math.min(1, ms2 / 900);
+        let allOn = (1 - sstep(4e-3, 0.032, smooth)) * (1 - Math.min(1, wc.routeOn * 1)) * allPulse * Math.min(1, ms2 / 900);
         let idleTarget = wc.routeOn < 2e-3 && smooth >= 0.9985 ? 1 : 0;
         let idleDt = Math.max(0, Math.min(100, ms2 - (globalThis.__idleT || ms2)));
         globalThis.__idleT = ms2;
@@ -12334,14 +12247,14 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         let spr = [];
         let right = [view[0], view[4], view[8]], upv = [view[1], view[5], view[9]];
         let addSpr = (pos, size, rgb) => {
-          for (let [cx2, cy2] of [[-1, -1], [1, -1], [1, 1], [-1, -1], [1, 1], [-1, 1]]) spr.push(pos[0] + (right[0] * cx2 + upv[0] * cy2) * size, pos[1] + (right[1] * cx2 + upv[1] * cy2) * size, pos[2] + (right[2] * cx2 + upv[2] * cy2) * size, cx2, cy2, rgb[0], rgb[1], rgb[2]);
+          for (let [cx, cy] of [[-1, -1], [1, -1], [1, 1], [-1, -1], [1, 1], [-1, 1]]) spr.push(pos[0] + (right[0] * cx + upv[0] * cy) * size, pos[1] + (right[1] * cx + upv[1] * cy) * size, pos[2] + (right[2] * cx + upv[2] * cy) * size, cx, cy, rgb[0], rgb[1], rgb[2]);
         };
-        const PHOTON_NEAR = 18;
         let dist3 = (p) => Math.hypot(p[0] - cam.eye[0], p[1] - cam.eye[1], p[2] - cam.eye[2]);
+        const PHOTON_NEAR = 18;
         if (photonOn > 0.02 && !s.lowMotion) {
           let pp = [ph3[0], ph3[1] + 0.35, ph3[2]];
-          let pd = dist3(pp), pk = Math.min(1, Math.max(0.15, pd / PHOTON_NEAR)), pa = 0.1 + 0.9 * pk * pk;
-          addSpr(pp, Math.max(1.0, pd * 0.013) * pk, [0.9 * photonOn * pa, 0.6 * photonOn * pa, 0.28 * photonOn * pa]);
+          let pd2 = dist3(pp), pk = Math.min(1, Math.max(0.15, pd2 / PHOTON_NEAR)), pa2 = 0.1 + 0.9 * pk * pk;
+          addSpr(pp, Math.max(1, pd2 * 0.013) * pk, [0.9 * photonOn * pa2, 0.6 * photonOn * pa2, 0.28 * photonOn * pa2]);
         }
         for (let k2 = 0; k2 < PROJECT_N; k2++) {
           if (hovAmt[k2] > 0.03) {
@@ -12391,13 +12304,23 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
                 else if (mob && pq.name !== activeNode) pq.visible = false;
               }
             }
-            if (mob && s.active === 3) for (let pq of points) { if (pq.name === "PROJ") pq.visible = false; else if (pq.name.startsWith("PB")) pq.y = Math.min(pq.y, Math.min(ch * 0.56, stTop - (PHH + 18)) - 2); }
+            if (mob && s.active === 3) {
+              for (let pq of points) {
+                if (pq.name === "PROJ") pq.visible = false;
+                else if (pq.name.startsWith("PB")) pq.y = Math.min(pq.y, Math.min(ch * 0.56, stTop - (PHH + 18)) - 2);
+              }
+              let pbs = points.filter((p) => p.visible && p.name.startsWith("PB")).sort((a, b) => a.x - b.x);
+              let GAP = 30, X0 = 4, X1 = cw - 30;
+              for (let q2 of pbs) q2.x = Math.max(X0, Math.min(q2.x, X1));
+              for (let i = 1; i < pbs.length; i++) if (Math.abs(pbs[i].y - pbs[i - 1].y) < 44 && pbs[i].x - pbs[i - 1].x < GAP) pbs[i].x = Math.min(X1, pbs[i - 1].x + GAP);
+              for (let i = pbs.length - 2; i >= 0; i--) if (Math.abs(pbs[i + 1].y - pbs[i].y) < 44 && pbs[i + 1].x - pbs[i].x < GAP) pbs[i].x = Math.max(X0, pbs[i + 1].x - GAP);
+            }
             let vis = points.filter((p) => p.visible && !(mob && p.name.startsWith("PB")));
             for (let i = 0; i < vis.length; i++) for (let j2 = i + 1; j2 < vis.length; j2++) {
               let A3 = vis[i], B3 = vis[j2];
               if (A3.name === activeNode && B3.name === activeNode) continue;
               let loser = A3.name === activeNode ? B3 : B3.name === activeNode ? A3 : CHIPS.includes(A3.name) && !CHIPS.includes(B3.name) ? A3 : CHIPS.includes(B3.name) && !CHIPS.includes(A3.name) ? B3 : B3;
-              let hwf = (q) => mob && q.name.startsWith("PB") ? 18 : PHW;
+              let hwf = (q2) => mob && q2.name.startsWith("PB") ? 18 : PHW;
               let ox = hwf(A3) + hwf(B3) - Math.abs(A3.x - B3.x), oy = 2 * PHH - Math.abs(A3.y - B3.y);
               if (ox <= 2 || oy <= 2) continue;
               let cands = [[loser.x, loser.y - oy - 8], [loser.x, loser.y + oy + 8], [loser.x + ox + 8, loser.y], [loser.x - ox - 8, loser.y]];
@@ -12455,7 +12378,11 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
       ptr.current.type = e2.pointerType || "mouse";
       if (ptr.current.type === "mouse" && !(ptr.current.pinH >= 0)) {
         let h = pickAt(e2);
-        if (h !== ptr.current.mh) { ptr.current.mh = h; ptr.current.hit = h; state.current.onHover && state.current.onHover(h); }
+        if (h !== ptr.current.mh) {
+          ptr.current.mh = h;
+          ptr.current.hit = h;
+          state.current.onHover && state.current.onHover(h);
+        }
       }
     }, onPointerDown: (e2) => {
       let r = ref.current?.getBoundingClientRect();
@@ -12463,7 +12390,13 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
       ptr.current.x = (e2.clientX - r.left) / r.width;
       ptr.current.y = (e2.clientY - r.top) / r.height;
       ptr.current.type = e2.pointerType || "mouse";
-      if (ptr.current.type !== "mouse") { ptr.current.tap = false; if (state.current.active === 3) { let h = pickAt(e2); state.current.onTap && state.current.onTap(h); } }
+      if (ptr.current.type !== "mouse") {
+        ptr.current.tap = false;
+        if (state.current.active === 3) {
+          let h = pickAt(e2);
+          state.current.onTap && state.current.onTap(h);
+        }
+      }
     }, onPointerLeave: () => {
       ptr.current.x = -1;
       ptr.current.y = -1;
@@ -12482,7 +12415,6 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "TEAMS" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "PROJECTS" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "SKILLS" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "ABOUT" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "RESUME" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "CONTACT" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "System visualization unavailable. Navigate through the sections below." })
@@ -12500,31 +12432,45 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         }
         onSelect(p.name === selected ? null : p.name);
         window.dispatchEvent(new CustomEvent("board-focus", { detail: p.name }));
-      }, className: `pin ${selected === p.name ? "is-active" : ""}${p.name.startsWith("PB") ? " pin-proj" : ""}`, onMouseEnter: p.name.startsWith("PB") ? () => { ptr.current.pinH = +p.name.slice(2); state.current.onHover && state.current.onHover(+p.name.slice(2)); } : void 0, onMouseLeave: p.name.startsWith("PB") ? () => { ptr.current.pinH = -1; state.current.onHover && state.current.onHover(-1); } : void 0, style: p.name.startsWith("PB") ? { left: pbL(p), top: innerWidth <= 1050 ? Math.max(250, Math.min(p.y, (document.querySelector(".story")?.getBoundingClientRect().top ?? 9999) - 30)) : p.y, borderColor: `rgb(${projects[+p.name.slice(2)].accent.map((v2) => Math.round(v2 * 255)).join(",")})` } : { left: p.x, top: p.y }, children: [
+      }, className: `pin ${selected === p.name ? "is-active" : ""}${p.name.startsWith("PB") ? " pin-proj" : ""}`, onMouseEnter: p.name.startsWith("PB") ? () => {
+        ptr.current.pinH = +p.name.slice(2);
+        state.current.onHover && state.current.onHover(+p.name.slice(2));
+      } : void 0, onMouseLeave: p.name.startsWith("PB") ? () => {
+        ptr.current.pinH = -1;
+        state.current.onHover && state.current.onHover(-1);
+      } : void 0, style: p.name.startsWith("PB") ? { left: pbL(p), top: innerWidth <= 1050 ? Math.max(250, Math.min(p.y, (document.querySelector(".story")?.getBoundingClientRect().top ?? 9999) - 30)) : p.y, borderColor: `rgb(${projects[+p.name.slice(2)].accent.map((v2) => Math.round(v2 * 255)).join(",")})` } : { left: p.x, top: p.y }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("b", { children: p.name.startsWith("PB") && mobile ? "0" + (+p.name.slice(2) + 1) : p.label || DISPLAY[p.name] || p.name }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { children: p.name.startsWith("PB") ? "0" + (+p.name.slice(2) + 1) : pinNum(p.name) })
       ] }, p.name))
     ] });
   }
   function ProjectPanel({ shown, onChip }) {
-    const jx = import_jsx_runtime21, p = shown >= 0 ? projects[shown] : null;
+    const p = shown >= 0 ? projects[shown] : null;
     const rgb = (a) => `rgb(${a.map((v2) => Math.round(v2 * 255)).join(",")})`;
-    return jx.jsxs("div", { className: "project-focus", children: [
-      jx.jsxs("div", { className: "project-signal", children: [
-        jx.jsx("span", { children: p ? `PROJECT / 0${shown + 1}` : `PROJECTS / ${String(projects.length).padStart(2, "0")} SELECTED` }),
-        jx.jsx("i", {}),
-        jx.jsx("span", { children: p ? p.type : (matchMedia("(hover: none)").matches ? "TAP A BLOCK" : "HOVER A BLOCK") })
+    const touch = matchMedia("(hover: none)").matches;
+    return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "project-focus", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "project-signal", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: p ? `PROJECT / 0${shown + 1}` : `PROJECTS / ${String(projects.length).padStart(2, "0")} SELECTED` }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: p ? p.type : touch ? "TAP A BLOCK" : "HOVER A BLOCK" })
       ] }),
-      jx.jsx("h2", { className: "project-title", children: p ? p.heading : "Inspect a project" }),
-      jx.jsx("p", { children: p ? p.body : "Each block on the board is one project. " + (matchMedia("(hover: none)").matches ? "Tap" : "Hover") + " a block to light it up and read the summary, then open its case study." }),
-      p && jx.jsx("div", { className: "project-mini-flow", "aria-label": "Project flow", children: p.flow.map((st, i) => jx.jsxs("span", { children: [i > 0 && jx.jsx("b", { "aria-hidden": "true", children: "\u2192" }), st] }, st)) }),
-      p && p.url && jx.jsx("a", { className: "case-open", href: p.url, target: "_blank", rel: "noopener noreferrer", children: "Explore the Case Study \u2197" }),
-      jx.jsx("div", { className: "project-jumps", children: projects.map((q2, i) => jx.jsxs("button", { className: shown === i ? "active" : "", style: { borderColor: shown === i ? rgb(q2.accent) : void 0 }, onMouseEnter: () => onChip(i, "hover"), onMouseLeave: () => onChip(-1, "hover"), onFocus: () => onChip(i, "hover"), onBlur: () => onChip(-1, "hover"), onClick: () => onChip(i, "tap"), "aria-label": q2.heading, children: [jx.jsx("span", { style: { color: rgb(q2.accent) }, children: "0" + (i + 1) }), " ", q2.short] }, q2.key)) })
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h2", { className: "project-title", children: p ? p.heading : "Inspect a project" }),
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: p ? p.body : "Each block on the board is one project. " + (touch ? "Tap" : "Hover") + " a block to light it up and read the summary, then open its case study." }),
+      p && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "project-mini-flow", "aria-label": "Project flow", children: p.flow.map((st3, i) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
+        i > 0 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("b", { "aria-hidden": "true", children: "\u2192" }),
+        st3
+      ] }, st3)) }),
+      p && p.url && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { className: "case-open", href: p.url, target: "_blank", rel: "noopener noreferrer", children: "Explore the Case Study \u2197" }),
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "project-jumps", children: projects.map((q2, i) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { className: shown === i ? "active" : "", style: { borderColor: shown === i ? rgb(q2.accent) : void 0 }, onMouseEnter: () => onChip(i, "hover"), onMouseLeave: () => onChip(-1, "hover"), onFocus: () => onChip(i, "hover"), onBlur: () => onChip(-1, "hover"), onClick: () => onChip(i, "tap"), "aria-label": q2.heading, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { style: { color: rgb(q2.accent) }, children: "0" + (i + 1) }),
+        " ",
+        q2.short
+      ] }, q2.key)) })
     ] });
   }
   function App() {
-    let [progress, setProgress] = (0, import_react23.useState)(0), [selected, setSelected] = (0, import_react23.useState)(null), [caseNode, setCaseNode] = (0, import_react23.useState)(null), [mobile, setMobile] = (0, import_react23.useState)(false), [lowMotion, setLowMotion] = (0, import_react23.useState)(false), [ready, setReady] = (0, import_react23.useState)(false), [pHover, setPHover] = (0, import_react23.useState)(-1), [chipHover, setChipHover] = (0, import_react23.useState)(-1), [tapSel, setTapSel] = (0, import_react23.useState)(-1), [lastShown, setLastShown] = (0, import_react23.useState)(-1);
-    const [travelMode, setTravelMode, saved] = iu("travel-mode.v1", "wire");
+    let [progress, setProgress] = (0, import_react23.useState)(0), [selected, setSelected] = (0, import_react23.useState)(null), [mobile, setMobile] = (0, import_react23.useState)(false), [lowMotion, setLowMotion] = (0, import_react23.useState)(false), [ready, setReady] = (0, import_react23.useState)(false), [pHover, setPHover] = (0, import_react23.useState)(-1), [chipHover, setChipHover] = (0, import_react23.useState)(-1), [tapSel, setTapSel] = (0, import_react23.useState)(-1), [lastShown, setLastShown] = (0, import_react23.useState)(-1);
+    const [travelMode, setTravelMode, saved] = iu("travel-mode.v2", "normal");
     const pendingMode = (0, import_react23.useRef)(null);
     (0, import_react23.useEffect)(() => {
       if (saved.ready && pendingMode.current) {
@@ -12552,7 +12498,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
       if (location.hash === "#resume") {
         let el2 = document.querySelector(".experience");
         let max = el2 ? el2.scrollHeight - el2.clientHeight : 0;
-        el2?.scrollTo({ top: stages[6].at * max, behavior: "instant" });
+        el2?.scrollTo({ top: stages[5].at * max, behavior: "instant" });
       }
       let hm = location.hash.match(/p=([\d.]+)/);
       if (hm) {
@@ -12574,14 +12520,13 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
     }, [effHover]);
     (0, import_react23.useEffect)(() => {
       setSelected(null);
-      setCaseNode(null);
       setPHover(-1);
       setChipHover(-1);
       setTapSel(-1);
       setLastShown(-1);
     }, [active]);
     (0, import_react23.useEffect)(() => {
-            if (location.hash === "#menu") document.querySelector(".system-nav")?.classList.add("open");
+      if (location.hash === "#menu") document.querySelector(".system-nav")?.classList.add("open");
     }, []);
     const jump = (n) => {
       let el2 = document.querySelector(".experience");
@@ -12589,122 +12534,118 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
       el2?.scrollTo({ top: stages[n].at * max, behavior: lowMotion ? "instant" : "smooth" });
       setSelected(null);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "experience", id: "top", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: `viewport stage-${active}`, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Board, { progress, active, mobile, selected, onSelect: setSelected, lowMotion, wire: travelMode === "wire", hoverExt: active === 3 ? chipHover >= 0 ? chipHover : tapSel : -1, onHover: setPHover, onTap: (k2) => setTapSel((t) => k2 < 0 || t === k2 ? -1 : k2) }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "vignette" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("header", { className: "topline", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { className: "brand", onClick: () => jump(0), children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { className: "brand-mark", children: [
-                "F",
-                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { children: "/" }),
-                "I"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "ENGINEERING / 002" })
+    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_jsx_runtime21.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "experience", id: "top", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: `viewport stage-${active}`, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Board, { progress, active, mobile, selected, onSelect: setSelected, lowMotion, wire: travelMode === "wire", hoverExt: active === 3 ? chipHover >= 0 ? chipHover : tapSel : -1, onHover: setPHover, onTap: (k2) => setTapSel((t) => k2 < 0 || t === k2 ? -1 : k2) }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "vignette" }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("header", { className: "topline", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { className: "brand", onClick: () => jump(0), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { className: "brand-mark", children: [
+              "F",
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { children: "/" }),
+              "I"
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { className: "system-state", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "live-dot" }),
-              " INTERACTIVE PORTFOLIO MAP",
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { className: "travel-mode", onClick: () => {
-                let next = travelMode === "wire" ? "normal" : "wire";
-                if (saved.ready) setTravelMode(next);
-                else pendingMode.current = next;
-              }, "aria-pressed": travelMode === "wire", "aria-label": "Toggle navigation travel mode", title: saved.message || "Choose how the camera travels between blocks", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "tm-label", children: travelMode === "wire" ? "TRAVEL / ALONG WIRE" : "TRAVEL / NORMAL" }),
-                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: `tm-pill${travelMode === "wire" ? " on" : ""}`, "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}) })
-              ] })
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "ENGINEERING / 002" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { className: "system-state", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "live-dot" }),
+            " INTERACTIVE PORTFOLIO MAP",
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { className: "travel-mode", onClick: () => {
+              let next = travelMode === "wire" ? "normal" : "wire";
+              if (saved.ready) setTravelMode(next);
+              else pendingMode.current = next;
+            }, "aria-pressed": travelMode === "wire", "aria-label": "Toggle navigation travel mode", title: saved.message || "Choose how the camera travels between blocks", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "tm-label", children: travelMode === "wire" ? "TRAVEL / ALONG WIRE" : "TRAVEL / NORMAL" }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: `tm-pill${travelMode === "wire" ? " on" : ""}`, "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}) })
             ] })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { className: "mobile-menu", onClick: () => document.querySelector(".system-nav")?.classList.toggle("open"), "aria-label": "Open section menu", children: [
-            "MENU ",
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "\u2630" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("nav", { className: "system-nav", "aria-label": "Portfolio sections", children: stages.slice(1).map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { className: i + 1 === active ? "current" : "", onClick: () => {
-            document.querySelector(".system-nav")?.classList.remove("open");
-            jump(i + 1);
-          }, children: s.label }, s.label)) }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "readout", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "REV 03 / F. ISLAM" }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
-              stages[active].n,
-              " / ",
-              stages[active].label
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "desktop-scroll-cue", children: "SCROLL TO EXPLORE \u2193" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "story", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("p", { className: "eyebrow", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "eyebrow-line" }),
-              " ",
-              stages[active].n,
-              " / ",
-              stages[active].sub.includes(" / ") ? stages[active].sub.split(" / ").map((w) => w.replace(/ /g, "\xA0")).join(" / ") : stages[active].sub
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h1", { children: stages[active].title }),
-            stages[active].copy && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { className: "story-copy", children: stages[active].copy }),
-            active === 1 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "entry-list", children: internships.map((e2) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "entry", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "entry-meta", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: e2.org }),
-                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: e2.meta })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: e2.role }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: e2.line })
-            ] }, e2.org)) }),
-            active === 2 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "entry-list", children: teams.map((e2) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "entry", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "entry-meta", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: e2.org }),
-                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: e2.meta })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: e2.role }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: e2.line })
-            ] }, e2.org)) }),
-            active === 3 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProjectPanel, { shown: effHover >= 0 ? effHover : lastShown, onChip: (k2, mode) => mode === "hover" ? setChipHover(k2) : setTapSel((t) => t === k2 ? -1 : k2) }),
-            active === 4 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "skills-grid", children: skillGroups.map((g) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "skill-group", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: g.name }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("ul", { children: g.items.map((it2) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("li", { children: it2 }, it2)) })
-            ] }, g.name)) }),
-            active === 6 && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "resume-cta", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { className: "resume-open", href: resumePdfUrl, target: "_blank", rel: "noopener noreferrer", children: "Open my resume here \u2197" }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "resume-hint", children: "PDF \xB7 ONE PAGE \xB7 OPENS IN A NEW TAB" })
-            ] }),
-            active === 7 && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "end-actions", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "mailto:islam.farhan2014@gmail.com", children: "Email Farhan \u2197" }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "https://linkedin.com/in/farhanislam-eng", target: "_blank", rel: "noopener noreferrer", children: "LinkedIn \u2197" }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "https://github.com/FarhanIslam17", target: "_blank", rel: "noopener noreferrer", children: "GitHub \u2197" }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: openResume, children: "Resume \u2197" })
-            ] })
-          ] }, active),
-          selected && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("aside", { className: "detail", "aria-live": "polite", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => setSelected(null), "aria-label": "Close block detail", children: "\xD7" }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("small", { children: [
-              "BLOCK / ",
-              DISPLAY[selected] || selected
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h2", { children: parts.find((p) => p.name === selected)?.detail }),
-            projectFacts.find((p) => p.node === selected) && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: projectFacts.find((p) => p.node === selected)?.body }),
-            selected === "RESUME" && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: resumePdfUrl, target: "_blank", rel: "noopener noreferrer", children: "Open my resume here \u2197" }) }),
-            selected === "CONTACT" && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "mailto:islam.farhan2014@gmail.com", children: "islam.farhan2014@gmail.com" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "ILLUSTRATIVE BOARD \xB7 NOT A REAL PCB DESIGN" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "bottomline", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "FIG. 01 / INTERACTIVE PORTFOLIO MAP \xB7 ILLUSTRATIVE BOARD" }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "progress-line", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { style: { width: `${progress * 100}%` } }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
-              (progress >= 0.9985 ? 100 : Math.min(99, Math.floor(progress * 100))).toString().padStart(2, "0"),
-              "%"
-            ] })
-          ] }),
-          !ready && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "boot", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "F/I \xB7 SYS 002" }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("b", { children: "POWERING UP" }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { children: "LOADING GEOMETRY / CALIBRATING VISUALIZATION" })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "scroll-track", "aria-hidden": "true" })
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { className: "mobile-menu", onClick: () => document.querySelector(".system-nav")?.classList.toggle("open"), "aria-label": "Open section menu", children: [
+          "MENU ",
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "\u2630" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("nav", { className: "system-nav", "aria-label": "Portfolio sections", children: stages.slice(1).map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { className: i + 1 === active ? "current" : "", onClick: () => {
+          document.querySelector(".system-nav")?.classList.remove("open");
+          jump(i + 1);
+        }, children: s.label }, s.label)) }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "readout", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "REV 03 / F. ISLAM" }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
+            stages[active].n,
+            " / ",
+            stages[active].label
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "desktop-scroll-cue", children: "SCROLL TO EXPLORE \u2193" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "story", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("p", { className: "eyebrow", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "eyebrow-line" }),
+            " ",
+            stages[active].n,
+            " / ",
+            stages[active].sub.includes(" / ") ? stages[active].sub.split(" / ").map((w) => w.replace(/ /g, "\xA0")).join(" / ") : stages[active].sub
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h1", { children: stages[active].title }),
+          stages[active].copy && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { className: "story-copy", children: stages[active].copy }),
+          active === 1 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "entry-list", children: internships.map((e2) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "entry", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "entry-meta", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: e2.org }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: e2.meta })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: e2.role }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: e2.line })
+          ] }, e2.org)) }),
+          active === 2 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "entry-list", children: teams.map((e2) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "entry", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "entry-meta", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: e2.org }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: e2.meta })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: e2.role }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: e2.line })
+          ] }, e2.org)) }),
+          active === 3 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(ProjectPanel, { shown: effHover >= 0 ? effHover : lastShown, onChip: (k2, mode) => mode === "hover" ? setChipHover(k2) : setTapSel((t) => t === k2 ? -1 : k2) }),
+          active === 4 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "skills-grid", children: skillGroups.map((g) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "skill-group", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: g.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("ul", { children: g.items.map((it2) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("li", { children: it2 }, it2)) })
+          ] }, g.name)) }),
+          active === 5 && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "resume-cta", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { className: "resume-open", href: resumePdfUrl, target: "_blank", rel: "noopener noreferrer", children: "Open my resume here \u2197" }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "resume-hint", children: "PDF \xB7 ONE PAGE \xB7 OPENS IN A NEW TAB" })
+          ] }),
+          active === 6 && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "end-actions", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "mailto:islam.farhan2014@gmail.com", children: "Email Farhan \u2197" }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "https://linkedin.com/in/farhanislam-eng", target: "_blank", rel: "noopener noreferrer", children: "LinkedIn \u2197" }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "https://github.com/FarhanIslam17", target: "_blank", rel: "noopener noreferrer", children: "GitHub \u2197" }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: openResume, children: "Resume \u2197" })
+          ] })
+        ] }, active),
+        selected && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("aside", { className: "detail", "aria-live": "polite", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => setSelected(null), "aria-label": "Close block detail", children: "\xD7" }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("small", { children: [
+            "BLOCK / ",
+            DISPLAY[selected] || selected
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h2", { children: parts.find((p) => p.name === selected)?.detail }),
+          selected === "RESUME" && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: resumePdfUrl, target: "_blank", rel: "noopener noreferrer", children: "Open my resume here \u2197" }) }),
+          selected === "CONTACT" && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "mailto:islam.farhan2014@gmail.com", children: "islam.farhan2014@gmail.com" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "ILLUSTRATIVE BOARD \xB7 NOT A REAL PCB DESIGN" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "bottomline", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "FIG. 01 / INTERACTIVE PORTFOLIO MAP \xB7 ILLUSTRATIVE BOARD" }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "progress-line", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { style: { width: `${progress * 100}%` } }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
+            (progress >= 0.9985 ? 100 : Math.min(99, Math.floor(progress * 100))).toString().padStart(2, "0"),
+            "%"
+          ] })
+        ] }),
+        !ready && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "boot", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "F/I \xB7 SYS 002" }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("b", { children: "POWERING UP" }),
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { children: "LOADING GEOMETRY / CALIBRATING VISUALIZATION" })
+        ] })
       ] }),
-      null
-    ] });
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "scroll-track", "aria-hidden": "true" })
+    ] }) });
   }
 
   // src/main.tsx
