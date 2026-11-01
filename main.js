@@ -11946,7 +11946,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         if (Math.abs(dsp) > 4e-4) dirB += (Math.sign(dsp) - dirB) * Math.min(1, dt3 / 240);
         let wc = wireCam(smooth, dirB);
         if (s.mobile && smooth < 0.0546) {
-          let mk = 1 + 0.69 * (1 - smooth / 0.0546);
+          let wa = Math.min(1, Math.max(0, (canvas.clientWidth - 320) / 70)), coef = 0.69 - 0.19 * wa, mk = 1 + coef * (1 - smooth / 0.0546);
           wc.eye = [wc.to[0] + (wc.eye[0] - wc.to[0]) * mk, wc.eye[1] * mk, wc.to[2] + (wc.eye[2] - wc.to[2]) * mk];
         }
         let target = s.wire ? 1 : 0;
@@ -11955,7 +11955,8 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         if (s.mobile) {
           if (smooth < 0.12) {
             let kk = smoother(smooth / 0.12);
-            cn.eye = [tween(127, cn.eye[0] * 1.32, kk), tween(154, cn.eye[1] * 1.32, kk), tween(209, cn.eye[2] * 1.32, kk)];
+            let wa2 = Math.min(1, Math.max(0, (canvas.clientWidth - 320) / 70)), ex = 113 + 14 * (1 - wa2), ey = 137 + 17 * (1 - wa2), ez = 186 + 23 * (1 - wa2);
+            cn.eye = [tween(ex, cn.eye[0] * 1.32, kk), tween(ey, cn.eye[1] * 1.32, kk), tween(ez, cn.eye[2] * 1.32, kk)];
             cn.to = [tween(2, cn.to[0], kk), tween(0, 0, kk), tween(0, cn.to[2], kk)];
           } else if (s.active === 3 && !focus) {
             let nd = parts.find((p) => p.name === currentProject(smooth).node);
