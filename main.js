@@ -11302,60 +11302,76 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/content.ts
   var stages = [
-    { n: "00", label: "SYSTEM", at: 0, title: "Farhan Islam", sub: "Electrical engineering / embedded systems / avionics", copy: "Electrical Engineering \xB7 Embedded Systems \xB7 Avionics. Scroll to enter the system." },
-    { n: "01", label: "CONTROLLER", at: 0.13, title: "Inside the controller", sub: "CONTROL / MCU", copy: "Logic, timing and interfaces. The same questions come up in every embedded system: what is measured, what is controlled and what happens when an input is wrong?" },
-    { n: "02", label: "SIGNAL", at: 0.28, title: "Follow the signal", sub: "PIN \u2192 TRACE \u2192 CONVERSION", copy: "SENS \u2192 ADC \u2192 MCU. Watch one input become a digital reading, then reach the controller. The gold route is an illustration, not measured data." },
-    { n: "03", label: "EXPERIENCE", at: 0.42, title: "Avionics / instrumentation", sub: "REACTION DYNAMICS \xB7 MAY\u2013AUG 2026", copy: "Built a 20-channel LabJack T7 / Mux80 acquisition setup: ten pressure channels and ten thermocouple channels. Worked on measurement-chain correlation between shunt tap and LabJack readings." },
-    { n: "04", label: "PROJECTS", at: 0.56, title: "Systems with a purpose", sub: "TWO PROJECTS / ONE TEST SYSTEM", copy: "A team course project, a personal spatial-mapping build and an avionics measurement chain. Follow the connections between them." },
-    { n: "05", label: "SKILLS", at: 0.78, title: "Tools on the bench", sub: "COMPONENT NETWORK", copy: "Embedded C/C++, instrumentation and DAQ, hardware test, sensors, analog electronics, MATLAB, AutoCAD. Each belongs to a problem, not a buzzword list." },
-    { n: "06", label: "ABOUT", at: 0.86, title: "The engineer", sub: "MCMASTER UNIVERSITY", copy: "Electrical Engineering co-op student, B.Eng expected April 2028. Avionics intern at Reaction Dynamics, May\u2013August 2026; McMaster Rocketry and Solar Car Electrical \u2013 Low Voltage team." },
-    { n: "07", label: "CONTACT", at: 0.96, title: "Back to the whole system", sub: "CONTACT / RESUME", copy: "Interested in embedded hardware, instrumentation and test. The board connects the work; the person behind it is reachable below." }
+    { n: "00", node: "", label: "SYSTEM", at: 0, title: "Farhan Islam", sub: "ELECTRICAL ENGINEERING / EMBEDDED SYSTEMS / AVIONICS", copy: "An interactive map of an engineering journey: seven blocks on one connected board. The glowing wires are the route. Scroll to power the system up." },
+    { n: "01", node: "INTERN", label: "INTERNSHIPS", at: 0.14, title: "Internships", sub: "GENERAL MOTORS \xB7 REACTION DYNAMICS", copy: "Two industry placements: incoming body-controls calibration and system test at General Motors, and avionics instrumentation at Reaction Dynamics." },
+    { n: "02", node: "TEAMS", label: "DESIGN TEAMS", at: 0.28, title: "Design teams", sub: "SOLAR CAR \xB7 ROCKETRY \xB7 FRC 9659", copy: "Design teams are where the hardware gets built: low-voltage vehicle systems, launch avionics and a competition robot." },
+    { n: "03", node: "PROJ", label: "PROJECTS", at: 0.42, title: "Projects", sub: "CONTROL \xB7 SENSING \xB7 MEASUREMENT", copy: "A team accessibility build, a personal spatial-mapping system and an avionics measurement chain. Follow the connections between them." },
+    { n: "04", node: "SKILLS", label: "SKILLS", at: 0.56, title: "Skills", sub: "GROUPED BY DISCIPLINE", copy: "Every skill here is backed by a block already on the map - an internship, a team or a build. Nothing decorative." },
+    { n: "05", node: "ABOUT", label: "ABOUT", at: 0.7, title: "About", sub: "THE ENGINEER", copy: "Electrical Engineering co-op student at McMaster University, B.Eng expected April 2028. Drawn to avionics, instrumentation and embedded hardware - systems where measurement quality decides the outcome." },
+    { n: "06", node: "RESUME", label: "RESUME", at: 0.84, title: "Resume", sub: "THE FORMAL DOCUMENT", copy: "" },
+    { n: "07", node: "CONTACT", label: "CONTACT", at: 0.96, title: "Contact", sub: "GET IN TOUCH", copy: "Interested in embedded hardware, instrumentation and test. The board connects the work; the person behind it is reachable below." }
+  ];
+  var internships = [
+    { org: "GENERAL MOTORS", role: "Body Controls Calibration and System Test Developer", meta: "INCOMING \xB7 JAN 2027 - DEC 2027 \xB7 OSHAWA, ON", line: "Incoming twelve-month placement in body controls calibration and system test, starting January 2027." },
+    { org: "REACTION DYNAMICS", role: "Avionics Intern", meta: "MAY 2026 - AUG 2026 \xB7 LONGUEUIL, QC", line: "Commissioned a 20-channel LabJack T7 / Mux80 DAQ (ten pressure, ten thermocouple channels), designed and bench-validated a 4-layer instrumentation PCB in KiCad, and correlated independent shunt-tap references against LabJack readings across the operating range." }
+  ];
+  var teams = [
+    { org: "MCMASTER SOLAR CAR", role: "Low Voltage Electrical Designer", meta: "SEP 2026 - PRESENT \xB7 HAMILTON, ON", line: "Designing the Motor section schematic of the Electrical System Emulator Board in Altium Designer: an STM32H563 interfacing dual Mitsuba controllers over DB37, sampling throttle and regen through a 3.3 V ADC and answering 125 kbps CAN polls." },
+    { org: "MCMASTER ROCKETRY", role: "Launch Oversight and Logistics", meta: "SEP 2024 - JAN 2025 \xB7 HAMILTON, ON", line: "Built C++ tooling that parses LoRa telemetry logs into flight-data visualizations, and verified avionics continuity and sensor interfaces before a launch to 3,187 m apogee." },
+    { org: "TEAM 9659 \xB7 FIRST ROBOTICS", role: "Electrical Team Lead", meta: "SEP 2023 - APR 2024 \xB7 NORTH YORK, ON", line: "Led a 5-person electrical team on the competition robot: power-distribution architecture, breaker and wire-gauge sizing, and modular harnesses built for full electrical swap-outs between matches." }
+  ];
+  var skillGroups = [
+    { name: "HARDWARE / ELECTRONICS", items: ["PCB design \xB7 Altium Designer, KiCad", "Analog electronics / front ends", "Power distribution & wire harnesses", "Sensor interfaces & acquisition"] },
+    { name: "EMBEDDED / FIRMWARE", items: ["Embedded C / C++", "STM32 \xB7 MSP432 \xB7 ESP32", "CAN \xB7 I2C \xB7 SPI \xB7 UART", "Real-time systems"] },
+    { name: "SOFTWARE / PROGRAMMING", items: ["Python \xB7 NumPy \xB7 Open3D", "MATLAB", "Java", "Git"] },
+    { name: "ENGINEERING TOOLS", items: ["LabJack T7 / Mux80 DAQ", "LTSpice modeling", "AutoCAD", "Test procedure development"] },
+    { name: "CONTROLS / OTHER", items: ["PID control", "Relay logic & safety interlocks", "Hardware validation & test", "Soldering / crimping / bring-up"] }
   ];
   var projectFacts = [
-    { node: "CTRL", at: 0.57, type: "TEAM COURSE PROJECT \xB7 1P13 \xB7 FEB\u2013APR 2025", heading: "Accessible microwave control system", body: "Farhan contributed CAD/enclosure design and documentation to a team-built accessible microwave interface.", diagramTitle: "SENSE \u2192 ESP32 \u2192 AUDIO", architecture: [{ name: "SENSE", detail: "Three HC-SR04 ultrasonic sensors, one per button column" }, { name: "INTERPRET", detail: "ESP32 reads sensor distances and sends the selected button over WebSocket" }, { name: "SPEAK", detail: "A local web client speaks the button label on a phone, with audio compatible with Bluetooth hearing aids" }], decisionTitle: "KEEP THE INTERFACE ON A PHONE", decision: "The team used a local web client and WebSocket updates to provide spoken feedback without a separate app download. An STM32 Nucleo supplied power to the ESP32 and sensors; it is not presented as the control MCU.", verificationTitle: "TEAM REPORT & FARHAN\u2019S ROLE", verification: "Farhan\u2019s role: CAD/enclosure design and documentation. The team describes a budget under $35, 90\u201395% accuracy and response time under 2500 ms. These are team-reported results, not independently validated metrics or Farhan\u2019s individual claims. The signal diagram explains the team system, not a PCB Farhan designed." },
-    { node: "SENS", at: 0.655, type: "PERSONAL BUILD", heading: "Indoor 3D spatial mapping", body: "A rotating time-of-flight sensor turns room measurements into a spatial representation.", diagramTitle: "DISTANCE \u2192 COORDINATES \u2192 CLOUD", architecture: [{ name: "SCAN", detail: "VL53L1X time-of-flight sensor and stepper motor sweep the room" }, { name: "CAPTURE", detail: "MSP432E401Y reads sensor distance over I\xB2C at successive angles and layers" }, { name: "MAP", detail: "Python / NumPy transform polar samples to Cartesian coordinates for Open3D point clouds" }], decisionTitle: "COORDINATES, NOT JUST DISTANCE", decision: "A rotating distance reading is only a range. Preserving its scan angle and layer lets the processing pipeline place each sample in three dimensions.", verificationTitle: "WHAT THE PROJECT SUMMARY SHOWS", verification: "The project summary identifies the MSP432E401Y, VL53L1X, motor and Python / NumPy / Open3D processing chain. The diagram reconstructs the data path; it is not actual scan data, a measured point cloud or independent validation of accuracy.", sourceLabel: "Project page", projectUrl: "https://fancy-brook-b6f.notion.site/MSP432-LiDAR-Room-Scanner-37344bb53cc9805f8890dedb5e257b23" },
-    { node: "DAQ", at: 0.7, type: "INTERNSHIP SYSTEM", heading: "Reaction Dynamics / DAQ", body: "A verified instrumentation contribution from Farhan\u2019s internship, separate from the course and personal projects.", diagramTitle: "SENSORS \u2192 ACQUISITION \u2192 COMPARISON", architecture: [{ name: "INPUT", detail: "Ten pressure channels and ten thermocouple channels" }, { name: "ACQUIRE", detail: "20-channel LabJack T7 / Mux80 setup" }, { name: "CHECK", detail: "Compare shunt-tap and LabJack signal-chain readings" }], decisionTitle: "TWO VIEWS OF A MEASUREMENT", decision: "Comparing shunt-tap and LabJack readings provides two views of the measurement chain. It helps check whether the acquisition path and the reference reading agree.", verificationTitle: "VERIFIED SCOPE", verification: "The verified scope of this case study is the 20-channel split and shunt-tap / LabJack correlation; it does not present test values, rates or performance results.", sourceLabel: "Verified internship facts" }
+    { node: "CTRL", at: 0.455, type: "TEAM COURSE PROJECT \xB7 1P13 \xB7 FEB\u2013APR 2025", heading: "Accessible microwave control system", body: "Farhan contributed CAD/enclosure design and documentation to a team-built accessible microwave interface.", diagramTitle: "SENSE \u2192 ESP32 \u2192 AUDIO", architecture: [{ name: "SENSE", detail: "Three HC-SR04 ultrasonic sensors, one per button column" }, { name: "INTERPRET", detail: "ESP32 reads sensor distances and sends the selected button over WebSocket" }, { name: "SPEAK", detail: "A local web client speaks the button label on a phone, with audio compatible with Bluetooth hearing aids" }], decisionTitle: "KEEP THE INTERFACE ON A PHONE", decision: "The team used a local web client and WebSocket updates to provide spoken feedback without a separate app download. An STM32 Nucleo supplied power to the ESP32 and sensors; it is not presented as the control MCU.", verificationTitle: "TEAM REPORT & FARHAN\u2019S ROLE", verification: "Farhan\u2019s role: CAD/enclosure design and documentation. The team describes a budget under $35, 90\u201395% accuracy and response time under 2500 ms. These are team-reported results, not independently validated metrics or Farhan\u2019s individual claims. The signal diagram explains the team system, not a PCB Farhan designed." },
+    { node: "SENS", at: 0.475, type: "PERSONAL BUILD", heading: "Indoor 3D spatial mapping", body: "A rotating time-of-flight sensor turns room measurements into a spatial representation.", diagramTitle: "DISTANCE \u2192 COORDINATES \u2192 CLOUD", architecture: [{ name: "SCAN", detail: "VL53L1X time-of-flight sensor and stepper motor sweep the room" }, { name: "CAPTURE", detail: "MSP432E401Y reads sensor distance over I\xB2C at successive angles and layers" }, { name: "MAP", detail: "Python / NumPy transform polar samples to Cartesian coordinates for Open3D point clouds" }], decisionTitle: "COORDINATES, NOT JUST DISTANCE", decision: "A rotating distance reading is only a range. Preserving its scan angle and layer lets the processing pipeline place each sample in three dimensions.", verificationTitle: "WHAT THE PROJECT SUMMARY SHOWS", verification: "The project summary identifies the MSP432E401Y, VL53L1X, motor and Python / NumPy / Open3D processing chain. The diagram reconstructs the data path; it is not actual scan data, a measured point cloud or independent validation of accuracy.", sourceLabel: "Project page", projectUrl: "https://fancy-brook-b6f.notion.site/MSP432-LiDAR-Room-Scanner-37344bb53cc9805f8890dedb5e257b23" },
+    { node: "DAQ", at: 0.495, type: "INTERNSHIP SYSTEM", heading: "Reaction Dynamics / DAQ", body: "A verified instrumentation contribution from Farhan\u2019s internship, separate from the course and personal projects.", diagramTitle: "SENSORS \u2192 ACQUISITION \u2192 COMPARISON", architecture: [{ name: "INPUT", detail: "Ten pressure channels and ten thermocouple channels" }, { name: "ACQUIRE", detail: "20-channel LabJack T7 / Mux80 setup" }, { name: "CHECK", detail: "Compare shunt-tap and LabJack signal-chain readings" }], decisionTitle: "TWO VIEWS OF A MEASUREMENT", decision: "Comparing shunt-tap and LabJack readings provides two views of the measurement chain. It helps check whether the acquisition path and the reference reading agree.", verificationTitle: "VERIFIED SCOPE", verification: "The verified scope of this case study is the 20-channel split and shunt-tap / LabJack correlation; it does not present test values, rates or performance results.", sourceLabel: "Verified internship facts" }
   ];
   var currentProject = (progress) => [...projectFacts].reverse().find((p) => progress >= p.at - 0.015) || projectFacts[0];
-  var skillFacts = [["MCU", "Embedded C/C++"], ["ADC", "Instrumentation / DAQ"], ["SENS", "Sensor interfaces"], ["ADC", "Analog electronics"], ["TEST", "Hardware validation"], ["CTRL", "Controls / PID"], ["COMMS", "Interfaces"], ["DAQ", "LabJack T7 / Mux80"]];
 
   // src/App.tsx
   var import_jsx_runtime21 = __toESM(require_jsx_runtime());
-  var resumePdfUrl = "https://drive.google.com/file/d/1VdOMMnn8kawatqEfiCf57N6OZWooODuF/view?usp=drivesdk";
+  var resumePdfUrl = "https://farhanislam17.github.io/portfolio-preview/Farhan_Islam_Resume.pdf";
+  var openResume = () => window.open(resumePdfUrl, "_blank", "noopener,noreferrer");
   var parts = [
-    { name: "MCU", x: 0, z: -2, w: 17, d: 17, h: 3.4, color: "package", detail: "Illustrative microcontroller / system logic" },
-    { name: "ADC", x: -35, z: 0, w: 12, d: 11, h: 2.7, color: "package", detail: "Analog-to-digital conversion / measurement chain" },
-    { name: "PWR", x: 33, z: -22, w: 13, d: 11, h: 3, color: "package", detail: "Regulated power domain and decoupling" },
-    { name: "COMMS", x: 34, z: 20, w: 15, d: 9, h: 3, color: "metal", detail: "Digital I/O and communication interface" },
-    { name: "SENS", x: -35, z: 25, w: 19, d: 8, h: 3, color: "metal", detail: "Sensor inputs and LiDAR mapping" },
-    { name: "TEST", x: -7, z: 27, w: 10, d: 8, h: 1.3, color: "copper", detail: "Bring-up and test points" },
-    { name: "CTRL", x: 7, z: -28, w: 12, d: 7, h: 2.7, color: "package", detail: "Team course project / accessible microwave interface" },
-    { name: "DAQ", x: -48, z: -22, w: 14, d: 8, h: 3.2, color: "metal", detail: "20-channel test data acquisition at Reaction Dynamics" }
+    { name: "INTERN", x: -44, z: -24, w: 21, d: 11, h: 3.2, color: "package", detail: "Internships \xB7 General Motors (incoming) and Reaction Dynamics" },
+    { name: "TEAMS", x: 0, z: -27, w: 19, d: 10, h: 2.8, color: "package", detail: "Design teams \xB7 Solar Car, Rocketry, FRC 9659" },
+    { name: "PROJ", x: 44, z: -26, w: 22, d: 9, h: 3.4, color: "package", detail: "Projects \xB7 three verified builds" },
+    { name: "SKILLS", x: 46, z: 22, w: 18, d: 10, h: 2.6, color: "package", detail: "Skills \xB7 grouped by discipline" },
+    { name: "ABOUT", x: 0, z: 27, w: 16, d: 10, h: 2.4, color: "package", detail: "About \xB7 the engineer behind the board" },
+    { name: "RESUME", x: -44, z: 22, w: 17, d: 10, h: 2.6, color: "package", detail: "Resume \xB7 the actual PDF opens in a new tab" },
+    { name: "CONTACT", x: -30, z: -1, w: 14, d: 9, h: 2.4, color: "package", detail: "Contact \xB7 email, LinkedIn, GitHub" },
+    { name: "CTRL", x: 34, z: -13, w: 7, d: 6, h: 1.6, color: "metal", detail: "Team course project / accessible microwave interface" },
+    { name: "SENS", x: 44, z: -13, w: 7, d: 6, h: 1.6, color: "metal", detail: "Personal build / indoor 3D spatial mapping" },
+    { name: "DAQ", x: 54, z: -13, w: 7, d: 6, h: 1.6, color: "metal", detail: "Internship system / 20-channel DAQ at Reaction Dynamics" }
   ];
+  var SECTION_NODES = ["INTERN", "TEAMS", "PROJ", "SKILLS", "ABOUT", "RESUME", "CONTACT"];
+  var CHIPS = ["CTRL", "SENS", "DAQ"];
+  var DISPLAY = { INTERN: "INTERNSHIPS", TEAMS: "DESIGN TEAMS", PROJ: "PROJECTS", SKILLS: "SKILLS", ABOUT: "ABOUT", RESUME: "RESUME", CONTACT: "CONTACT", CTRL: "\xB5WAVE", SENS: "LIDAR", DAQ: "DAQ" };
   var navRoutes = [
-    { pts: [[55, 20], [41.5, 20], [26.5, 20], [23, 20], [23, 2], [9, 2]], hold: 0.42 },
-    { pts: [[-9, 4], [-13, 4], [-13, 12], [-21, 12], [-21, 25], [-25.5, 25]], hold: 0.32 },
-    { pts: [[-35, 21], [-35, 5.5]], hold: 0.08 },
-    { pts: [[-29, 0], [-9, 0]], hold: 0.12 },
-    { pts: [[-9, -8], [-29, -8], [-37, -8], [-37, -22], [-41, -22]], hold: 0.18 },
-    { pts: [[-48, -18], [-48, -33], [1, -33], [1, -28]], hold: 0.22 },
-    { pts: [[1, -28], [-13, -28], [-13, -18], [-21, -18], [-21, 25], [-25.5, 25]], hold: 0.12 },
-    { pts: [[-44.5, 25], [-47, 25], [-57, 25], [-57, -22], [-55, -22]], hold: 0.12 },
-    { pts: [[-55, -22], [-57, -22], [-57, 31], [-12, 31], [-12, 27]], hold: 0.18 },
-    { pts: [[-7, 23], [-7, 6.5]], hold: 0.22 },
-    { pts: [[9, 2], [23, 2], [23, 20], [26.5, 20], [41.5, 20], [55, 20]], hold: 0.3 }
+    { pts: [[-64, -36], [-54, -36], [-49, -33], [-49, -30]], hold: 0.35 },
+    { pts: [[-33.5, -24], [-20, -24], [-14, -27], [-9.8, -27]], hold: 0.3 },
+    { pts: [[9.8, -27], [20, -27], [26, -26], [32.6, -26]], hold: 0.3 },
+    { pts: [[55, -26], [62, -26], [62, -2], [52, -2], [52, 16.4]], hold: 0.3 },
+    { pts: [[37, 22], [20, 22], [14, 27], [8.4, 27]], hold: 0.3 },
+    { pts: [[-8.4, 27], [-20, 27], [-26, 22], [-35.4, 22]], hold: 0.3 },
+    { pts: [[-44, 16.4], [-44, 8], [-30, 2], [-30, 4.2]], hold: 0.3 },
+    { pts: [[-37, -1], [-58, -1]], hold: 0.55 }
   ];
   var supportEdges = [
-    [[9, -2], [27, -2], [27, -22], [26.5, -22]],
-    [[6, -11], [6, -24.5], [7, -24.5]],
-    [[33, -16.5], [33, 15.5], [34, 15.5]],
-    [[39.5, -22], [43, -22], [43, 19], [41.5, 20]],
-    [[-35, -5.5], [-35, -8]],
-    [[-35, 29], [-35, 31], [-12, 31]],
-    [[-2, 27], [10, 27], [10, 20], [23, 20]],
-    [[34, 24.5], [34, 31], [10, 31], [10, 27]]
+    [[34, -21.5], [34, -16.4]],
+    [[44, -21.5], [44, -16.4]],
+    [[54, -21.5], [54, -16.4]],
+    [[-44, -29.9], [-44, -33]],
+    [[0, -32.4], [0, -35]],
+    [[46, 27.4], [46, 31]]
   ];
-  var PALETTE = { board: [0.043, 0.125, 0.112], edge: [0.12, 0.18, 0.16], copper: [0.66, 0.38, 0.17], bright: [1, 0.68, 0.27], metal: [0.58, 0.66, 0.64], package: [0.08, 0.105, 0.11], ink: [0.28, 0.38, 0.35], silk: [0.73, 0.79, 0.69], led: [0.36, 1, 0.68], ground: [0.057, 0.15, 0.135] };
+  var PALETTE = { board: [0.043, 0.125, 0.112], edge: [0.12, 0.18, 0.16], copper: [0.66, 0.38, 0.17], bright: [1, 0.68, 0.27], metal: [0.58, 0.66, 0.64], package: [0.08, 0.105, 0.11], ink: [0.28, 0.38, 0.35], silk: [0.73, 0.79, 0.69], led: [0.36, 1, 0.68], ground: [0.057, 0.15, 0.135], plate: [0.09, 0.2, 0.17] };
   function perspective(fov, aspect, near, far) {
     let t = 1 / Math.tan(fov / 2), r = 1 / (near - far);
     return [t / aspect, 0, 0, 0, 0, t, 0, 0, 0, 0, (far + near) * r, -1, 0, 0, 2 * far * near * r, 0];
@@ -11427,17 +11443,36 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     let dx = b[0] - a[0], dz = b[1] - a[1], angle = Math.atan2(dz, dx), u = Math.cos(angle), v2 = Math.sin(angle), nx = -v2 * width / 2, nz = u * width / 2, coords = [[a[0] + nx, y2, a[1] + nz], [b[0] + nx, y2, b[1] + nz], [b[0] - nx, y2, b[1] - nz], [a[0] - nx, y2, a[1] - nz]];
     return [0, 1, 2, 0, 2, 3].flatMap((k2) => [...coords[k2], 0, 1, 0, ...col, emission]);
   }
+  var spine = [];
+  for (let ri = 0; ri < 7; ri++) {
+    let r = navRoutes[ri].pts;
+    for (let i = ri ? 1 : 0; i < r.length; i++) spine.push(r[i]);
+  }
+  var spineLens = spine.slice(1).map((p, i) => Math.hypot(p[0] - spine[i][0], p[1] - spine[i][1]));
+  var spineTot = spineLens.reduce((a, b) => a + b, 0) || 1;
+  function spinePoint(u) {
+    let d = Math.max(0, Math.min(1, u)) * spineTot;
+    let i = 0;
+    while (i < spineLens.length - 1 && d > spineLens[i]) {
+      d -= spineLens[i];
+      i++;
+    }
+    let t = d / (spineLens[i] || 1);
+    return [tween(spine[i][0], spine[i + 1][0], t), tween(spine[i][1], spine[i + 1][1], t)];
+  }
   function createGeometry(mobile) {
     let d = [];
     let add = (v2) => d.push(...v2);
-    add(cube(0, -1.3, 0, 134, 2.2, 84, PALETTE.edge, 13.8));
-    add(cube(0, -0.13, 0, 132, 0.22, 82, PALETTE.board, 12.5));
+    add(cube(0, -1.3, 0, 134, 2.2, 84, PALETTE.edge, 0));
+    add(cube(0, -0.13, 0, 132, 0.22, 82, PALETTE.board, 5e-3));
     for (let x of [-61, 61]) for (let z3 of [-35, 35]) {
       add(cylinder(x, 0.22, z3, 2.2, 0.5, PALETTE.metal, 14));
       add(cylinder(x, 0.53, z3, 1.25, 0.16, [0.012, 0.025, 0.025], 14));
     }
     for (let r of navRoutes) for (let i = 0; i < r.pts.length - 1; i++) add(trace(r.pts[i], r.pts[i + 1]));
     for (let e2 of supportEdges) for (let i = 0; i < e2.length - 1; i++) add(trace(e2[i], e2[i + 1]));
+    for (let r of navRoutes) for (let p of [r.pts[0], r.pts[r.pts.length - 1]]) add(cylinder(p[0], 0.39, p[1], 0.62, 0.2, PALETTE.copper, 10));
+    for (let e2 of supportEdges) add(cylinder(e2[e2.length - 1][0], 0.39, e2[e2.length - 1][1], 0.5, 0.18, PALETTE.copper, 8));
     navRoutes.forEach((r, ri) => {
       let lens = r.pts.slice(1).map((p, i) => Math.hypot(p[0] - r.pts[i][0], p[1] - r.pts[i][1]));
       let tot = lens.reduce((a, b) => a + b, 0), dist = 0;
@@ -11449,16 +11484,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         dist += lens[i];
       }
     });
-    for (let r of [7, 8.5, 10]) for (let i = 0; i < 32; i++) {
-      let a = i * Math.PI * 2 / 32, b = (i + 1) * Math.PI * 2 / 32;
-      add(trace([-35 + Math.cos(a) * r, 0 + Math.sin(a) * r], [-35 + Math.cos(b) * r, 0 + Math.sin(b) * r], 0.26, [0.07, 0.22, 0.16], 0.56, 5.5));
-    }
-    for (let [node, emission, color] of [["SENS", 5.7, [0.08, 0.06, 0.025]], ["DAQ", 5.8, [0.025, 0.11, 0.08]]]) {
-      let p = parts.find((v2) => v2.name === node);
-      for (let r of [p.w / 2 + 1.2, p.w / 2 + 2]) for (let i = 0; i < 32; i++) {
-        let a = i * Math.PI * 2 / 32, b = (i + 1) * Math.PI * 2 / 32;
-        add(trace([p.x + Math.cos(a) * r, p.z + Math.sin(a) * r * 0.6], [p.x + Math.cos(b) * r, p.z + Math.sin(b) * r * 0.6], 0.28, color, 0.6, emission));
-      }
+    let slens = spine.slice(1).map((p, i) => Math.hypot(p[0] - spine[i][0], p[1] - spine[i][1]));
+    let stot = slens.reduce((a, b) => a + b, 0) || 1, sd2 = 0;
+    for (let i = 0; i < slens.length; i++) {
+      let s0 = sd2 / stot, s1 = (sd2 + slens[i]) / stot;
+      let wv = trace(spine[i], spine[i + 1], 0.55, [1, 0.72, 0.34], 0.4, 40 + s0 * 4);
+      for (let v2 of [1, 2, 4]) wv[v2 * 10 + 9] = 40 + s1 * 4;
+      add(wv);
+      let hv = trace(spine[i], spine[i + 1], 2.1, [1, 0.62, 0.26], 0.385, 45 + s0 * 4);
+      for (let v2 of [1, 2, 4]) hv[v2 * 10 + 9] = 45 + s1 * 4;
+      add(hv);
+      sd2 += slens[i];
     }
     for (let [idx, name] of ["CTRL", "SENS", "DAQ"].entries()) {
       let p = parts.find((v2) => v2.name === name);
@@ -11467,55 +11503,55 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     parts.forEach((p, pi) => {
       let hw = p.w / 2 + 1.6, hd = p.d / 2 + 1.6;
-      for (let [a, b] of [[[-hw, -hd], [hw, -hd]], [[hw, -hd], [hw, hd]], [[hw, hd], [-hw, hd]], [[-hw, hd], [-hw, -hd]]]) add(trace([p.x + a[0], p.z + a[1]], [p.x + b[0], p.z + b[1]], 0.42, [0.72, 0.46, 0.18], 0.62, 30 + pi));
+      for (let [a, b] of [[[-hw, -hd], [hw, -hd]], [[hw, -hd], [hw, hd]], [[hw, hd], [-hw, hd]], [[-hw, hd], [-hw, -hd]]]) add(trace([p.x + a[0], p.z + a[1]], [p.x + b[0], p.z + b[1]], 0.42, [0.3, 0.72, 0.52], 0.62, 30 + pi));
     });
-    for (let k2 = 0; k2 < 10; k2++) {
-      let z3 = -31 + k2 * 1.82;
-      let x = -52 + k2 * 0.42;
-      add(trace([x, z3], [-44, z3], 0.22));
-      add(trace([-44, z3], [-41, -14 + k2 * 1.5], 0.22));
-      add(trace([-41, -14 + k2 * 1.5], [-40.6, -5 + k2 * 0.8], 0.22));
-      add(cylinder(x, 0.39, z3, 0.47, 0.18, PALETTE.copper, 8));
+    parts.forEach((p, pi) => {
+      if (!SECTION_NODES.includes(p.name)) return;
+      let hw = p.w / 2 + 3.4, hd = p.d / 2 + 3.4;
+      for (let [a, b] of [[[-hw, -hd], [hw, -hd]], [[hw, -hd], [hw, hd]], [[hw, hd], [-hw, hd]], [[-hw, hd], [-hw, -hd]]]) add(trace([p.x + a[0], p.z + a[1]], [p.x + b[0], p.z + b[1]], 0.16, [0.58, 0.62, 0.56], 0.55, 0.22));
+      for (let k2 = 0; k2 < 3; k2++) add(trace([p.x - hw, p.z - hd - 1.15 - k2 * 0.8], [p.x - hw + 3.4 - k2 * 0.75, p.z - hd - 1.15 - k2 * 0.8], 0.16, [0.58, 0.62, 0.56], 0.55, 0.22));
+    });
+    for (let r of navRoutes) for (let i = 0; i < r.pts.length - 1; i++) {
+      let a = r.pts[i], b = r.pts[i + 1], dx = b[0] - a[0], dz = b[1] - a[1], L = Math.hypot(dx, dz) || 1, nx = -dz / L, nz = dx / L;
+      for (let d2 = 3; d2 < L - 2; d2 += 5.5) {
+        let px = a[0] + dx * (d2 / L), pz = a[1] + dz * (d2 / L);
+        add(cylinder(px + nx * 1.15, 0.34, pz + nz * 1.15, 0.3, 0.16, [0.5, 0.33, 0.16], 8));
+        add(cylinder(px - nx * 1.15, 0.34, pz - nz * 1.15, 0.3, 0.16, [0.5, 0.33, 0.16], 8));
+      }
     }
-    for (let i = 0; i < 6; i++) {
-      let x = -10 + i * 3.5;
-      add(trace([x, -14], [x, -12], 0.23));
-      add(cylinder(x, 0.45, -14, 0.53, 0.2, PALETTE.copper, 8));
-      add(trace([x, 9], [x, 12], 0.23));
-      add(cylinder(x, 0.45, 12, 0.48, 0.2, PALETTE.copper, 8));
+    const nearWire = (x, z3, r) => {
+      for (let rt3 of navRoutes) for (let i = 0; i < rt3.pts.length - 1; i++) {
+        let a = rt3.pts[i], b = rt3.pts[i + 1], dx = b[0] - a[0], dz = b[1] - a[1], L = dx * dx + dz * dz || 1, t = Math.max(0, Math.min(1, ((x - a[0]) * dx + (z3 - a[1]) * dz) / L));
+        if (Math.hypot(x - (a[0] + t * dx), z3 - (a[1] + t * dz)) < r) return true;
+      }
+      return false;
+    };
+    let count = mobile ? 46 : 170;
+    for (let i = 0; i < count; i++) {
+      let band = i % 3, t = Math.floor(i / 3);
+      let x = band === 0 ? -18 + t % 10 * 2.3 : band === 1 ? 6 + t % 10 * 2.3 : -20 + t % 8 * 2.4;
+      let z3 = band === 0 || band === 1 ? -16 + Math.floor(t / 10) * 2.7 : 6 + Math.floor(t / 8) * 2.5;
+      if (parts.some((p) => Math.abs(x - p.x) < p.w / 2 + 1 && Math.abs(z3 - p.z) < p.d / 2 + 1)) continue;
+      if (nearWire(x, z3, 1.4)) continue;
+      add(cube(x, 0.51, z3, 1.4, 0.6, 0.73, i % 5 === 0 ? PALETTE.metal : PALETTE.package));
+      add(cube(x - 0.85, 0.24, z3, 0.32, 0.18, 0.8, PALETTE.copper));
+      add(cube(x + 0.85, 0.24, z3, 0.32, 0.18, 0.8, PALETTE.copper));
     }
-    for (let i = 0; i < 4; i++) {
-      let x = -13 + i * 6;
-      add(trace([x, 26.9], [x, 19], 0.28));
-      add(trace([x, 19], [-8 + i * 4, 7], 0.28));
-    }
-    for (let i = 0; i < 5; i++) {
-      let x = 30 + i * 3;
-      add(trace([x, -32], [x, -27.6], 0.28));
-      add(cylinder(x, 0.4, -32, 0.43, 0.15, PALETTE.copper, 8));
-      add(trace([30 + i * 3, 27], [30 + i * 3, 24.6], 0.27));
-      add(cylinder(30 + i * 3, 0.4, 27, 0.43, 0.15, PALETTE.copper, 8));
+    for (let i = 0; i < (mobile ? 24 : 60); i++) {
+      let x = -55 + i * 29 % 111, z3 = -30 + i * 47 % 61;
+      if (parts.some((p) => Math.abs(x - p.x) < p.w / 2 + 2 && Math.abs(z3 - p.z) < p.d / 2 + 2)) continue;
+      if (nearWire(x, z3, 1.1)) continue;
+      add(cylinder(x, 0.34, z3, 0.37, 0.18, PALETTE.copper, 8));
     }
     for (let z3 of [-38, 38]) {
-      add(trace([-57, z3], [57, z3], 0.11, PALETTE.metal, 0.23));
+      add(trace([-57, z3], [57, z3], 0.11, PALETTE.metal, 0.23, 0));
     }
-    for (let x of [-58, 58]) add(trace([x, -30], [x, 30], 0.11, PALETTE.metal, 0.23));
-    for (let k2 = 0; k2 < 4; k2++) {
-      let z3 = 5 + k2 * 1.05;
-      add(trace([9, z3], [17, z3], 0.23));
-      add(trace([17, z3], [22, z3 + 5], 0.23));
-      add(trace([22, z3 + 5], [23, z3 + 5], 0.23));
-    }
-    for (let k2 = 0; k2 < 5; k2++) {
-      add(trace([-29, -5 + k2 * 1.8], [-23, -5 + k2 * 1.8], 0.19));
-      add(trace([-23, -5 + k2 * 1.8], [-17, -3 + k2 * 1.8], 0.19));
-      add(trace([-17, -3 + k2 * 1.8], [-9, -3 + k2 * 1.8], 0.19));
-    }
-    for (let p of parts) {
+    for (let x of [-58, 58]) add(trace([x, -30], [x, 30], 0.11, PALETTE.metal, 0.23, 0));
+    for (let [pi, p] of parts.entries()) {
       add(cube(p.x, 0.42 + p.h / 2, p.z, p.w, p.h, p.d, PALETTE[p.color]));
-      add(cube(p.x, 0.46 + p.h, p.z, p.w * 0.84, 0.055, p.d * 0.84, p.color === "metal" ? PALETTE.ink : [0.14, 0.19, 0.19]));
+      add(cube(p.x, 0.46 + p.h, p.z, p.w * 0.84, 0.055, p.d * 0.84, p.color === "metal" ? PALETTE.ink : pi < 7 ? PALETTE.plate : [0.14, 0.19, 0.19]));
       let y2 = p.h + 0.54, hw = p.w * 0.4, hd = p.d * 0.4;
-      for (let [a, b] of [[[-hw, -hd], [hw, -hd]], [[hw, -hd], [hw, hd]], [[hw, hd], [-hw, hd]], [[-hw, hd], [-hw, -hd]]]) add(trace([p.x + a[0], p.z + a[1]], [p.x + b[0], p.z + b[1]], 0.08, PALETTE.silk, y2));
+      for (let [a, b] of [[[-hw, -hd], [hw, -hd]], [[hw, -hd], [hw, hd]], [[hw, hd], [-hw, hd]], [[-hw, hd], [-hw, -hd]]]) add(trace([p.x + a[0], p.z + a[1]], [p.x + b[0], p.z + b[1]], 0.08, PALETTE.silk, y2, 0));
       if (p.color === "package") {
         for (let i = -3; i <= 3; i++) {
           let x = p.x + i * p.w / 9;
@@ -11531,43 +11567,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         for (let i = -2; i <= 2; i++) add(cube(p.x + i * p.w / 7, 0.6, p.z + p.d / 2 - 1, 0.9, 0.6, 1.6, PALETTE.copper));
       }
     }
-    let count = mobile ? 46 : 190;
-    for (let i = 0; i < count; i++) {
-      let band = i % 3, t = Math.floor(i / 3);
-      let x = band === 0 ? -53 + t % 12 * 2.1 : band === 1 ? 16 + t % 12 * 2.4 : -18 + t % 14 * 2.25;
-      let z3 = band === 0 ? 5 + Math.floor(t / 12) * 2.9 : band === 1 ? -31 + Math.floor(t / 12) * 2.6 : 19 + Math.floor(t / 14) * 2.3;
-      if (parts.some((p) => Math.abs(x - p.x) < p.w / 2 + 1 && Math.abs(z3 - p.z) < p.d / 2 + 1)) continue;
-      add(cube(x, 0.51, z3, 1.4, 0.6, 0.73, i % 5 === 0 ? PALETTE.metal : PALETTE.package));
-      add(cube(x - 0.85, 0.24, z3, 0.32, 0.18, 0.8, PALETTE.copper));
-      add(cube(x + 0.85, 0.24, z3, 0.32, 0.18, 0.8, PALETTE.copper));
-    }
-    for (let i = 0; i < (mobile ? 24 : 68); i++) {
-      let x = -55 + i * 29 % 111, z3 = -30 + i * 47 % 61;
-      if (parts.some((p) => Math.abs(x - p.x) < p.w / 2 + 2 && Math.abs(z3 - p.z) < p.d / 2 + 2)) continue;
-      add(cylinder(x, 0.34, z3, 0.37, 0.18, PALETTE.copper, 8));
-    }
-    for (let [x, z3] of [[-13, 27], [-7, 27], [-1, 27], [5, 27]]) add(cylinder(x, 0.45, z3, 1, 0.18, PALETTE.copper, 8));
-    for (let z3 of [-8, -2, 4]) {
-      add(cube(-28, 0.42, z3, 1.1, 0.22, 0.6, PALETTE.metal));
-      add(cube(-43, 0.42, z3, 1.1, 0.22, 0.6, PALETTE.metal));
-    }
-    add(cube(-5, 0.6, -17, 3, 0.6, 0.8, PALETTE.metal));
-    add(cube(30, 0.66, -4, 2, 1.2, 3, PALETTE.package));
     return new Float32Array(d);
   }
   var vertex = `attribute vec3 p;attribute vec3 n;attribute vec3 c;attribute float e;uniform mat4 m;varying vec3 col;varying float emit;varying vec3 place;varying vec3 normal;void main(){place=p;normal=n;vec3 light=normalize(vec3(-.55,.86,.38));float diffuse=max(.0,dot(n,light));float grazing=pow(1.-max(0.,dot(n,normalize(vec3(.15,.85,.5)))),3.);col=c*(.39+diffuse*.64)+c*grazing*.11;emit=e;gl_Position=m*vec4(p,1.);}`;
-  var fragment = `precision mediump float;varying vec3 col;varying float emit;varying vec3 place;varying vec3 normal;uniform float pulse;uniform float phase;uniform float section;uniform float target;uniform float opening;uniform float uRouteBase;uniform float uTravel;uniform float uRouteOn;uniform float uNode;uniform float uNodeOn;uniform float uDir;void main(){float convert=emit>5.4&&emit<5.6?(.65+.85*pow(max(0.,sin(phase*4.)),4.))*smoothstep(.27,.30,section)*(1.-smoothstep(.39,.43,section)):0.;float origin=emit>5.65&&emit<5.75?(.26+.48*pow(max(0.,sin(phase*4.)),4.))*smoothstep(.20,.24,section)*(1.-smoothstep(.27,.31,section)):0.;float arrival=emit>5.75&&emit<5.85?(.3+.55*pow(max(0.,sin(phase*4.)),4.))*smoothstep(.415,.46,section)*(1.-smoothstep(.55,.6,section)):0.;float selection=emit>=6.&&emit<9.?((abs(emit-(5.+target))<.1)?(.30+.42*pow(max(0.,sin(phase*2.6+place.x*.42+place.z*.5)),3.)):0.):0.;float oldTrace=emit<1.?emit*.16*(1.+opening*3.):0.;float muted=section>.19&&section<.55&&emit>.1&&emit<.2?.34:1.;float inactiveRing=emit>=6.&&emit<9.&&abs(emit-(5.+target))>.1?.14:1.;float slabGlow=emit>12.&&emit<13.6?opening*(.30+.18*pow(max(0.,sin(phase*1.2)),3.)):0.;float rimGlow=emit>=13.6&&emit<14.2?opening*(.34+.16*pow(max(0.,sin(phase*1.2+2.)),3.)):0.;float rp=(emit-uRouteBase)/.6;float inRoute=(uRouteBase>0.&&emit>=uRouteBase&&emit<=uRouteBase+.61)?1.:0.;float routeGlow=0.;if(inRoute>.5){float head=exp(-pow((rp-uTravel)/.05,2.))*2.4;float trailF=rp<uTravel?.5*exp((rp-uTravel)*5.):0.;float trailB=rp>uTravel?.5*exp((uTravel-rp)*5.):0.;float trail=mix(trailB,trailF,clamp(uDir*.5+.5,0.,1.));routeGlow=uRouteOn*(.14+trail+head);}float nodeGlow=0.;if(uNode>0.&&abs(emit-uNode)<.4)nodeGlow=uNodeOn*(.34+.62*pow(max(0.,sin(phase*2.2)),3.));vec3 spec=vec3(.18,.22,.18)*pow(max(0.,dot(reflect(normalize(vec3(.55,-.86,-.38)),normalize(normal)),normalize(vec3(.2,.6,.8)))),18.);gl_FragColor=vec4(col*muted*inactiveRing+spec*.12+vec3(.9,.52,.18)*(routeGlow+selection+oldTrace+origin+convert*.4)+vec3(.16,.78,.56)*(convert+arrival+routeGlow*.55)+vec3(.32,.85,.60)*slabGlow+vec3(.95,.55,.16)*rimGlow+vec3(.9,.6,.25)*nodeGlow,1.);}`;
+  var fragment = `precision mediump float;varying vec3 col;varying float emit;varying vec3 place;varying vec3 normal;uniform float pulse;uniform float phase;uniform float section;uniform float target;uniform float opening;uniform float uRouteBase;uniform float uTravel;uniform float uRouteOn;uniform float uNode;uniform float uNodeOn;uniform float uDir;uniform float uEnv;uniform float uWireBase;uniform float uPulsePos;uniform float uPulseOn;uniform vec2 uPulseWorld;void main(){vec3 cm=col;float pde=smoothstep(0.,.06,uPulsePos)*smoothstep(1.,.94,uPulsePos);float pd=distance(place.xz,uPulseWorld);float boardM=(emit>.002&&emit<.01)?1.:0.;if(emit>.002&&emit<.01){float sn=fract(sin(dot(floor(place.xz*.22),vec2(12.9898,78.233)))*43758.5453);float sn2=fract(sin(dot(floor(place.xz*.055),vec2(39.346,11.135)))*24634.6345);float sn3=fract(sin(dot(floor(place.xz*1.1),vec2(26.651,84.131)))*31459.2653);float mot=.45*sn+.35*sn2+.20*sn3;float ed=mix(.46,1.,uEnv);cm*=1.+(mot-.5)*.34;cm+=(mot-.5)*.05/ed*vec3(.7,1.,.85);cm+=vec3(.9,.52,.18)*uPulseOn*pde*.38*exp(-pd*pd/72.);}float selection=emit>=6.&&emit<9.?((abs(emit-(5.+target))<.1)?(.30+.42*pow(max(0.,sin(phase*2.6+place.x*.42+place.z*.5)),3.)):0.):0.;float baseTrace=emit>0.&&emit<1.?emit*.13:0.;float inactiveRing=emit>=6.&&emit<9.&&abs(emit-(5.+target))>.1?.14:1.;float rp=(emit-uRouteBase)/.6;float inRoute=(uRouteBase>0.&&emit>=uRouteBase&&emit<=uRouteBase+.61)?1.:0.;float routeGlow=0.;if(inRoute>.5){float head=exp(-pow((rp-uTravel)/.05,2.))*2.4;float trailF=rp<uTravel?.5*exp((rp-uTravel)*5.):0.;float trailB=rp>uTravel?.5*exp((uTravel-rp)*5.):0.;float trail=mix(trailB,trailF,clamp(uDir*.5+.5,0.,1.));routeGlow=uRouteOn*(.14+trail+head);}float nodeGlow=0.;if(uNode>0.&&abs(emit-uNode)<.4)nodeGlow=uNodeOn*(.34+.62*pow(max(0.,sin(phase*2.2)),3.));vec3 wireCol=vec3(0.);if(emit>=40.&&emit<44.01){float sp=(emit-40.)/4.;float dd=fract(sp-uPulsePos+.5)-.5;float penv=smoothstep(0.,.06,uPulsePos)*smoothstep(1.,.94,uPulsePos);float head=penv*exp(-pow(dd/.032,2.));float trail=dd<0.?penv*.8*exp(dd*9.):0.;float base=uWireBase*(.30+.08*pow(max(0.,sin(phase*1.3+sp*10.)),2.));wireCol=vec3(1.,.72,.34)*(base+uPulseOn*.55*trail)+vec3(1.,.86,.58)*uPulseOn*head*3.;}if(emit>=45.&&emit<49.01){float sp=(emit-45.)/4.;float dd=fract(sp-uPulsePos+.5)-.5;float penv=smoothstep(0.,.06,uPulsePos)*smoothstep(1.,.94,uPulsePos);float head=penv*exp(-pow(dd/.1,2.));float trail=dd<0.?penv*.5*exp(dd*4.):0.;wireCol=vec3(1.,.62,.26)*(uWireBase*.09+uPulseOn*(.16*head+.06*trail));}float envDim=mix(.46,1.,uEnv);vec3 spec=vec3(.18,.22,.18)*pow(max(0.,dot(reflect(normalize(vec3(.55,-.86,-.38)),normalize(normal)),normalize(vec3(.2,.6,.8)))),18.);gl_FragColor=vec4(cm*envDim*inactiveRing+spec*.12*(.45+.55*uEnv)+vec3(.9,.52,.18)*(routeGlow+selection+baseTrace)+wireCol+vec3(.34,.88,.62)*nodeGlow+vec3(.9,.52,.18)*uPulseOn*pde*boardM*.16*exp(-pd*pd/180.),1.);}`;
   var bgVS = `attribute vec2 p;varying vec2 ndc;void main(){ndc=p;gl_Position=vec4(p,0.,1.);}`;
   var blitVS = `attribute vec2 p;varying vec2 uv;void main(){uv=p*.5+.5;gl_Position=vec4(p,0.,1.);}`;
   var blitFS = `precision mediump float;varying vec2 uv;uniform sampler2D tex;void main(){gl_FragColor=texture2D(tex,uv);}`;
   function bgFS(deriv) {
-    return (deriv ? "#extension GL_OES_standard_derivatives : enable\n" : "") + `precision mediump float;varying vec2 ndc;uniform mat4 inv;uniform vec3 eye;uniform float opening;uniform float time;void main(){vec4 w0=inv*vec4(ndc,-1.,1.);vec4 w1=inv*vec4(ndc,1.,1.);vec3 rd=normalize(w1.xyz/w1.w-w0.xyz/w0.w);float h=clamp(rd.y*.5+.5,0.,1.);vec3 col=mix(vec3(.085,.175,.195),vec3(.018,.038,.058),pow(h,1.35));float hy=rd.y*3.4;col+=vec3(.07,.19,.17)*exp(-hy*hy)*.85;float tp=(-2.3-eye.y)/rd.y;if(tp>0.){vec3 p=eye+rd*tp;float r=length(p.xz);col+=vec3(.13,.30,.23)*exp(-pow(r/40.,2.))*(.9+1.1*opening);col+=vec3(.38,.20,.06)*exp(-pow(r/22.,2.))*(.6+.9*opening);col+=vec3(.10,.24,.21)*exp(-pow((r-72.)/22.,2.))*(.40+.22*sin(time*.18));}float tg=(-13.5-eye.y)/rd.y;if(tg>0.){vec3 p=eye+rd*tg;vec2 q=p.xz/9.;vec2 g=abs(fract(q)-.5);
+    return (deriv ? "#extension GL_OES_standard_derivatives : enable\n" : "") + `precision mediump float;varying vec2 ndc;uniform mat4 inv;uniform vec3 eye;uniform float opening;uniform float time;void main(){vec4 w0=inv*vec4(ndc,-1.,1.);vec4 w1=inv*vec4(ndc,1.,1.);vec3 rd=normalize(w1.xyz/w1.w-w0.xyz/w0.w);float h=clamp(rd.y*.5+.5,0.,1.);float env=.38+.62*opening;vec3 col=mix(vec3(.085,.175,.195),vec3(.018,.038,.058),pow(h,1.35));float hy=rd.y*3.4;col+=vec3(.07,.19,.17)*exp(-hy*hy)*.85;col*=env;float tp=(-2.3-eye.y)/rd.y;if(tp>0.){vec3 p=eye+rd*tp;float r=length(p.xz);col+=vec3(.13,.30,.23)*exp(-pow(r/40.,2.))*(.18+.92*opening);col+=vec3(.38,.20,.06)*exp(-pow(r/22.,2.))*(.06+.54*opening);col+=vec3(.10,.24,.21)*exp(-pow((r-72.)/22.,2.))*(.10+.32*opening)*(.85+.15*sin(time*.18));}float tg=(-13.5-eye.y)/rd.y;if(tg>0.){vec3 p=eye+rd*tg;vec2 q=p.xz/9.;vec2 g=abs(fract(q)-.5);
 #ifdef GL_OES_standard_derivatives
 float fw=fwidth(q.x)+fwidth(q.y);
 #else
 float fw=.01;
 #endif
-float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fade=exp(-tg*.008);col+=vec3(.13,.27,.25)*line*fade;vec2 q2=p.xz/45.;vec2 g2=abs(fract(q2)-.5);float line2=smoothstep(.48,.5,max(g2.x,g2.y));col+=vec3(.16,.33,.30)*line2*fade*.8;vec2 q3=p.xz/27.+vec2(time*.006,time*.0035);vec2 cell=floor(q3);vec2 f=fract(q3)-.5;float hsh=fract(sin(dot(cell,vec2(127.1,311.7)))*43758.55);vec2 off=(vec2(fract(hsh*7.13),fract(hsh*3.71))-.5)*.72;float dd=length(f-off);float tw=.45+.55*sin(time*(.5+hsh*1.7)+hsh*43.);col+=vec3(.30,.44,.42)*smoothstep(.10,.01,dd)*.16*tw*fade*step(.15,hsh);}float vig=1.-.42*pow(length(ndc*vec2(1.15,1.)),2.4);gl_FragColor=vec4(col*max(vig,0.),1.);}`;
+float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fade=exp(-tg*.008);col+=vec3(.13,.27,.25)*line*fade*(.25+.75*opening);vec2 q2=p.xz/45.;vec2 g2=abs(fract(q2)-.5);float line2=smoothstep(.48,.5,max(g2.x,g2.y));col+=vec3(.16,.33,.30)*line2*fade*.8*(.25+.75*opening);vec2 q3=p.xz/27.+vec2(time*.006,time*.0035);vec2 cell=floor(q3);vec2 f=fract(q3)-.5;float hsh=fract(sin(dot(cell,vec2(127.1,311.7)))*43758.55);vec2 off=(vec2(fract(hsh*7.13),fract(hsh*3.71))-.5)*.72;float dd=length(f-off);float tw=.45+.55*sin(time*(.5+hsh*1.7)+hsh*43.);col+=vec3(.30,.44,.42)*smoothstep(.10,.01,dd)*.16*tw*fade*step(.15,hsh)*(.3+.7*opening);}float vig=1.-.42*pow(length(ndc*vec2(1.15,1.)),2.4);gl_FragColor=vec4(col*max(vig,0.),1.);}`;
   }
   function compile(gl2, type, src) {
     let s = gl2.createShader(type);
@@ -11580,22 +11594,14 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
     return a + (b - a) * t;
   }
   var keys = [
-    { t: 0, eye: [74, 91, 120], to: [2, 0, 0] },
-    { t: 0.11, eye: [45, 62, 85], to: [-25, 0, 16] },
-    { t: 0.18, eye: [-12, 43, 68], to: [-34, 0, 23] },
-    { t: 0.24, eye: [-8, 34, 56], to: [-35, 0, 21] },
-    { t: 0.275, eye: [-8, 33, 51], to: [-35, 0, 14] },
-    { t: 0.3, eye: [-10, 31, 43], to: [-34, 0, 1] },
-    { t: 0.36, eye: [-8, 35, 48], to: [-21, 0, 1] },
-    { t: 0.41, eye: [-7, 40, 55], to: [-25, 0, -8] },
-    { t: 0.44, eye: [-10, 38, 53], to: [-65, 0, -22] },
-    { t: 0.49, eye: [-10, 36, 51], to: [-65, 0, -22] },
-    { t: 0.55, eye: [30, 74, 90], to: [-12, 0, -10] },
-    { t: 0.6, eye: [34, 37, 17], to: [-10, 0, -28] },
-    { t: 0.66, eye: [-8, 37, 70], to: [-52, 0, 25] },
-    { t: 0.715, eye: [-21, 37, 23], to: [-65, 0, -22] },
-    { t: 0.79, eye: [58, 55, 59], to: [9, 0, 9] },
-    { t: 0.88, eye: [70, 74, 84], to: [0, 0, 0] },
+    { t: 0, eye: [78, 92, 122], to: [0, 0, -2] },
+    { t: 0.14, eye: [-14, 38, 30], to: [-44, 0, -24] },
+    { t: 0.28, eye: [0, 32, 4], to: [0, 0, -27] },
+    { t: 0.42, eye: [16, 38, 26], to: [44, 0, -25] },
+    { t: 0.56, eye: [22, 36, 54], to: [46, 0, 22] },
+    { t: 0.7, eye: [0, 34, 58], to: [0, 0, 27] },
+    { t: 0.84, eye: [-16, 38, 56], to: [-44, 0, 22] },
+    { t: 0.95, eye: [-4, 36, 38], to: [-30, 0, -1] },
     { t: 1, eye: [86, 90, 102], to: [0, 0, 0] }
   ];
   function cameraAt(p) {
@@ -11607,16 +11613,13 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
   }
   var anchors = [
     { t: 0, node: "OV", eye: [75, 91, 124], to: [2, 0, 0] },
-    { t: 0.13, node: "MCU", eye: [2, 33, 44], to: [0, 0, -2] },
-    { t: 0.26, node: "SENS", eye: [-8, 34, 52], to: [-35, 0, 22] },
-    { t: 0.3, node: "ADC", eye: [-10, 31, 43], to: [-34, 0, 1] },
-    { t: 0.36, node: "MCU", eye: [-8, 35, 48], to: [-16, 0, 0] },
-    { t: 0.44, node: "DAQ", eye: [-10, 38, 53], to: [-52, 0, -20] },
-    { t: 0.6, node: "CTRL", eye: [34, 37, 17], to: [7, 0, -27] },
-    { t: 0.66, node: "SENS", eye: [-8, 37, 70], to: [-50, 0, 24] },
-    { t: 0.715, node: "DAQ", eye: [-21, 37, 23], to: [-58, 0, -21] },
-    { t: 0.79, node: "TEST", eye: [18, 42, 58], to: [-7, 0, 24] },
-    { t: 0.86, node: "MCU", eye: [58, 55, 59], to: [4, 0, 4] },
+    { t: 0.14, node: "INTERN", eye: [-44, 30, 8], to: [-44, 0, -24] },
+    { t: 0.28, node: "TEAMS", eye: [0, 27, -4], to: [0, 0, -27] },
+    { t: 0.42, node: "PROJ", eye: [44, 30, 2], to: [44, 0, -25] },
+    { t: 0.56, node: "SKILLS", eye: [46, 27, 46], to: [46, 0, 22] },
+    { t: 0.7, node: "ABOUT", eye: [0, 26, 50], to: [0, 0, 27] },
+    { t: 0.84, node: "RESUME", eye: [-44, 27, 46], to: [-44, 0, 22] },
+    { t: 0.955, node: "CONTACT", eye: [-30, 24, 22], to: [-30, 0, -1] },
     { t: 1, node: "OV", eye: [86, 90, 102], to: [0, 0, 0] }
   ];
   var routeData = navRoutes.map((r) => {
@@ -11646,7 +11649,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
     let r = navRoutes[i - 1] || navRoutes[navRoutes.length - 1], rd2 = routeData[i - 1] || routeData[routeData.length - 1];
     let u = Math.max(0, Math.min(1, (p - A3.t) / (B3.t - A3.t || 1)));
     let hold = r.hold, appr = 0.14, arr = 0.16, trav = 1 - hold - appr - arr;
-    let hT = 8.5, LA = 12;
+    let hT = 8.5, LA = 18;
     let p0 = r.pts[0], pE = r.pts[r.pts.length - 1];
     let eye = [...A3.eye], to = [...A3.to], routeOn = 0, travel = 0, nodeA = nodeEmit(A3.node), nodeB = nodeEmit(B3.node), nodeEmitV = nodeA, nodeOn = 1;
     if (u < hold) {
@@ -11694,11 +11697,10 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
   function safepin(p, active, mobile, w, h) {
     if (mobile) {
       let storyTop = document.querySelector(".story")?.getBoundingClientRect().top ?? h * 0.6;
-      return p.x > 25 && p.x < w - 25 && p.y > 180 && p.y < Math.min(h * 0.56, storyTop - 38) && active < 6;
+      return p.x > 25 && p.x < w - 25 && p.y > 170 && p.y < Math.min(h * 0.56, storyTop - 38);
     }
     if (p.x > w - 170 && p.y < 360) return false;
     if (p.x < 580 && p.y > h * 0.57) return false;
-    if (active === 2 && p.y < 180) return false;
     return true;
   }
   function ProjectEvidence({ node }) {
@@ -11833,61 +11835,6 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
       ] })
     ] }) });
   }
-  function Resume({ close }) {
-    (0, import_react23.useEffect)(() => {
-      let onKey = (e2) => {
-        if (e2.key === "Escape") close();
-      };
-      window.addEventListener("keydown", onKey);
-      return () => window.removeEventListener("keydown", onKey);
-    }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "resume", role: "dialog", "aria-modal": "true", "aria-label": "Farhan Islam resume", onClick: (e2) => {
-      if (e2.target === e2.currentTarget) close();
-    }, children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "resume-paper", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { className: "resume-close", onClick: close, children: "\u2190 Back to system" }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h2", { children: "Farhan Islam" }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { className: "resume-lead", children: "Electrical Engineering \xB7 McMaster University \xB7 B.Eng expected April 2028" }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("p", { className: "resume-contact", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "mailto:islam.farhan2014@gmail.com", children: "islam.farhan2014@gmail.com" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "https://linkedin.com/in/farhanislam-eng", target: "_blank", rel: "noopener noreferrer", children: "linkedin.com/in/farhanislam-eng" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "https://github.com/FarhanIslam17", target: "_blank", rel: "noopener noreferrer", children: "github.com/FarhanIslam17" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("hr", {}),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("section", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("small", { children: "EDUCATION" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: "McMaster University \xB7 Hamilton, ON" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "B.Eng in Electrical Engineering (co-op) \xB7 September 2024 - April 2028" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("section", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("small", { children: "EXPERIENCE" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: "General Motors \xB7 Body Controls Calibration and System Test Developer (Incoming)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "January 2027 - December 2027 \xB7 Oshawa, ON" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: "McMaster Solar Car \xB7 Low Voltage Electrical Designer" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "September 2026 - Present \xB7 Hamilton, ON" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: "Reaction Dynamics \xB7 Avionics Intern" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "May 2026 - August 2026 \xB7 Longueuil, QC" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: "McMaster Rocketry \xB7 Launch Oversight and Logistics" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "September 2024 - January 2025 \xB7 Hamilton, ON" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: "Team 9659, FIRST Robotics Competition \xB7 Electrical Team Lead" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "September 2023 - April 2024 \xB7 North York, ON" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("section", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("small", { children: "PROJECTS" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: "Accessible Microwave Control System" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "Team course project (1P13, Feb-Apr 2025) \xB7 CAD/enclosure design and documentation." }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: "Indoor 3D Spatial Mapping System" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "Personal build \xB7 MSP432 + VL53L1X rotating LiDAR room scanner, Python/Open3D point clouds." })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("section", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("small", { children: "TECHNICAL SKILLS" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "Embedded C/C++, instrumentation and DAQ, hardware validation and test, sensors, analog electronics, MATLAB, controls/PID, AutoCAD." })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("p", { className: "resume-note", children: [
-        "Summary view of the formal resume. ",
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: resumePdfUrl, target: "_blank", rel: "noopener noreferrer", children: "Download full resume (PDF) \u2197" })
-      ] })
-    ] }) });
-  }
   function Board({ progress, active, mobile, selected, onSelect, lowMotion, wire }) {
     const ref = (0, import_react23.useRef)(null), state = (0, import_react23.useRef)({ progress, active, selected, mobile, lowMotion, wire });
     state.current = { progress, active, selected, mobile, lowMotion, wire };
@@ -11952,10 +11899,10 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         }
       };
       setAttribs();
-      let uM = gl2.getUniformLocation(program, "m"), uP = gl2.getUniformLocation(program, "pulse"), uT = gl2.getUniformLocation(program, "phase"), uS = gl2.getUniformLocation(program, "section"), uTarget = gl2.getUniformLocation(program, "target"), uOpen = gl2.getUniformLocation(program, "opening"), uRB = gl2.getUniformLocation(program, "uRouteBase"), uTV = gl2.getUniformLocation(program, "uTravel"), uRO = gl2.getUniformLocation(program, "uRouteOn"), uND = gl2.getUniformLocation(program, "uNode"), uNO = gl2.getUniformLocation(program, "uNodeOn"), uDR = gl2.getUniformLocation(program, "uDir");
+      let uM = gl2.getUniformLocation(program, "m"), uP = gl2.getUniformLocation(program, "pulse"), uT = gl2.getUniformLocation(program, "phase"), uS = gl2.getUniformLocation(program, "section"), uTarget = gl2.getUniformLocation(program, "target"), uOpen = gl2.getUniformLocation(program, "opening"), uRB = gl2.getUniformLocation(program, "uRouteBase"), uTV = gl2.getUniformLocation(program, "uTravel"), uRO = gl2.getUniformLocation(program, "uRouteOn"), uND = gl2.getUniformLocation(program, "uNode"), uNO = gl2.getUniformLocation(program, "uNodeOn"), uDR = gl2.getUniformLocation(program, "uDir"), uEV = gl2.getUniformLocation(program, "uEnv"), uWB = gl2.getUniformLocation(program, "uWireBase"), uPP = gl2.getUniformLocation(program, "uPulsePos"), uPN = gl2.getUniformLocation(program, "uPulseOn"), uPW2 = gl2.getUniformLocation(program, "uPulseWorld");
       gl2.enable(gl2.DEPTH_TEST);
       gl2.disable(gl2.CULL_FACE);
-      let raf = 0, dirB = 1, lastLabel = 0, lastPoints = [], slow = false, probeN = 0, probeAcc = 0, lastMs = 0, smooth = parseFloat((location.hash.match(/p=([\d.]+)/) || [])[1] || "0"), focus = null, focusStart = 0, modeBlend = state.current.wire ? 1 : 0;
+      let raf = 0, dirB = 1, lastLabel = 0, lastPoints = [], pinHide = false, showAt = 0, slow = false, probeN = 0, probeAcc = 0, lastMs = 0, smooth = parseFloat((location.hash.match(/p=([\d.]+)/) || [])[1] || "0"), focus = null, focusStart = 0, modeBlend = state.current.wire ? 1 : 0;
       const setFocus = (e2) => {
         focus = e2.detail;
         focusStart = performance.now();
@@ -11981,6 +11928,21 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         }
         smooth += (s.progress - smooth) * (s.lowMotion ? 1 : 0.24);
         let dsp = s.progress - smooth;
+        {
+          let dd2 = Math.abs(dsp), hd = pinHide;
+          if (dd2 > 4e-3) {
+            hd = true;
+            showAt = 0;
+          } else if (dd2 < 15e-4 && hd) {
+            if (!showAt) showAt = ms2 + 200;
+            if (ms2 >= showAt) {
+              hd = false;
+              showAt = 0;
+            }
+          }
+          pinHide = hd;
+          document.documentElement.classList.toggle("pins-hidden", hd);
+        }
         if (Math.abs(dsp) > 4e-4) dirB += (Math.sign(dsp) - dirB) * Math.min(1, dt3 / 240);
         let wc = wireCam(smooth, dirB);
         if (s.mobile && smooth < 0.0546) {
@@ -11995,7 +11957,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
             let kk = smoother(smooth / 0.12);
             cn.eye = [tween(127, cn.eye[0] * 1.32, kk), tween(154, cn.eye[1] * 1.32, kk), tween(209, cn.eye[2] * 1.32, kk)];
             cn.to = [tween(2, cn.to[0], kk), tween(0, 0, kk), tween(0, cn.to[2], kk)];
-          } else if (s.active === 4 && !focus) {
+          } else if (s.active === 3 && !focus) {
             let nd = parts.find((p) => p.name === currentProject(smooth).node);
             let w = Math.min(1, Math.max(0, (smooth - (currentProject(smooth).at - 0.02)) / 0.02));
             let nl = Math.hypot(nd.x, nd.z);
@@ -12052,7 +12014,8 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         gl2.vertexAttribPointer(bgLocP, 2, gl2.FLOAT, false, 0, 0);
         gl2.uniformMatrix4fv(bgInv, false, new Float32Array(invM));
         gl2.uniform3f(bgEye, cam.eye[0], cam.eye[1], cam.eye[2]);
-        gl2.uniform1f(bgOpen, open);
+        let env = smoother(Math.min(1, smooth / 0.8));
+        gl2.uniform1f(bgOpen, env);
         gl2.uniform1f(bgTime, s.lowMotion ? 0 : ms2 * 1e-3);
         gl2.disable(gl2.DEPTH_TEST);
         gl2.depthMask(false);
@@ -12073,11 +12036,20 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         gl2.useProgram(program);
         setAttribs();
         gl2.uniform1f(uOpen, open);
+        gl2.uniform1f(uEV, env);
+        let wb = s.lowMotion ? 0.72 : Math.max(0.42, 1 - Math.min(1, Math.max(0, ms2 - 1e3) / 6500) * 0.58);
+        let pt = Math.max(0, (ms2 - 2600) / 9500);
+        gl2.uniform1f(uWB, wb);
+        gl2.uniform1f(uPP, pt - Math.floor(pt));
+        let pwPos = spinePoint(pt - Math.floor(pt));
+        gl2.uniform2f(uPW2, pwPos[0], pwPos[1]);
+        let pnr = Math.min(1, Math.max(0, (ms2 - 2200) / 1600));
+        gl2.uniform1f(uPN, s.lowMotion ? 0 : pnr * pnr * (3 - 2 * pnr));
         gl2.uniformMatrix4fv(uM, false, new Float32Array(mat));
         gl2.uniform1f(uP, s.lowMotion ? 0.5 : Math.sin(ms2 * 25e-4) * 0.5 + 0.5);
         gl2.uniform1f(uT, s.lowMotion ? 0.4 : ms2 * 1e-3);
         gl2.uniform1f(uS, smooth);
-        gl2.uniform1f(uTarget, s.active === 4 ? ["CTRL", "SENS", "DAQ"].indexOf(currentProject(s.progress).node) + 1 : ["CTRL", "SENS", "DAQ"].indexOf(s.selected || "") + 1);
+        gl2.uniform1f(uTarget, s.active === 3 ? ["CTRL", "SENS", "DAQ"].indexOf(currentProject(s.progress).node) + 1 : ["CTRL", "SENS", "DAQ"].indexOf(s.selected || "") + 1);
         gl2.uniform1f(uRB, wc.routeOn > 1e-3 ? wc.routeBase : -1);
         gl2.uniform1f(uTV, wc.travel);
         gl2.uniform1f(uRO, wc.routeOn);
@@ -12089,6 +12061,49 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         if (ms2 - lastLabel > 70) {
           lastLabel = ms2;
           let points = parts.map((p) => ({ name: p.name, detail: p.detail, ...project([p.x, p.h + 3, p.z], mat, cw, ch) }));
+          {
+            let mob = s.mobile, PHW = mob ? 46 : 62, PHH = mob ? 21 : 12;
+            let st3 = document.querySelector(".story")?.getBoundingClientRect();
+            let sc = mob ? null : document.querySelector(".story .story-copy")?.getBoundingClientRect();
+            let band = mob ? st3 : sc || st3;
+            let stTop = st3 ? st3.top : ch * 0.6;
+            let okPin = (x, y2) => x > -40 && x < cw + 40 && y2 > 90 && y2 < ch - 90 && (mob ? x > 25 && x < cw - 25 && y2 > 170 && y2 < Math.min(ch * 0.56, stTop - (PHH + 18)) : !(x > cw - 170 && y2 < 360 || x < 580 && y2 > ch * 0.57));
+            let hitsBand = (x, y2) => {
+              if (!band) return false;
+              let ix = Math.min(x + PHW, band.right) - Math.max(x - PHW, band.left), iy = Math.min(y2 + PHH, band.bottom) - Math.max(y2 - PHH, band.top);
+              return ix >= 2 && iy >= 2;
+            };
+            let activeNode = s.active >= 1 && s.active <= 7 ? stages[s.active].node : null;
+            if (band) for (let pq of points) {
+              if (!pq.visible) continue;
+              if (hitsBand(pq.x, pq.y)) {
+                let nx = band.right + PHW + 10, ny = band.top - (mob ? PHH + 20 : 22);
+                if (okPin(nx, pq.y) && nx + PHW <= cw - 8 && !hitsBand(nx, pq.y)) pq.x = nx;
+                else if (okPin(pq.x, ny) && !hitsBand(pq.x, ny)) pq.y = ny;
+                else if (mob && pq.name !== activeNode) pq.visible = false;
+              }
+            }
+            let vis = points.filter((p) => p.visible);
+            for (let i = 0; i < vis.length; i++) for (let j2 = i + 1; j2 < vis.length; j2++) {
+              let A3 = vis[i], B3 = vis[j2];
+              if (A3.name === activeNode && B3.name === activeNode) continue;
+              let loser = A3.name === activeNode ? B3 : B3.name === activeNode ? A3 : CHIPS.includes(A3.name) && !CHIPS.includes(B3.name) ? A3 : CHIPS.includes(B3.name) && !CHIPS.includes(A3.name) ? B3 : B3;
+              let ox = 2 * PHW - Math.abs(A3.x - B3.x), oy = 2 * PHH - Math.abs(A3.y - B3.y);
+              if (ox <= 2 || oy <= 2) continue;
+              let cands = [[loser.x, loser.y - oy - 8], [loser.x, loser.y + oy + 8], [loser.x + ox + 8, loser.y], [loser.x - ox - 8, loser.y]];
+              let done = false;
+              for (let [cx2, cy2] of cands) {
+                let clash = vis.some((p) => p !== loser && Math.abs(p.x - cx2) < 2 * PHW - 2 && Math.abs(p.y - cy2) < 2 * PHH - 2);
+                if (!clash && okPin(cx2, cy2) && !hitsBand(cx2, cy2)) {
+                  loser.x = cx2;
+                  loser.y = cy2;
+                  done = true;
+                  break;
+                }
+              }
+              if (!done && mob && CHIPS.includes(loser.name)) loser.visible = false;
+            }
+          }
           if (!lastPoints.length || points.some((p, i) => Math.abs(p.x - lastPoints[i].x) > 0.5 || Math.abs(p.y - lastPoints[i].y) > 0.5 || p.visible !== lastPoints[i].visible)) {
             lastPoints = points;
             setLabels(points);
@@ -12104,11 +12119,18 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         gl2.deleteProgram(program);
       };
     }, [mobile]);
-    let featured = active === 4 ? currentProject(progress).node : selected;
+    const pinNum = (name) => {
+      let si = stages.findIndex((s) => s.node === name);
+      if (si > 0) return String(si).padStart(2, "0");
+      let ci = ["CTRL", "SENS", "DAQ"].indexOf(name);
+      if (ci >= 0) return String(ci + 1).padStart(2, "0");
+      return "";
+    };
+    let featured = active === 3 ? currentProject(progress).node : selected;
     let featuredPin = labels.find((p) => p.name === featured);
-    let focusRect = active === 4 ? document.querySelector(".project-focus")?.getBoundingClientRect() : null;
+    let focusRect = active === 3 ? document.querySelector(".project-focus")?.getBoundingClientRect() : null;
     let anchor = focusRect ? { x: mobile ? focusRect.right - 26 : focusRect.right, y: mobile ? focusRect.top + 12 : focusRect.top + 95 } : null;
-    let leaderBw = ref.current?.clientWidth || 0, leaderBh = ref.current?.clientHeight || 0, leaderOn = !!(active === 4 && featuredPin && featuredPin.visible && anchor && featuredPin.x > -40 && featuredPin.x < leaderBw + 40 && featuredPin.y > 90 && featuredPin.y < leaderBh - 90 && safepin(featuredPin, active, mobile, leaderBw, leaderBh));
+    let leaderBw = ref.current?.clientWidth || 0, leaderBh = ref.current?.clientHeight || 0, leaderOn = !!(active === 3 && featuredPin && featuredPin.visible && anchor && featuredPin.x > -40 && featuredPin.x < leaderBw + 40 && featuredPin.y > 90 && featuredPin.y < leaderBh - 90 && safepin(featuredPin, active, mobile, leaderBw, leaderBh));
     return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "board-wrap", children: [
       /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("canvas", { ref, className: "board", "aria-label": "Illustrative interactive 3D electronic system" }),
       leaderOn && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("svg", { className: "board-leader", "aria-hidden": "true", children: [
@@ -12116,26 +12138,31 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("circle", { cx: featuredPin.x, cy: featuredPin.y - 30, r: "5" })
       ] }),
       fallback && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "fallback-board", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "MCU" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "ADC" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "DAQ" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "SENS" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "PWR" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "COMMS" }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "INTERNSHIPS" }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "TEAMS" }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "PROJECTS" }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "SKILLS" }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "ABOUT" }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "RESUME" }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "CONTACT" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "System visualization unavailable. Navigate through the sections below." })
       ] }),
-      !fallback && labels.map((p, i) => p.visible && p.x > -40 && p.x < (ref.current?.clientWidth || 0) + 40 && p.y > 90 && p.y < (ref.current?.clientHeight || 0) - 90 && safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0) && (!state.current.mobile && state.current.active === 0 && ["MCU", "ADC", "DAQ"].includes(p.name) || !state.current.mobile && state.current.active === 1 && p.name === "MCU" || !state.current.mobile && state.current.active === 2 && (p.name === "SENS" && state.current.progress < 0.3 || p.name === "ADC" && state.current.progress >= 0.27 && state.current.progress < 0.36 || p.name === "MCU" && state.current.progress >= 0.345) || !state.current.mobile && state.current.active === 3 && ["DAQ", "ADC"].includes(p.name) || state.current.active === 4 && ["CTRL", "SENS", "DAQ"].includes(p.name) && (!state.current.mobile || p.name === currentProject(state.current.progress).node) || !state.current.mobile && state.current.active === 5 && ["MCU", "ADC", "TEST"].includes(p.name) || !state.current.mobile && selected === p.name) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { title: p.detail, "aria-label": `${p.name}: ${p.detail}`, onClick: () => {
+      !fallback && labels.map((p, i) => p.visible && p.x > -40 && p.x < (ref.current?.clientWidth || 0) + 40 && p.y > 90 && p.y < (ref.current?.clientHeight || 0) - 90 && safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0) && (!state.current.mobile && state.current.active === 0 && SECTION_NODES.includes(p.name) || state.current.active >= 1 && state.current.active <= 7 && p.name === stages[state.current.active].node || state.current.active === 3 && CHIPS.includes(p.name) && (!state.current.mobile || p.name === currentProject(state.current.progress).node) || !state.current.mobile && selected === p.name) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { title: p.detail, "aria-label": `${p.name}: ${p.detail}`, onClick: () => {
+        if (p.name === "RESUME") {
+          openResume();
+          return;
+        }
         onSelect(p.name === selected ? null : p.name);
         window.dispatchEvent(new CustomEvent("board-focus", { detail: p.name }));
-        if (state.current.active === 4) window.dispatchEvent(new CustomEvent("open-project-case", { detail: p.name }));
+        if (state.current.active === 3 && CHIPS.includes(p.name)) window.dispatchEvent(new CustomEvent("open-project-case", { detail: p.name }));
       }, className: `pin ${selected === p.name ? "is-active" : ""}`, style: { left: p.x, top: p.y }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("b", { children: active === 2 ? { SENS: "01 / INPUT", ADC: "02 / CONVERT", MCU: "03 / CONTROL" }[p.name] || p.name : active === 3 && p.name === "DAQ" ? "04 / DAQ" : p.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { children: String(i + 1).padStart(2, "0") })
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("b", { children: DISPLAY[p.name] || p.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { children: pinNum(p.name) })
       ] }, p.name))
     ] });
   }
   function App() {
-    let [progress, setProgress] = (0, import_react23.useState)(0), [selected, setSelected] = (0, import_react23.useState)(null), [resume, setResume] = (0, import_react23.useState)(false), [caseNode, setCaseNode] = (0, import_react23.useState)(null), [mobile, setMobile] = (0, import_react23.useState)(false), [lowMotion, setLowMotion] = (0, import_react23.useState)(false), [ready, setReady] = (0, import_react23.useState)(false);
+    let [progress, setProgress] = (0, import_react23.useState)(0), [selected, setSelected] = (0, import_react23.useState)(null), [caseNode, setCaseNode] = (0, import_react23.useState)(null), [mobile, setMobile] = (0, import_react23.useState)(false), [lowMotion, setLowMotion] = (0, import_react23.useState)(false), [ready, setReady] = (0, import_react23.useState)(false);
     const [travelMode, setTravelMode, saved] = iu("travel-mode.v1", "wire");
     const pendingMode = (0, import_react23.useRef)(null);
     (0, import_react23.useEffect)(() => {
@@ -12161,7 +12188,11 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
       };
       document.querySelector(".experience")?.addEventListener("scroll", update, { passive: true });
       update();
-      if (location.hash === "#resume") setResume(true);
+      if (location.hash === "#resume") {
+        let el2 = document.querySelector(".experience");
+        let max = el2 ? el2.scrollHeight - el2.clientHeight : 0;
+        el2?.scrollTo({ top: stages[6].at * max, behavior: "instant" });
+      }
       let hm = location.hash.match(/p=([\d.]+)/);
       if (hm) {
         let el2 = document.querySelector(".experience");
@@ -12211,16 +12242,16 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
                 /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { children: "/" }),
                 "I"
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "ENGINEERING / 001" })
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "ENGINEERING / 002" })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { className: "system-state", children: [
               /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "live-dot" }),
-              " INTERACTIVE SYSTEM MAP",
+              " INTERACTIVE PORTFOLIO MAP",
               /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { className: "travel-mode", onClick: () => {
                 let next = travelMode === "wire" ? "normal" : "wire";
                 if (saved.ready) setTravelMode(next);
                 else pendingMode.current = next;
-              }, "aria-pressed": travelMode === "wire", "aria-label": "Toggle navigation travel mode", title: saved.message || "Choose how the camera travels between components", children: [
+              }, "aria-pressed": travelMode === "wire", "aria-label": "Toggle navigation travel mode", title: saved.message || "Choose how the camera travels between blocks", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "tm-label", children: travelMode === "wire" ? "TRAVEL / ALONG WIRE" : "TRAVEL / NORMAL" }),
                 /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: `tm-pill${travelMode === "wire" ? " on" : ""}`, "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", {}) })
               ] })
@@ -12230,12 +12261,12 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
             "MENU ",
             /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "\u2630" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("nav", { className: "system-nav", "aria-label": "Portfolio sections", children: ["SYSTEM", "EXPERIENCE", "PROJECTS", "SKILLS", "ABOUT", "RESUME", "CONTACT"].map((name, i) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { className: [0, 3, 4, 5, 6, -1, 7][i] === active || i === 5 && resume ? "current" : "", onClick: () => {
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("nav", { className: "system-nav", "aria-label": "Portfolio sections", children: stages.slice(1).map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { className: i + 1 === active ? "current" : "", onClick: () => {
             document.querySelector(".system-nav")?.classList.remove("open");
-            i === 5 ? setResume(true) : jump([0, 3, 4, 5, 6, 0, 7][i]);
-          }, children: name }, name)) }),
+            jump(i + 1);
+          }, children: s.label }, s.label)) }),
           /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "readout", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "REV 02 / F. ISLAM" }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "REV 03 / F. ISLAM" }),
             /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
               stages[active].n,
               " / ",
@@ -12252,8 +12283,24 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
               stages[active].sub
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h1", { children: stages[active].title }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { className: "story-copy", children: stages[active].copy }),
-            active === 4 && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "project-focus", children: [
+            stages[active].copy && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { className: "story-copy", children: stages[active].copy }),
+            active === 1 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "entry-list", children: internships.map((e2) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "entry", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "entry-meta", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: e2.org }),
+                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: e2.meta })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: e2.role }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: e2.line })
+            ] }, e2.org)) }),
+            active === 2 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "entry-list", children: teams.map((e2) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "entry", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "entry-meta", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: e2.org }),
+                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: e2.meta })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: e2.role }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: e2.line })
+            ] }, e2.org)) }),
+            active === 3 && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "project-focus", children: [
               /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "project-signal", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
                   "PROJECT / ",
@@ -12286,39 +12333,35 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
                 p.node
               ] }, p.node)) })
             ] }),
-            active === 5 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "skills-lines", children: skillFacts.map(([node, skill]) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { onClick: () => setSelected(node), children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: node }),
-              skill
-            ] }, node)) }),
-            active === 3 && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "scope", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "scope-meta", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "CH / 01 \xB7 SIGNAL PATH" }),
-                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "ILLUSTRATIVE \xB7 NO LIVE DATA" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("svg", { viewBox: "0 0 400 70", role: "img", "aria-label": "Illustrative voltage waveform, not a real measurement", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("path", { d: "M0 35 L48 35 L58 28 L65 43 L72 34 L102 34 L115 30 L128 38 L140 35 L165 35 L174 22 L181 48 L190 35 L220 35 L231 31 L244 39 L254 35 L281 35 L290 24 L298 44 L306 35 L340 35 L352 31 L364 39 L374 35 L400 35" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "scope-meta", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "SENSOR \u2192 ADC \u2192 CONTROLLER" }),
-                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "01 / 03" })
-              ] })
+            active === 4 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "skills-grid", children: skillGroups.map((g) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "skill-group", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: g.name }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("ul", { children: g.items.map((it2) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("li", { children: it2 }, it2)) })
+            ] }, g.name)) }),
+            active === 6 && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "resume-cta", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { className: "resume-open", href: resumePdfUrl, target: "_blank", rel: "noopener noreferrer", children: "Open my resume here \u2197" }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "resume-hint", children: "PDF \xB7 ONE PAGE \xB7 OPENS IN A NEW TAB" })
             ] }),
             active === 7 && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "end-actions", children: [
               /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "mailto:islam.farhan2014@gmail.com", children: "Email Farhan \u2197" }),
               /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "https://linkedin.com/in/farhanislam-eng", target: "_blank", rel: "noopener noreferrer", children: "LinkedIn \u2197" }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => setResume(true), children: "Resume / profile \u2197" })
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "https://github.com/FarhanIslam17", target: "_blank", rel: "noopener noreferrer", children: "GitHub \u2197" }),
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: openResume, children: "Resume \u2197" })
             ] })
           ] }, active),
-          selected && (active !== 4 || currentProject(progress).node === selected) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("aside", { className: "detail", "aria-live": "polite", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => setSelected(null), "aria-label": "Close component detail", children: "\xD7" }),
+          selected && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("aside", { className: "detail", "aria-live": "polite", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => setSelected(null), "aria-label": "Close block detail", children: "\xD7" }),
             /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("small", { children: [
-              "BOARD NODE / ",
-              selected
+              "BLOCK / ",
+              DISPLAY[selected] || selected
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h2", { children: parts.find((p) => p.name === selected)?.detail }),
             projectFacts.find((p) => p.node === selected) && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: projectFacts.find((p) => p.node === selected)?.body }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "CONCEPTUAL SYSTEM MAP \xB7 NOT A REAL BOARD DESIGN" })
+            selected === "RESUME" && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: resumePdfUrl, target: "_blank", rel: "noopener noreferrer", children: "Open my resume here \u2197" }) }),
+            selected === "CONTACT" && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "mailto:islam.farhan2014@gmail.com", children: "islam.farhan2014@gmail.com" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "ILLUSTRATIVE BOARD \xB7 NOT A REAL PCB DESIGN" })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "bottomline", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "FIG. 01 / CONCEPTUAL SYSTEM MAP \xB7 NOT A REAL BOARD DESIGN" }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "FIG. 01 / INTERACTIVE PORTFOLIO MAP \xB7 ILLUSTRATIVE BOARD" }),
             /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "progress-line", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { style: { width: `${progress * 100}%` } }) }),
             /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { children: [
               Math.round(progress * 100).toString().padStart(2, "0"),
@@ -12326,21 +12369,23 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
             ] })
           ] }),
           !ready && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "boot", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "F/I \xB7 SYS 001" }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("b", { children: "INITIALIZING SYSTEM" }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "F/I \xB7 SYS 002" }),
+            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("b", { children: "POWERING UP" }),
             /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { children: "LOADING GEOMETRY / CALIBRATING VISUALIZATION" })
           ] })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "scroll-track", "aria-hidden": "true" })
       ] }),
-      caseNode && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(CaseStudy, { project: projectFacts.find((p) => p.node === caseNode), close: () => setCaseNode(null) }),
-      " ",
-      resume && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Resume, { close: () => setResume(false) })
+      caseNode && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(CaseStudy, { project: projectFacts.find((p) => p.node === caseNode), close: () => setCaseNode(null) })
     ] });
   }
 
   // src/main.tsx
   var import_jsx_runtime22 = __toESM(require_jsx_runtime());
+  var _f = document.createElement("link");
+  _f.rel = "icon";
+  _f.href = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23061011'/%3E%3Ctext x='5' y='22' font-family='monospace' font-size='14' fill='%23e8b26f'%3EF/I%3C/text%3E%3C/svg%3E";
+  document.head.appendChild(_f);
   (0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime22.jsx)(FileRouter, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(App, {}) }));
 })();
 /*! Bundled license information:
