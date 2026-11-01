@@ -12281,7 +12281,10 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
         if (ms2 - lastLabel > 70) {
           lastLabel = ms2;
           let points = parts.map((p) => ({ name: p.name, detail: p.detail, ...project([p.x, p.h + 3, p.z], mat, cw, ch) }));
-          if (s.active === 3) projectBlocks.forEach((b, k2) => points.push({ name: "PB" + k2, label: projects[k2].short, detail: projects[k2].heading, ...project([b.x, 0.5, b.z + b.d / 2 + 2.6], mat, cw, ch) }));
+          if (s.active === 3) projectBlocks.forEach((b, k2) => {
+            let f2 = project([b.x, 0.5, b.z + b.d / 2], mat, cw, ch);
+            points.push({ name: "PB" + k2, label: projects[k2].short, detail: projects[k2].heading, x: f2.x, y: f2.y + 16 + (!s.mobile && k2 % 2 ? 26 : 0), visible: f2.visible, bx: f2.x, by: f2.y });
+          });
           {
             let mob = s.mobile, PHW = mob ? 46 : 62, PHH = mob ? 21 : 12;
             let st3 = document.querySelector(".story")?.getBoundingClientRect();
@@ -12296,7 +12299,7 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
             };
             let activeNode = s.active >= 1 && s.active <= 7 ? stages[s.active].node : null;
             if (band) for (let pq of points) {
-              if (!pq.visible || mob && pq.name.startsWith("PB")) continue;
+              if (!pq.visible || pq.name.startsWith("PB")) continue;
               if (hitsBand(pq.x, pq.y)) {
                 let nx = band.right + PHW + 10, ny = band.top - (mob ? PHH + 20 : 22);
                 if (okPin(nx, pq.y) && nx + PHW <= cw - 8 && !hitsBand(nx, pq.y)) pq.x = nx;
@@ -12315,7 +12318,7 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
               for (let i = 1; i < pbs.length; i++) if (Math.abs(pbs[i].y - pbs[i - 1].y) < 44 && pbs[i].x - pbs[i - 1].x < GAP) pbs[i].x = Math.min(X1, pbs[i - 1].x + GAP);
               for (let i = pbs.length - 2; i >= 0; i--) if (Math.abs(pbs[i + 1].y - pbs[i].y) < 44 && pbs[i + 1].x - pbs[i].x < GAP) pbs[i].x = Math.max(X0, pbs[i + 1].x - GAP);
             }
-            let vis = points.filter((p) => p.visible && !(mob && p.name.startsWith("PB")));
+            let vis = points.filter((p) => p.visible && !p.name.startsWith("PB"));
             for (let i = 0; i < vis.length; i++) for (let j2 = i + 1; j2 < vis.length; j2++) {
               let A3 = vis[i], B3 = vis[j2];
               if (A3.name === activeNode && B3.name === activeNode) continue;
@@ -12406,6 +12409,11 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
       if (k2 >= 0 && projects[k2].url) window.open(projects[k2].url, "_blank", "noopener,noreferrer");
     }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("canvas", { ref, className: "board", "aria-label": "Illustrative interactive 3D electronic system" }),
+      active === 3 && !mobile && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("svg", { className: "board-leader", "aria-hidden": "true", children: labels.map((p) => {
+        if (!p.name.startsWith("PB") || !p.visible || p.bx == null || p.x < -40 || p.x > (ref.current?.clientWidth || 0) + 40 || p.y <= 90 || p.y >= (ref.current?.clientHeight || 0) - 90 || !safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0)) return null;
+        let a2 = `rgb(${projects[+p.name.slice(2)].accent.map((v2) => Math.round(v2 * 255)).join(",")})`, px2 = Math.max(innerWidth > 1050 ? 545 : 4, Math.min(p.x, innerWidth > 1050 ? innerWidth - 130 : innerWidth - 30));
+        return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("path", { d: `M ${px2} ${p.y - 4} L ${p.bx} ${p.by}`, style: { stroke: a2, opacity: 0.55 } }, "lc" + p.name);
+      }) }),
       leaderOn && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("svg", { className: "board-leader", "aria-hidden": "true", children: [
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("path", { d: mobile ? `M ${anchor.x} ${anchor.y} L ${anchor.x} ${featuredPin.y - 8} L ${featuredPin.x} ${featuredPin.y - 30}` : `M ${anchor.x} ${anchor.y} L ${anchor.x + 24} ${anchor.y} L ${featuredPin.x - 18} ${featuredPin.y - 2} L ${featuredPin.x} ${featuredPin.y - 30}` }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("circle", { cx: featuredPin.x, cy: featuredPin.y - 30, r: "5" })
@@ -12438,7 +12446,7 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
       } : void 0, onMouseLeave: p.name.startsWith("PB") ? () => {
         ptr.current.pinH = -1;
         state.current.onHover && state.current.onHover(-1);
-      } : void 0, style: p.name.startsWith("PB") ? { left: pbL(p), top: innerWidth <= 1050 ? Math.max(250, Math.min(p.y, (document.querySelector(".story")?.getBoundingClientRect().top ?? 9999) - 30)) : p.y, borderColor: `rgb(${projects[+p.name.slice(2)].accent.map((v2) => Math.round(v2 * 255)).join(",")})` } : { left: p.x, top: p.y }, children: [
+      } : void 0, style: p.name.startsWith("PB") ? { left: pbL(p), top: innerWidth <= 1050 ? Math.max(250, Math.min(p.y, (document.querySelector(".story")?.getBoundingClientRect().top ?? 9999) - 30)) : p.y, transform: state.current.mobile ? void 0 : "translateX(-50%)", borderColor: `rgb(${projects[+p.name.slice(2)].accent.map((v2) => Math.round(v2 * 255)).join(",")})` } : { left: p.x, top: p.y }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("b", { children: p.name.startsWith("PB") && mobile ? "0" + (+p.name.slice(2) + 1) : p.label || DISPLAY[p.name] || p.name }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { children: p.name.startsWith("PB") ? "0" + (+p.name.slice(2) + 1) : pinNum(p.name) })
       ] }, p.name))
