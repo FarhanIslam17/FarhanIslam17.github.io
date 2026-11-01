@@ -12281,7 +12281,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));float fa
               " ",
               stages[active].n,
               " / ",
-              stages[active].sub
+              stages[active].sub.includes(" / ") ? stages[active].sub.split(" / ").map((w) => w.replace(/ /g, "\xA0")).join(" / ") : stages[active].sub
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h1", { children: stages[active].title }),
             stages[active].copy && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { className: "story-copy", children: stages[active].copy }),
