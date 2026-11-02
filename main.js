@@ -11343,7 +11343,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     { name: "TEAMS", x: 0, z: -27, w: 19, d: 10, h: 2.8, color: "package", detail: "Design teams \xB7 Solar Car, Rocketry, FRC 9659" },
     { name: "PROJ", x: 44, z: -26, w: 22, d: 9, h: 3.4, color: "package", detail: "Projects \xB7 hover a block to inspect it" },
     { name: "SKILLS", x: 46, z: 22, w: 18, d: 10, h: 2.6, color: "package", detail: "Skills \xB7 grouped by discipline" },
-    { name: "RESUME", x: -44, z: 22, w: 17, d: 10, h: 2.6, color: "package", detail: "Resume \xB7 the actual PDF opens in a new tab" },
+    { name: "RESUME", x: -44, z: 22, w: 17, d: 10, h: 2.6, color: "package", detail: "Resume \xB7 one-page PDF, linked from the Resume section" },
     { name: "CONTACT", x: -30, z: -1, w: 14, d: 9, h: 2.4, color: "package", detail: "Contact \xB7 email, LinkedIn, GitHub" }
   ];
   var SECTION_NODES = ["INTERN", "TEAMS", "PROJ", "SKILLS", "RESUME", "CONTACT"];
@@ -11813,13 +11813,13 @@ precision mediump float;
   var blitVS = `attribute vec2 p;varying vec2 uv;void main(){uv=p*.5+.5;gl_Position=vec4(p,0.,1.);}`;
   var blitFS = `precision mediump float;varying vec2 uv;uniform sampler2D tex;void main(){gl_FragColor=texture2D(tex,uv);}`;
   function bgFS(deriv) {
-    return (deriv ? "#extension GL_OES_standard_derivatives : enable\n" : "") + `precision mediump float;varying vec2 ndc;uniform mat4 inv;uniform vec3 eye;uniform float opening;uniform float time;void main(){vec4 w0=inv*vec4(ndc,-1.,1.);vec4 w1=inv*vec4(ndc,1.,1.);vec3 rd=normalize(w1.xyz/w1.w-w0.xyz/w0.w);float h=clamp(rd.y*.5+.5,0.,1.);float env=.38+.62*opening;vec3 col=mix(vec3(.052,.108,.122),vec3(.010,.022,.036),pow(h,1.5));float hy=rd.y*3.1;col+=vec3(.05,.125,.115)*exp(-hy*hy)*.75;col*=env;float tp=(-2.3-eye.y)/rd.y;if(tp>0.){vec3 p=eye+rd*tp;float r=length(p.xz);col+=vec3(.11,.25,.19)*exp(-pow(r/40.,2.))*(.16+.84*opening);col+=vec3(.34,.18,.05)*exp(-pow(r/22.,2.))*(.05+.48*opening);col+=vec3(.09,.21,.18)*exp(-pow((r-72.)/22.,2.))*(.09+.30*opening)*(.85+.15*sin(time*.18));}float tg=(-13.5-eye.y)/rd.y;if(tg>0.){vec3 p=eye+rd*tg;float fade=exp(-tg*.009);float r=length(p.xz);
+    return (deriv ? "#extension GL_OES_standard_derivatives : enable\n" : "") + `precision mediump float;varying vec2 ndc;uniform mat4 inv;uniform vec3 eye;uniform float opening;uniform float time;void main(){vec4 w0=inv*vec4(ndc,-1.,1.);vec4 w1=inv*vec4(ndc,1.,1.);vec3 rd=normalize(w1.xyz/w1.w-w0.xyz/w0.w);float h=clamp(rd.y*.5+.5,0.,1.);float env=.38+.62*opening;vec3 col=mix(vec3(.052,.108,.122),vec3(.010,.022,.036),pow(h,1.5));float hy=rd.y*3.1;col+=vec3(.05,.125,.115)*exp(-hy*hy)*.75;col*=env;float tp=(-2.3-eye.y)/rd.y;if(tp>0.){vec3 p=eye+rd*tp;float r=length(p.xz);col+=vec3(.11,.25,.19)*exp(-pow(r/40.,2.))*(.16+.84*opening);col+=vec3(.34,.18,.05)*exp(-pow(r/22.,2.))*(.05+.48*opening);col+=vec3(.09,.21,.18)*exp(-pow((r-72.)/22.,2.))*(.09+.30*opening)*(.85+.15*sin(time*.18));}float tg=(-13.5-eye.y)/rd.y;if(tg>0.){vec3 p=eye+rd*tg;float fade=exp(-tg*.008);float r=length(p.xz);vec2 q=p.xz/9.;vec2 g=abs(fract(q)-.5);
 #ifdef GL_OES_standard_derivatives
-vec2 q=p.xz/56.;vec2 gg=abs(fract(q)-.5);float fw=max(fwidth(q.x)+fwidth(q.y),.006);float seam=smoothstep(.5-.014-fw,.5,max(gg.x,gg.y));vec2 q2=p.xz/14.;vec2 g2=abs(fract(q2)-.5);float fw2=max(fwidth(q2.x)+fwidth(q2.y),.006);float seam2=smoothstep(.5-.009-fw2,.5,max(g2.x,g2.y));
+float fw=fwidth(q.x)+fwidth(q.y);
 #else
-float seam=0.;float seam2=0.;
+float fw=.01;
 #endif
-float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float n2=fract(sin(dot(floor(p.xz*.023),vec2(39.346,11.135)))*24634.6345);col+=vec3(.085,.145,.135)*seam*fade*(.16+.5*opening);col+=vec3(.05,.09,.085)*seam2*fade*(.10+.3*opening);col+=vec3(.05,.08,.075)*(n1*.5+n2-.75)*.13*fade*(.3+.7*opening);col+=vec3(.09,.185,.15)*exp(-pow(r/80.,2.))*(.10+.5*opening);col+=vec3(.28,.15,.045)*exp(-pow(r/36.,2.))*(.04+.28*opening);}float vig=1.-.42*pow(length(ndc*vec2(1.15,1.)),2.4);gl_FragColor=vec4(col*max(vig,0.),1.);}`;
+float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec3(.13,.27,.25)*line*fade*(.25+.75*opening);vec2 q2=p.xz/45.;vec2 g2=abs(fract(q2)-.5);float line2=smoothstep(.48,.5,max(g2.x,g2.y));col+=vec3(.16,.33,.30)*line2*fade*.8*(.25+.75*opening);vec2 q3=p.xz/27.+vec2(time*.006,time*.0035);vec2 cell=floor(q3);vec2 f=fract(q3)-.5;float hsh=fract(sin(dot(cell,vec2(127.1,311.7)))*43758.55);vec2 off=(vec2(fract(hsh*7.13),fract(hsh*3.71))-.5)*.72;float dd=length(f-off);float tw=.45+.55*sin(time*(.5+hsh*1.7)+hsh*43.);col+=vec3(.28,.42,.40)*smoothstep(.10,.01,dd)*.15*tw*fade*step(.15,hsh)*(.3+.7*opening);col+=vec3(.09,.185,.15)*exp(-pow(r/80.,2.))*(.10+.5*opening);col+=vec3(.28,.15,.045)*exp(-pow(r/36.,2.))*(.04+.28*opening);}float vig=1.-.42*pow(length(ndc*vec2(1.15,1.)),2.4);gl_FragColor=vec4(col*max(vig,0.),1.);}`;
   }
   function compile(gl2, type, src) {
     let s = gl2.createShader(type);
@@ -11949,9 +11949,9 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
     if (p.x < (p.name.startsWith("PB") ? 330 : 580) && p.y > h * 0.57) return false;
     return true;
   }
-  function Board({ progress, active, mobile, selected, onSelect, lowMotion, wire, hoverExt, onHover, onTap }) {
-    const ref = (0, import_react23.useRef)(null), state = (0, import_react23.useRef)({ progress, active, selected, mobile, lowMotion, wire, hoverExt, onHover, onTap }), ptr = (0, import_react23.useRef)({ x: -1, y: -1, type: "mouse", tap: false, hit: -1, pinH: -1 });
-    state.current = { progress, active, selected, mobile, lowMotion, wire, hoverExt, onHover, onTap };
+  function Board({ progress, active, mobile, lowMotion, wire, hoverExt, onHover, onTap, onJump }) {
+    const ref = (0, import_react23.useRef)(null), state = (0, import_react23.useRef)({ progress, active, mobile, lowMotion, wire, hoverExt, onHover, onTap }), ptr = (0, import_react23.useRef)({ x: -1, y: -1, type: "mouse", tap: false, hit: -1, pinH: -1 });
+    state.current = { progress, active, mobile, lowMotion, wire, hoverExt, onHover, onTap, onJump };
     const [labels, setLabels] = (0, import_react23.useState)([]), [fallback, setFallback] = (0, import_react23.useState)(false);
     (0, import_react23.useEffect)(() => {
       let canvas = ref.current;
@@ -12049,12 +12049,7 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
       setAttribs();
       gl2.enable(gl2.DEPTH_TEST);
       gl2.disable(gl2.CULL_FACE);
-      let raf = 0, dirB = 1, lastLabel = 0, lastPoints = [], pinHide = false, showAt = 0, slow = false, probeN = 0, probeAcc = 0, lastMs = 0, smooth = parseFloat((location.hash.match(/p=([\d.]+)/) || [])[1] || "0"), focus = null, focusStart = 0, modeBlend = state.current.wire ? 1 : 0;
-      const setFocus = (e2) => {
-        focus = e2.detail;
-        focusStart = performance.now();
-      };
-      window.addEventListener("board-focus", setFocus);
+      let raf = 0, dirB = 1, lastLabel = 0, lastPoints = [], pinHide = false, showAt = 0, slow = false, probeN = 0, probeAcc = 0, lastMs = 0, smooth = parseFloat((location.hash.match(/p=([\d.]+)/) || [])[1] || "0"), modeBlend = state.current.wire ? 1 : 0;
       let tOv = parseFloat((location.hash.match(/t=([\d.]+)/) || [])[1] || "NaN");
       function render(ms2) {
         if (!canvas || !gl2) return;
@@ -12112,19 +12107,7 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
           }
         }
         let cam = { eye: [tween(cn.eye[0], wc.eye[0], modeBlend), tween(cn.eye[1], wc.eye[1], modeBlend), tween(cn.eye[2], wc.eye[2], modeBlend)], to: [tween(cn.to[0], wc.to[0], modeBlend), tween(cn.to[1], wc.to[1], modeBlend), tween(cn.to[2], wc.to[2], modeBlend)] };
-        if (focus) {
-          let node = parts.find((p) => p.name === focus);
-          if (node) {
-            let k2 = Math.max(0, Math.min(1, (ms2 - focusStart) / 650));
-            k2 = k2 * k2 * (3 - 2 * k2);
-            let expiry = Math.max(0, Math.min(1, (5e3 - (ms2 - focusStart)) / 800));
-            k2 *= expiry;
-            cam.to = [tween(cam.to[0], node.x, k2 * 0.9), 0, tween(cam.to[2], node.z, k2 * 0.9)];
-            cam.eye = [tween(cam.eye[0], node.x + 21, k2 * 0.7), tween(cam.eye[1], 27, k2 * 0.7), tween(cam.eye[2], node.z + 26, k2 * 0.7)];
-          }
-          if (ms2 - focusStart > 5e3) focus = null;
-        }
-        if (!s.lowMotion && !focus) {
+        if (!s.lowMotion) {
           let a = Math.sin(ms2 * 16e-5) * 0.05, dx = cam.eye[0] - cam.to[0], dz = cam.eye[2] - cam.to[2], ca2 = Math.cos(a), sa2 = Math.sin(a);
           cam.eye[0] = cam.to[0] + dx * ca2 - dz * sa2;
           cam.eye[2] = cam.to[2] + dx * sa2 + dz * ca2;
@@ -12357,7 +12340,6 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
       raf = requestAnimationFrame(render);
       return () => {
         cancelAnimationFrame(raf);
-        window.removeEventListener("board-focus", setFocus);
         gl2.deleteBuffer(buff);
         gl2.deleteProgram(program);
       };
@@ -12369,7 +12351,7 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
       if (ci >= 0) return String(ci + 1).padStart(2, "0");
       return "";
     };
-    let featured = selected;
+    let featured = null;
     let featuredPin = labels.find((p) => p.name === featured);
     let focusRect = null;
     let anchor = focusRect ? { x: mobile ? focusRect.right - 26 : focusRect.right, y: mobile ? focusRect.top + 12 : focusRect.top + 95 } : null;
@@ -12429,20 +12411,15 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "CONTACT" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "System visualization unavailable. Navigate through the sections below." })
       ] }),
-      !fallback && labels.map((p, i) => p.visible && p.x > -40 && p.x < (ref.current?.clientWidth || 0) + 40 && p.y > 90 && p.y < (ref.current?.clientHeight || 0) - 90 && safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0) && (!state.current.mobile && state.current.active === 0 && SECTION_NODES.includes(p.name) || state.current.active >= 1 && state.current.active <= 7 && p.name === stages[state.current.active].node || state.current.active === 3 && p.name.startsWith("PB") || !state.current.mobile && selected === p.name) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { title: p.detail, "aria-label": `${p.name}: ${p.detail}`, onClick: () => {
+      !fallback && labels.map((p, i) => p.visible && p.x > -40 && p.x < (ref.current?.clientWidth || 0) + 40 && p.y > 90 && p.y < (ref.current?.clientHeight || 0) - 90 && safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0) && (!state.current.mobile && state.current.active === 0 && SECTION_NODES.includes(p.name) || state.current.active >= 1 && state.current.active <= 7 && p.name === stages[state.current.active].node || state.current.active === 3 && p.name.startsWith("PB")) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { title: p.detail, "aria-label": `${p.name}: ${p.detail}`, onClick: () => {
         if (p.name.startsWith("PB")) {
           let pj = projects[+p.name.slice(2)];
           if (!state.current.mobile && pj.url) window.open(pj.url, "_blank", "noopener,noreferrer");
           else if (state.current.onTap) state.current.onTap(+p.name.slice(2));
           return;
         }
-        if (p.name === "RESUME") {
-          openResume();
-          return;
-        }
-        onSelect(p.name === selected ? null : p.name);
-        window.dispatchEvent(new CustomEvent("board-focus", { detail: p.name }));
-      }, className: `pin ${selected === p.name ? "is-active" : ""}${p.name.startsWith("PB") ? " pin-proj" : ""}`, onMouseEnter: p.name.startsWith("PB") ? () => {
+        state.current.onJump && state.current.onJump(p.name);
+      }, className: `pin${p.name.startsWith("PB") ? " pin-proj" : ""}`, onMouseEnter: p.name.startsWith("PB") ? () => {
         ptr.current.pinH = +p.name.slice(2);
         state.current.onHover && state.current.onHover(+p.name.slice(2));
       } : void 0, onMouseLeave: p.name.startsWith("PB") ? () => {
@@ -12479,7 +12456,7 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
     ] });
   }
   function App() {
-    let [progress, setProgress] = (0, import_react23.useState)(0), [selected, setSelected] = (0, import_react23.useState)(null), [mobile, setMobile] = (0, import_react23.useState)(false), [lowMotion, setLowMotion] = (0, import_react23.useState)(false), [ready, setReady] = (0, import_react23.useState)(false), [pHover, setPHover] = (0, import_react23.useState)(-1), [chipHover, setChipHover] = (0, import_react23.useState)(-1), [tapSel, setTapSel] = (0, import_react23.useState)(-1), [lastShown, setLastShown] = (0, import_react23.useState)(-1);
+    let [progress, setProgress] = (0, import_react23.useState)(0), [mobile, setMobile] = (0, import_react23.useState)(false), [lowMotion, setLowMotion] = (0, import_react23.useState)(false), [ready, setReady] = (0, import_react23.useState)(false), [pHover, setPHover] = (0, import_react23.useState)(-1), [chipHover, setChipHover] = (0, import_react23.useState)(-1), [tapSel, setTapSel] = (0, import_react23.useState)(-1), [lastShown, setLastShown] = (0, import_react23.useState)(-1);
     const [travelMode, setTravelMode, saved] = iu("travel-mode.v2", "normal");
     const pendingMode = (0, import_react23.useRef)(null);
     (0, import_react23.useEffect)(() => {
@@ -12529,7 +12506,6 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
       if (effHover >= 0) setLastShown(effHover);
     }, [effHover]);
     (0, import_react23.useEffect)(() => {
-      setSelected(null);
       setPHover(-1);
       setChipHover(-1);
       setTapSel(-1);
@@ -12542,11 +12518,13 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
       let el2 = document.querySelector(".experience");
       let max = el2 ? el2.scrollHeight - el2.clientHeight : 0;
       el2?.scrollTo({ top: stages[n].at * max, behavior: lowMotion ? "instant" : "smooth" });
-      setSelected(null);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_jsx_runtime21.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "experience", id: "top", children: [
       /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: `viewport stage-${active}`, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Board, { progress, active, mobile, selected, onSelect: setSelected, lowMotion, wire: travelMode === "wire", hoverExt: active === 3 ? chipHover >= 0 ? chipHover : tapSel : -1, onHover: setPHover, onTap: (k2) => setTapSel((t) => k2 < 0 || t === k2 ? -1 : k2) }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Board, { progress, active, mobile, lowMotion, onJump: (name) => {
+          let si = stages.findIndex((s) => s.node === name);
+          if (si > 0) jump(si);
+        }, wire: travelMode === "wire", hoverExt: active === 3 ? chipHover >= 0 ? chipHover : tapSel : -1, onHover: setPHover, onTap: (k2) => setTapSel((t) => k2 < 0 || t === k2 ? -1 : k2) }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "vignette" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("header", { className: "topline", children: [
           /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { className: "brand", onClick: () => jump(0), children: [
@@ -12629,17 +12607,6 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
             /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: openResume, children: "Resume \u2197" })
           ] })
         ] }, active),
-        selected && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("aside", { className: "detail", "aria-live": "polite", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => setSelected(null), "aria-label": "Close block detail", children: "\xD7" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("small", { children: [
-            "BLOCK / ",
-            DISPLAY[selected] || selected
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h2", { children: parts.find((p) => p.name === selected)?.detail }),
-          selected === "RESUME" && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: resumePdfUrl, target: "_blank", rel: "noopener noreferrer", children: "Open my resume here \u2197" }) }),
-          selected === "CONTACT" && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("a", { href: "mailto:islam.farhan2014@gmail.com", children: "islam.farhan2014@gmail.com" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "ILLUSTRATIVE BOARD \xB7 NOT A REAL PCB DESIGN" })
-        ] }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "bottomline", children: [
           /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "FIG. 01 / INTERACTIVE PORTFOLIO MAP \xB7 ILLUSTRATIVE BOARD" }),
           /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "progress-line", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { style: { width: `${progress * 100}%` } }) }),
