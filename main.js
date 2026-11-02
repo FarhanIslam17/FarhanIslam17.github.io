@@ -12280,18 +12280,25 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
         if (location.hash.includes("dbg")) document.title = JSON.stringify({ iw: innerWidth, sm: Math.round(smooth * 1e3) });
         if (ms2 - lastLabel > 70) {
           lastLabel = ms2;
-          let points = parts.map((p) => ({ name: p.name, detail: p.detail, ...project([p.x, p.h + 3, p.z], mat, cw, ch) }));
+          let lw = canvas.clientWidth, lh = canvas.clientHeight;
+          let points = parts.map((p) => ({ name: p.name, detail: p.detail, ...project([p.x, p.h + 3, p.z], mat, lw, lh) }));
           if (s.active === 3) projectBlocks.forEach((b, k2) => {
-            let f2 = project([b.x, 0.5, b.z + b.d / 2], mat, cw, ch);
-            points.push({ name: "PB" + k2, label: projects[k2].short, detail: projects[k2].heading, x: f2.x, y: f2.y + 16 + (!s.mobile && k2 % 2 ? 26 : 0), visible: f2.visible, bx: f2.x, by: f2.y });
+            let c = project([b.x, 0.42, b.z], mat, lw, lh), mxy = -1e9, xlo = 1e9, xhi = -1e9;
+            for (let xx of [b.x - b.w / 2, b.x + b.w / 2]) for (let zz of [b.z - b.d / 2, b.z + b.d / 2]) {
+              let q2 = project([xx, 0.42, zz], mat, lw, lh);
+              if (q2.y > mxy) mxy = q2.y;
+              if (q2.x < xlo) xlo = q2.x;
+              if (q2.x > xhi) xhi = q2.x;
+            }
+            points.push({ name: "PB" + k2, label: projects[k2].short, detail: projects[k2].heading, x: (xlo + xhi) / 2, y: mxy + 14 + (!s.mobile && k2 % 2 ? 26 : 0), visible: c.visible, bx: c.x, by: mxy });
           });
           {
             let mob = s.mobile, PHW = mob ? 46 : 62, PHH = mob ? 21 : 12;
             let st3 = document.querySelector(".story")?.getBoundingClientRect();
             let sc = mob ? null : document.querySelector(".story .story-copy")?.getBoundingClientRect();
             let band = mob ? st3 : sc || st3;
-            let stTop = st3 ? st3.top : ch * 0.6;
-            let okPin = (x, y2) => x > -40 && x < cw + 40 && y2 > 90 && y2 < ch - 90 && (mob ? x > 25 && x < cw - 25 && y2 > 170 && y2 < Math.min(ch * 0.56, stTop - (PHH + 18)) : !(x > cw - 170 && y2 < 360 || x < 580 && y2 > ch * 0.57));
+            let stTop = st3 ? st3.top : lh * 0.6;
+            let okPin = (x, y2) => x > -40 && x < lw + 40 && y2 > 90 && y2 < lh - 90 && (mob ? x > 25 && x < lw - 25 && y2 > 170 && y2 < Math.min(lh * 0.56, stTop - (PHH + 18)) : !(x > lw - 170 && y2 < 360 || x < 580 && y2 > lh * 0.57));
             let hitsBand = (x, y2) => {
               if (!band) return false;
               let ix = Math.min(x + PHW, band.right) - Math.max(x - PHW, band.left), iy = Math.min(y2 + PHH, band.bottom) - Math.max(y2 - PHH, band.top);
@@ -12302,7 +12309,7 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
               if (!pq.visible || pq.name.startsWith("PB")) continue;
               if (hitsBand(pq.x, pq.y)) {
                 let nx = band.right + PHW + 10, ny = band.top - (mob ? PHH + 20 : 22);
-                if (okPin(nx, pq.y) && nx + PHW <= cw - 8 && !hitsBand(nx, pq.y)) pq.x = nx;
+                if (okPin(nx, pq.y) && nx + PHW <= lw - 8 && !hitsBand(nx, pq.y)) pq.x = nx;
                 else if (okPin(pq.x, ny) && !hitsBand(pq.x, ny)) pq.y = ny;
                 else if (mob && pq.name !== activeNode) pq.visible = false;
               }
@@ -12310,10 +12317,10 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
             if (mob && s.active === 3) {
               for (let pq of points) {
                 if (pq.name === "PROJ") pq.visible = false;
-                else if (pq.name.startsWith("PB")) pq.y = Math.min(pq.y, Math.min(ch * 0.56, stTop - (PHH + 18)) - 2);
+                else if (pq.name.startsWith("PB")) pq.y = Math.min(pq.y, Math.min(lh * 0.56, stTop - (PHH + 18)) - 2);
               }
               let pbs = points.filter((p) => p.visible && p.name.startsWith("PB")).sort((a, b) => a.x - b.x);
-              let GAP = 30, X0 = 4, X1 = cw - 30;
+              let GAP = 30, X0 = 4, X1 = lw - 30;
               for (let q2 of pbs) q2.x = Math.max(X0, Math.min(q2.x, X1));
               for (let i = 1; i < pbs.length; i++) if (Math.abs(pbs[i].y - pbs[i - 1].y) < 44 && pbs[i].x - pbs[i - 1].x < GAP) pbs[i].x = Math.min(X1, pbs[i - 1].x + GAP);
               for (let i = pbs.length - 2; i >= 0; i--) if (Math.abs(pbs[i + 1].y - pbs[i].y) < 44 && pbs[i + 1].x - pbs[i].x < GAP) pbs[i].x = Math.max(X0, pbs[i + 1].x - GAP);
@@ -12409,11 +12416,6 @@ float n1=fract(sin(dot(floor(p.xz*.081),vec2(12.9898,78.233)))*43758.5453);float
       if (k2 >= 0 && projects[k2].url) window.open(projects[k2].url, "_blank", "noopener,noreferrer");
     }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("canvas", { ref, className: "board", "aria-label": "Illustrative interactive 3D electronic system" }),
-      active === 3 && !mobile && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("svg", { className: "board-leader", "aria-hidden": "true", children: labels.map((p) => {
-        if (!p.name.startsWith("PB") || !p.visible || p.bx == null || p.x < -40 || p.x > (ref.current?.clientWidth || 0) + 40 || p.y <= 90 || p.y >= (ref.current?.clientHeight || 0) - 90 || !safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0)) return null;
-        let a2 = `rgb(${projects[+p.name.slice(2)].accent.map((v2) => Math.round(v2 * 255)).join(",")})`, px2 = Math.max(innerWidth > 1050 ? 545 : 4, Math.min(p.x, innerWidth > 1050 ? innerWidth - 130 : innerWidth - 30));
-        return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("path", { d: `M ${px2} ${p.y - 4} L ${p.bx} ${p.by}`, style: { stroke: a2, opacity: 0.55 } }, "lc" + p.name);
-      }) }),
       leaderOn && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("svg", { className: "board-leader", "aria-hidden": "true", children: [
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("path", { d: mobile ? `M ${anchor.x} ${anchor.y} L ${anchor.x} ${featuredPin.y - 8} L ${featuredPin.x} ${featuredPin.y - 30}` : `M ${anchor.x} ${anchor.y} L ${anchor.x + 24} ${anchor.y} L ${featuredPin.x - 18} ${featuredPin.y - 2} L ${featuredPin.x} ${featuredPin.y - 30}` }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("circle", { cx: featuredPin.x, cy: featuredPin.y - 30, r: "5" })
