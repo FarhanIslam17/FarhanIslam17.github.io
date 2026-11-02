@@ -7953,6 +7953,169 @@ button {
     letter-spacing: .14em;
   }
 }
+.pin:active {
+  background: #25312a;
+  border-color: #f4c287;
+  color: #fff;
+}
+@media (max-width: 1050px) and (orientation: landscape) and (max-height: 560px) {
+  .story {
+    left: 14px;
+    right: auto;
+    bottom: 50px;
+    max-width: min(430px, 48%);
+    max-height: 64vh;
+    overflow-y: auto;
+    background:
+      linear-gradient(
+        90deg,
+        #061011d9 55%,
+        #06101173 82%,
+        transparent);
+    scrollbar-width: none;
+  }
+  .story h1 {
+    font-size: clamp(22px, 8vh, 34px);
+    margin-bottom: 8px;
+  }
+  .story-copy {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .eyebrow {
+    font-size: 8px;
+    margin-bottom: 7px;
+  }
+  .entry-list {
+    max-height: 34vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .entry p {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .entry h3 {
+    font-size: 14px;
+  }
+  .readout {
+    display: none;
+  }
+  .project-focus {
+    margin-top: 8px;
+    max-height: 44vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .project-focus > p:not(.project-type) {
+    font-size: 10px;
+    min-height: 0;
+    margin-bottom: 7px;
+  }
+  .project-focus h2 {
+    font-size: 17px;
+    margin-bottom: 4px;
+  }
+  .project-jumps {
+    flex-wrap: wrap;
+  }
+  .story:has(.project-focus) {
+    bottom: 50px;
+  }
+  .mobile-menu {
+    top: 58px;
+    right: 14px;
+    padding: 8px 11px;
+    min-height: 38px;
+  }
+  .system-nav {
+    top: 100px;
+    max-height: 56vh;
+    overflow-y: auto;
+  }
+  .bottomline {
+    bottom: 10px;
+  }
+  .skills-grid {
+    max-height: 38vh;
+    overflow-y: auto;
+  }
+}
+@media (max-width: 1050px) {
+  .stage-0 .pin {
+    display: flex;
+  }
+}
+@media (max-width: 1050px) {
+  .pin {
+    background: #071a19f5;
+    box-shadow: 0 2px 10px #000c;
+  }
+  .pin b {
+    text-shadow: 0 1px 3px #000;
+  }
+}
+@media (max-width: 1050px) and (orientation: landscape) and (max-height: 560px) {
+  .pin {
+    font-size: 9px;
+    padding: 3px 7px;
+    min-width: 44px;
+    min-height: 36px;
+  }
+  .pin i {
+    display: none;
+  }
+}
+@media (max-width: 1050px) and (orientation: landscape) and (max-height: 560px) {
+  .pin {
+    font-size: 10px;
+    padding: 4px 8px;
+    min-height: 40px;
+    background: #071a19;
+    color: #e8f4ea;
+  }
+}
+.hero-leaders {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+.hero-leaders path {
+  stroke: #c99a6380;
+  stroke-width: 1;
+  fill: none;
+  stroke-dasharray: 3 3;
+}
+.hero-leaders circle {
+  fill: #c99a63;
+}
+.hero-leaders circle {
+  r: 2.5;
+}
+@media (max-width: 1050px) and (orientation: landscape) and (max-height: 560px) {
+  .pins-hidden .stage-0 .pin {
+    visibility: visible !important;
+  }
+}
+@media (max-width: 1050px) and (orientation: landscape) and (max-height: 560px) {
+  .vignette {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(3, 13, 13, .55) 0%,
+        rgba(3, 13, 13, .3) 26%,
+        transparent 62%),
+      linear-gradient(
+        0deg,
+        rgba(3, 13, 13, .4),
+        transparent 20%,
+        transparent 80%,
+        rgba(3, 13, 13, .25));
+  }
+}
 /*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/
 </style><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23061011'/%3E%3Ctext x='5' y='22' font-family='monospace' font-size='14' fill='%23e8b26f'%3EF/I%3C/text%3E%3C/svg%3E"></head><body><div id="root"><div class="experience" id="top"><div class="viewport stage-0"><div class="board-wrap"><canvas class="board" aria-label="Illustrative interactive 3D electronic system" width="633" height="382"></canvas><button title="Internships · General Motors (incoming) and Reaction Dynamics" aria-label="INTERN: Internships · General Motors (incoming) and Reaction Dynamics" class="pin " style="left: 472.773px; top: 224.113px;"><b>INTERNSHIPS</b><i>01</i></button><button title="Design teams · Solar Car, Rocketry, FRC 9659" aria-label="TEAMS: Design teams · Solar Car, Rocketry, FRC 9659" class="pin " style="left: 645.398px; top: 271.526px;"><b>DESIGN TEAMS</b><i>02</i></button><button title="Projects · hover a block to inspect it" aria-label="PROJ: Projects · hover a block to inspect it" class="pin " style="left: 850.268px; top: 334.236px;"><b>PROJECTS</b><i>03</i></button><button title="Skills · grouped by discipline" aria-label="SKILLS: Skills · grouped by discipline" class="pin " style="left: 742.166px; top: 484.152px;"><b>SKILLS</b><i>04</i></button><button title="Resume · the actual PDF opens in a new tab" aria-label="RESUME: Resume · the actual PDF opens in a new tab" class="pin " style="left: 317.133px; top: 308.105px;"><b>RESUME</b><i>05</i></button><button title="Contact · email, LinkedIn, GitHub" aria-label="CONTACT: Contact · email, LinkedIn, GitHub" class="pin " style="left: 451.841px; top: 282.632px;"><b>CONTACT</b><i>06</i></button></div><div class="vignette"></div><header class="topline"><button class="brand"><span class="brand-mark">F<i>/</i>I</span><span>ENGINEERING / 002</span></button><span class="system-state"><span class="live-dot"></span> INTERACTIVE PORTFOLIO MAP<button class="travel-mode" aria-pressed="false" aria-label="Toggle navigation travel mode" title="Not saved. Changes last only while this File is open."><span class="tm-label">TRAVEL / NORMAL</span><span class="tm-pill" aria-hidden="true"><i></i></span></button></span></header><button class="mobile-menu" aria-label="Open section menu">MENU <span>☰</span></button><nav class="system-nav" aria-label="Portfolio sections"><button class="">INTERNSHIPS</button><button class="">DESIGN TEAMS</button><button class="">PROJECTS</button><button class="">SKILLS</button><button class="">RESUME</button><button class="">CONTACT</button></nav><div class="readout"><span>REV 03 / F. ISLAM</span><span>00 / SYSTEM</span><span class="desktop-scroll-cue">SCROLL TO EXPLORE ↓</span></div><div class="story"><p class="eyebrow"><span class="eyebrow-line"></span> 00 / ELECTRICAL&nbsp;ENGINEERING / EMBEDDED&nbsp;SYSTEMS / AVIONICS</p><h1>Farhan Islam</h1><p class="story-copy">Electrical engineering co-op student at McMaster University, B.Eng April 2028.</p></div><div class="bottomline"><span>FIG. 01 / INTERACTIVE PORTFOLIO MAP · ILLUSTRATIVE BOARD</span><div class="progress-line"><i style="width: 0%;"></i></div><span>00%</span></div></div><div class="scroll-track" aria-hidden="true"></div></div></div>
 

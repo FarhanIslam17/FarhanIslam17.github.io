@@ -11302,7 +11302,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/content.ts
   var stages = [
-    { n: "00", node: "", label: "SYSTEM", at: 0, title: "Farhan Islam", sub: "ELECTRICAL ENGINEERING / EMBEDDED SYSTEMS / AVIONICS", copy: "Electrical engineering co-op student at McMaster University, B.Eng April 2028." },
+    { n: "00", node: "", label: "SYSTEM", at: 0, title: "Farhan Islam", sub: "ELECTRICAL ENGINEERING / EMBEDDED SYSTEMS / AVIONICS", copy: "Electrical engineering co-op student at McMaster University. Expected graduation: 2029." },
     { n: "01", node: "INTERN", label: "INTERNSHIPS", at: 0.16, title: "Internships", sub: "GENERAL MOTORS \xB7 REACTION DYNAMICS", copy: "" },
     { n: "02", node: "TEAMS", label: "DESIGN TEAMS", at: 0.32, title: "Design teams", sub: "SOLAR CAR \xB7 ROCKETRY \xB7 FRC 9659", copy: "" },
     { n: "03", node: "PROJ", label: "PROJECTS", at: 0.48, title: "Projects", sub: "BUILDS \xB7 LAB STUDIES \xB7 MEASUREMENT", copy: "" },
@@ -11942,6 +11942,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
   function safepin(p, active, mobile, w, h) {
     if (mobile) {
       let storyTop = document.querySelector(".story")?.getBoundingClientRect().top ?? h * 0.6;
+      if (w > h && h < 560) return p.x > 4 && p.x < w - 4 && p.y > 80 && p.y < h - 70;
       if (p.name.startsWith("PB")) return p.x > 4 && p.x < w + 30 && p.y > 135 && p.y < h - 150;
       return p.x > 25 && p.x < w - 25 && p.y > 170 && p.y < Math.min(h * 0.56, storyTop - 38);
     }
@@ -12086,23 +12087,27 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
           document.documentElement.classList.toggle("pins-hidden", hd);
         }
         if (Math.abs(dsp) > 4e-4) dirB += (Math.sign(dsp) - dirB) * Math.min(1, dt3 / 240);
+        let aspN = canvas.clientWidth / Math.max(1, canvas.clientHeight), narrow = Math.min(1, Math.max(0, (1.05 - aspN) / 0.55));
         let wc = wireCam(smooth, dirB);
         if (s.mobile && smooth < 0.0546) {
-          let wa = Math.min(1, Math.max(0, (canvas.clientWidth - 320) / 70)), coef = 0.69 - 0.19 * wa, mk = 1 + coef * (1 - smooth / 0.0546);
+          let wa = Math.min(1, Math.max(0, (canvas.clientWidth - 320) / 70)), coef = (0.69 - 0.19 * wa) * narrow, mk = 1 + coef * (1 - smooth / 0.0546);
           wc.eye = [wc.to[0] + (wc.eye[0] - wc.to[0]) * mk, wc.eye[1] * mk, wc.to[2] + (wc.eye[2] - wc.to[2]) * mk];
         }
         let target = s.wire ? 1 : 0;
         modeBlend += (target - modeBlend) * Math.min(1, dt3 / 260);
         let cn = cameraAt(smooth);
         if (s.mobile) {
+          let zf = 1 + 0.32 * narrow;
           if (smooth < 0.12) {
             let kk = smoother(smooth / 0.12);
             let wa2 = Math.min(1, Math.max(0, (canvas.clientWidth - 320) / 70)), ex = 113 + 14 * (1 - wa2), ey = 137 + 17 * (1 - wa2), ez = 186 + 23 * (1 - wa2);
-            cn.eye = [tween(ex, cn.eye[0] * 1.32, kk), tween(ey, cn.eye[1] * 1.32, kk), tween(ez, cn.eye[2] * 1.32, kk)];
-            cn.to = [tween(2, cn.to[0], kk), tween(0, 0, kk), tween(0, cn.to[2], kk)];
+            ex = tween(cn.eye[0] * zf, ex, narrow);
+            ey = tween(cn.eye[1] * zf, ey, narrow);
+            ez = tween(cn.eye[2] * zf, ez, narrow);
+            cn.eye = [tween(ex, cn.eye[0] * zf, kk), tween(ey, cn.eye[1] * zf, kk), tween(ez, cn.eye[2] * zf, kk)];
+            cn.to = [tween(tween(cn.to[0], 2, narrow), cn.to[0], kk), 0, tween(tween(cn.to[2], 0, narrow), cn.to[2], kk)];
           } else {
-            let zoom = 1.32;
-            cn.eye = [cn.eye[0] * zoom, cn.eye[1] * zoom, cn.eye[2] * zoom];
+            cn.eye = [cn.eye[0] * zf, cn.eye[1] * zf, cn.eye[2] * zf];
             cn.to = [cn.to[0], 0, cn.to[2]];
           }
         }
@@ -12281,7 +12286,8 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
             let sc = mob ? null : document.querySelector(".story .story-copy")?.getBoundingClientRect();
             let band = mob ? st3 : sc || st3;
             let stTop = st3 ? st3.top : lh * 0.6;
-            let okPin = (x, y2) => x > -40 && x < lw + 40 && y2 > 90 && y2 < lh - 90 && (mob ? x > 25 && x < lw - 25 && y2 > 170 && y2 < Math.min(lh * 0.56, stTop - (PHH + 18)) : !(x > lw - 170 && y2 < 360 || x < 580 && y2 > lh * 0.57));
+            let landShort = mob && lw > lh && lh < 560;
+            let okPin = (x, y2) => x > -40 && x < lw + 40 && y2 > 90 && y2 < lh - 90 && (mob ? landShort ? x > 8 + PHW && x < lw - 8 - PHW && y2 > 88 + PHH && y2 < lh - 88 - PHH : x > 25 && x < lw - 25 && y2 > 170 && y2 < Math.min(lh * 0.56, stTop - (PHH + 18)) : !(x > lw - 170 && y2 < 360 || x < 580 && y2 > lh * 0.57));
             let hitsBand = (x, y2) => {
               if (!band) return false;
               let ix = Math.min(x + PHW, band.right) - Math.max(x - PHW, band.left), iy = Math.min(y2 + PHH, band.bottom) - Math.max(y2 - PHH, band.top);
@@ -12294,40 +12300,133 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
                 let nx = band.right + PHW + 10, ny = band.top - (mob ? PHH + 20 : 22);
                 if (okPin(nx, pq.y) && nx + PHW <= lw - 8 && !hitsBand(nx, pq.y)) pq.x = nx;
                 else if (okPin(pq.x, ny) && !hitsBand(pq.x, ny)) pq.y = ny;
-                else if (mob && pq.name !== activeNode) pq.visible = false;
+                else if (mob && pq.name !== activeNode && !(s.active === 0 && SECTION_NODES.includes(pq.name))) pq.visible = false;
+              }
+            }
+            if (mob) for (let pq of points) {
+              if (pq.name.startsWith("PB") || !pq.visible) continue;
+              let must = pq.name === activeNode || s.active === 0 && SECTION_NODES.includes(pq.name);
+              if (!must) continue;
+              if (landShort) {
+                pq.x = Math.max(10 + PHW, Math.min(pq.x, lw - 10 - PHW));
+                pq.y = Math.max(90 + PHH, Math.min(pq.y, lh - 90 - PHH));
+                if (hitsBand(pq.x, pq.y)) {
+                  let nx = band ? band.right + PHW + 10 : pq.x;
+                  if (band && nx + PHW <= lw - 8 && !hitsBand(nx, pq.y)) pq.x = nx;
+                  else if (band) pq.y = Math.max(90 + PHH, band.top - PHH - 8);
+                }
+              } else {
+                let yLo = Math.min(lh * 0.56, stTop - (PHH + 18));
+                if (yLo < 196) yLo = 196;
+                pq.x = Math.max(27, Math.min(pq.x, lw - 27));
+                pq.y = Math.max(172, Math.min(pq.y, yLo - 2));
               }
             }
             if (mob && s.active === 3) {
               for (let pq of points) {
                 if (pq.name === "PROJ") pq.visible = false;
-                else if (pq.name.startsWith("PB")) pq.y = Math.min(pq.y, Math.min(lh * 0.56, stTop - (PHH + 18)) - 2);
+                else if (pq.name.startsWith("PB")) {
+                  if (landShort) {
+                    pq.y = Math.max(90 + PHH, Math.min(pq.y, lh - 90 - PHH));
+                    if (hitsBand(pq.x, pq.y)) {
+                      let nx = band ? band.right + PHW + 10 : pq.x;
+                      if (band && nx + PHW <= lw - 8 && !hitsBand(nx, pq.y)) pq.x = nx;
+                      else if (band) pq.y = Math.max(90 + PHH, band.top - PHH - 8);
+                    }
+                  } else pq.y = Math.min(pq.y, Math.min(lh * 0.56, stTop - (PHH + 18)) - 2);
+                }
               }
               let pbs = points.filter((p) => p.visible && p.name.startsWith("PB")).sort((a, b) => a.x - b.x);
-              let GAP = 30, X0 = 4, X1 = lw - 30;
+              let GAP = 30, X0 = 6, X1 = lw - 30;
               for (let q2 of pbs) q2.x = Math.max(X0, Math.min(q2.x, X1));
               for (let i = 1; i < pbs.length; i++) if (Math.abs(pbs[i].y - pbs[i - 1].y) < 44 && pbs[i].x - pbs[i - 1].x < GAP) pbs[i].x = Math.min(X1, pbs[i - 1].x + GAP);
               for (let i = pbs.length - 2; i >= 0; i--) if (Math.abs(pbs[i + 1].y - pbs[i].y) < 44 && pbs[i + 1].x - pbs[i].x < GAP) pbs[i].x = Math.max(X0, pbs[i + 1].x - GAP);
             }
             let vis = points.filter((p) => p.visible && !p.name.startsWith("PB"));
-            for (let i = 0; i < vis.length; i++) for (let j2 = i + 1; j2 < vis.length; j2++) {
-              let A3 = vis[i], B3 = vis[j2];
-              if (A3.name === activeNode && B3.name === activeNode) continue;
-              let loser = A3.name === activeNode ? B3 : B3.name === activeNode ? A3 : CHIPS.includes(A3.name) && !CHIPS.includes(B3.name) ? A3 : CHIPS.includes(B3.name) && !CHIPS.includes(A3.name) ? B3 : B3;
-              let hwf = (q2) => mob && q2.name.startsWith("PB") ? 18 : PHW;
-              let ox = hwf(A3) + hwf(B3) - Math.abs(A3.x - B3.x), oy = 2 * PHH - Math.abs(A3.y - B3.y);
-              if (ox <= 2 || oy <= 2) continue;
-              let cands = [[loser.x, loser.y - oy - 8], [loser.x, loser.y + oy + 8], [loser.x + ox + 8, loser.y], [loser.x - ox - 8, loser.y]];
-              let done = false;
-              for (let [cx2, cy2] of cands) {
-                let clash = vis.some((p) => p !== loser && Math.abs(p.x - cx2) < hwf(p) + hwf(loser) - 2 && Math.abs(p.y - cy2) < 2 * PHH - 2);
-                if (!clash && okPin(cx2, cy2) && !hitsBand(cx2, cy2)) {
-                  loser.x = cx2;
-                  loser.y = cy2;
-                  done = true;
-                  break;
+            let hwf = (q2) => mob ? q2.name.startsWith("PB") ? 18 : 14 + (DISPLAY[q2.name] || q2.name).length * 4.6 : PHW;
+            let pickLoser = (A3, B3) => A3.name === activeNode ? B3 : B3.name === activeNode ? A3 : CHIPS.includes(A3.name) && !CHIPS.includes(B3.name) ? A3 : CHIPS.includes(B3.name) && !CHIPS.includes(A3.name) ? B3 : B3;
+            for (let pass = 0; pass < 7; pass++) {
+              let moved = false;
+              for (let i = 0; i < vis.length; i++) for (let j2 = i + 1; j2 < vis.length; j2++) {
+                let A3 = vis[i], B3 = vis[j2];
+                if (!A3.visible || !B3.visible) continue;
+                if (A3.name === activeNode && B3.name === activeNode) continue;
+                let loser = pickLoser(A3, B3);
+                let ox = hwf(A3) + hwf(B3) - Math.abs(A3.x - B3.x), oy = 2 * PHH - Math.abs(A3.y - B3.y);
+                if (ox <= 2 || oy <= 2) continue;
+                let done = false;
+                for (let cand of [loser, loser === A3 ? B3 : A3]) {
+                  for (let m = 1; m <= 8 && !done; m++) {
+                    let cands = [[cand.x, cand.y - oy - 8 * m], [cand.x, cand.y + oy + 8 * m], [cand.x + ox + 8 * m, cand.y], [cand.x - ox - 8 * m, cand.y]];
+                    for (let [cx2, cy2] of cands) {
+                      let clash = vis.some((p) => p !== cand && p.visible && Math.abs(p.x - cx2) < hwf(p) + hwf(cand) - 2 && Math.abs(p.y - cy2) < 2 * PHH - 2);
+                      if (!clash && okPin(cx2, cy2) && !hitsBand(cx2, cy2)) {
+                        cand.x = cx2;
+                        cand.y = cy2;
+                        done = true;
+                        moved = true;
+                        break;
+                      }
+                    }
+                  }
+                  if (done) break;
+                }
+                if (!done && mob && CHIPS.includes(loser.name)) {
+                  loser.visible = false;
+                  moved = true;
                 }
               }
-              if (!done && mob && CHIPS.includes(loser.name)) loser.visible = false;
+              if (!moved) break;
+            }
+            if (mob && landShort) {
+              let yMin = 90 + PHH, yMax = landShort ? lh - 90 - PHH : Math.min(lh * 0.56, stTop - (PHH + 18)) - 2, xMin = landShort ? 8 + PHW : 27, xMax = landShort ? lw - 8 - PHW : lw - 27;
+              for (let pass = 0; pass < 10; pass++) {
+                let any = false;
+                for (let i = 0; i < vis.length; i++) for (let j2 = i + 1; j2 < vis.length; j2++) {
+                  let A3 = vis[i], B3 = vis[j2];
+                  if (!A3.visible || !B3.visible) continue;
+                  if (A3.name === activeNode && B3.name === activeNode) continue;
+                  let ox = hwf(A3) + hwf(B3) - Math.abs(A3.x - B3.x), oy = 2 * PHH - Math.abs(A3.y - B3.y);
+                  if (ox <= 2 || oy <= 2) continue;
+                  any = true;
+                  let loser = pickLoser(A3, B3);
+                  let other = loser === A3 ? B3 : A3;
+                  let dir = loser.y <= other.y ? -1 : 1;
+                  let ny = loser.y + dir * (oy + 6);
+                  if (ny >= yMin && ny <= yMax) {
+                    loser.y = ny;
+                  } else {
+                    let nx = loser.x + (loser.x <= other.x ? -1 : 1) * (ox + 6);
+                    loser.x = Math.max(xMin, Math.min(nx, xMax));
+                    loser.y = Math.max(yMin, Math.min(loser.y, yMax));
+                  }
+                }
+                if (!any) break;
+              }
+            }
+            if (mob && landShort && s.active === 0) {
+              let bx = band ? band.right : 0;
+              let gx0 = Math.max(bx + 80, 120), gx1 = lw - 70;
+              let GRIDORDER = ["INTERN", "TEAMS", "PROJ", "SKILLS", "RESUME", "CONTACT"];
+              let gpins = GRIDORDER.map((n) => points.find((p) => p.name === n)).filter(Boolean);
+              for (let pq of gpins) {
+                pq.visible = true;
+                pq.ax = pq.x;
+                pq.ay = pq.y;
+              }
+              let grow = [gpins.slice(0, 3).sort((a, b) => a.ax - b.ax), gpins.slice(3).sort((a, b) => a.ax - b.ax)];
+              for (let r = 0; r < 2; r++) {
+                let row = grow[r], px = -1e9;
+                for (let pq of row) {
+                  pq.x = Math.max(pq.ax, px + 122, (band ? band.right : 0) + 66);
+                  px = pq.x;
+                }
+                let over = px + 56 - (lw - 56);
+                if (over > 0) {
+                  for (let pq of row) pq.x -= over;
+                }
+                for (let pq of row) pq.y = r < 1 ? lh * 0.32 : lh * 0.54;
+              }
             }
           }
           if (!lastPoints.length || points.some((p, i) => Math.abs(p.x - lastPoints[i].x) > 0.5 || Math.abs(p.y - lastPoints[i].y) > 0.5 || p.visible !== lastPoints[i].visible)) {
@@ -12402,6 +12501,10 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("path", { d: mobile ? `M ${anchor.x} ${anchor.y} L ${anchor.x} ${featuredPin.y - 8} L ${featuredPin.x} ${featuredPin.y - 30}` : `M ${anchor.x} ${anchor.y} L ${anchor.x + 24} ${anchor.y} L ${featuredPin.x - 18} ${featuredPin.y - 2} L ${featuredPin.x} ${featuredPin.y - 30}` }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("circle", { cx: featuredPin.x, cy: featuredPin.y - 30, r: "5" })
       ] }),
+      mobile && active === 0 && innerWidth > innerHeight && innerHeight < 560 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("svg", { className: "hero-leaders", "aria-hidden": "true", children: labels.filter((p) => p.visible && p.ax != null).map((p) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("g", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("path", { d: `M ${p.x} ${p.y + 20} L ${p.ax} ${p.ay}` }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("circle", { cx: p.ax, cy: p.ay, r: "3" })
+      ] }, p.name)) }),
       fallback && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "fallback-board", children: [
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "INTERNSHIPS" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "TEAMS" }),
@@ -12411,7 +12514,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "CONTACT" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "System visualization unavailable. Navigate through the sections below." })
       ] }),
-      !fallback && labels.map((p, i) => p.visible && p.x > -40 && p.x < (ref.current?.clientWidth || 0) + 40 && p.y > 90 && p.y < (ref.current?.clientHeight || 0) - 90 && safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0) && (!state.current.mobile && state.current.active === 0 && SECTION_NODES.includes(p.name) || state.current.active >= 1 && state.current.active <= 7 && p.name === stages[state.current.active].node || state.current.active === 3 && p.name.startsWith("PB")) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { title: p.detail, "aria-label": `${p.name}: ${p.detail}`, onClick: () => {
+      !fallback && labels.map((p, i) => p.visible && p.x > -40 && p.x < (ref.current?.clientWidth || 0) + 40 && p.y > 90 && p.y < (ref.current?.clientHeight || 0) - 90 && safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0) && (state.current.active === 0 && SECTION_NODES.includes(p.name) || state.current.active >= 1 && state.current.active <= 7 && p.name === stages[state.current.active].node || state.current.active === 3 && p.name.startsWith("PB")) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { title: p.detail, "aria-label": `${p.name}: ${p.detail}`, onClick: () => {
         if (p.name.startsWith("PB")) {
           let pj = projects[+p.name.slice(2)];
           if (!state.current.mobile && pj.url) window.open(pj.url, "_blank", "noopener,noreferrer");

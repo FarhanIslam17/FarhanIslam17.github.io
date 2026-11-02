@@ -22,6 +22,7 @@ live site, check out the tag and redeploy (or revert `main` to that commit).
 | i20    | Nov 1, 6:08 PM          | Project label association fix: labels anchored to block front-bottom geometry, centered, accent connectors; declutter no longer moves project labels |
 | i21    | Nov 1, 7:40 PM          | Project labels centered under their visible blocks via canvas CSS box screen mapping; rollback baseline for i22 |
 | i22    | Nov 2, 12:50 AM         | Board pins navigate via existing jump() instead of opening the .detail modal (modal removed); rectangular grid floor restored from i18e on the muted i21 base; story scrollbar line and desktop hero eyebrow orphan fixed; RESUME pin copy matches navigation (reviewed) |
+| i23    | Nov 2, 2:25 AM          | Responsive label repair (reviewed, independent QA pass): mobile hero render-gate fix, clamp-into-band culling, landscape-short mode with compact story column, aspect-aware camera, iterative pin declutter, anchor-tracking 3x2 hero label grid with dashed leaders to real 3D anchors, 44px tap targets with :active feedback, landscape-short vignette lift (bottom-row label contrast 9.9-11.2:1 measured), hero copy "Expected graduation: 2029" |
 
 ## Source snapshots (archive/sources/)
 
@@ -38,7 +39,8 @@ publicly:
 - `i19b` - pin-declutter build, superseded by i20
 - `i20` - previous live version
 - `i21` - previous live version, rollback point for i22
-- `i22` - current live version
+- `i22` - previous live version, rollback point for i23
+- `i23` - current live version
 
 Content hashes (sha256, first 12 chars) so snapshots can be told apart:
 
@@ -61,3 +63,4 @@ Content hashes (sha256, first 12 chars) so snapshots can be told apart:
 | i20        | 7fc3e8c4c799 | ac71f7c96c91 | 989ab2a3074e |
 | i21        | b95378ddeacd | ac71f7c96c91 | 989ab2a3074e |
 | i22        | b7c6d0707e76 | ac71f7c96c91 | 867388f3cf8c |
+| i23        | d6de9069b1cf | ab9b9b936933 | f12ff0221325 |
