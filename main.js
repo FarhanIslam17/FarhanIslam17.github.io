@@ -12715,6 +12715,8 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
     }, [active]);
     (0, import_react23.useEffect)(() => {
       let dead = false;
+      window.goatcounter = window.goatcounter || {};
+      window.goatcounter.path = function(p) { return (p || "").replace(/[?#].*$/, "") || "/"; };
       let sc = document.createElement("script");
       sc.defer = true;
       sc.setAttribute("data-goatcounter", "https://farhanislam.goatcounter.com/count");
@@ -12722,7 +12724,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
       sc.onerror = () => setVisitors((v2) => v2 === "err" ? "err" : "err");
       document.head.appendChild(sc);
       let t = setTimeout(() => {
-        fetch("https://farhanislam.goatcounter.com/counter//.json").then((r) => r.json()).then((j2) => {
+        fetch("https://farhanislam.goatcounter.com/counter//.json?start=2020-01-01").then((r) => r.ok ? r.json() : { count: 0, count_unique: 0 }).then((j2) => {
           if (!dead && j2) {
             let n = j2.count_unique !== void 0 ? j2.count_unique : j2.count;
             if (n !== void 0 && n !== null) setVisitors(String(n));
