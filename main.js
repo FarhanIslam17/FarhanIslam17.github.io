@@ -11347,6 +11347,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     { name: "CONTACT", x: -30, z: -1, w: 14, d: 9, h: 2.4, color: "package", detail: "Contact \xB7 email, LinkedIn, GitHub" }
   ];
   var SECTION_NODES = ["INTERN", "TEAMS", "PROJ", "SKILLS", "RESUME", "CONTACT"];
+  var pbHoverOn = (a) => a === 0 || a === 3 || a === 6;
   var CHIPS = { includes: (n) => typeof n === "string" && n.startsWith("PB") };
   var DISPLAY = { INTERN: "INTERNSHIPS", TEAMS: "DESIGN TEAMS", PROJ: "PROJECTS", SKILLS: "SKILLS", ABOUT: "ABOUT", RESUME: "RESUME", CONTACT: "CONTACT" };
   var ROUTE_WAYPOINTS = [
@@ -11844,7 +11845,9 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
     { t: 0.64, eye: [22, 36, 54], to: [46, 0, 22] },
     { t: 0.8, eye: [-16, 38, 56], to: [-44, 0, 22] },
     { t: 0.94, eye: [-4, 36, 38], to: [-30, 0, -1] },
-    { t: 1, eye: [86, 90, 102], to: [0, 0, 0] }
+    /* i52: settled end view now matches the opening framing scale (was ~8% closer,
+       cropping the SKILLS block's bottom edge on desktop); same look direction, hero unchanged. */
+    { t: 1, eye: [93, 98, 111], to: [0, 0, 8] }
   ];
   function cameraAt(p) {
     let i = keys.findIndex((k2) => k2.t >= p);
@@ -11861,7 +11864,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
     { t: 0.64, node: "SKILLS", eye: [46, 27, 46], to: [46, 0, 22] },
     { t: 0.8, node: "RESUME", eye: [-44, 27, 46], to: [-44, 0, 22] },
     { t: 0.94, node: "CONTACT", eye: [-30, 24, 22], to: [-30, 0, -1] },
-    { t: 1, node: "OV", eye: [86, 90, 102], to: [0, 0, 0] }
+    { t: 1, node: "OV", eye: [93, 98, 111], to: [0, 0, 8] }
   ];
   var routeData = navRoutes.map((r) => {
     let lens = r.pts.slice(1).map((p, i) => Math.hypot(p[0] - r.pts[i][0], p[1] - r.pts[i][1]));
@@ -12048,7 +12051,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
       locMain.uPh = locMain["uPh[0]"];
       locMain.uAcc = locMain["uAcc[0]"];
       let locHalo = mkLocs(haloProg, []);
-      let hovAmt = new Array(8).fill(0), hovPh = new Array(8).fill(0), hovOn = new Array(8).fill(0), hovStart = new Array(8).fill(0), lastHit = -1;
+      let hovAmt = new Array(8).fill(0), hovPh = Array.from({ length: 8 }, (_3, k2) => k2 * 0.2), hovOn = new Array(8).fill(0), lastHit = -1;
       let accArr = new Float32Array(24);
       projects.forEach((pr2, k2) => accArr.set(pr2.accent, k2 * 3));
       let uOpen0 = gl2.getUniformLocation(program, "opening"), uEV0 = gl2.getUniformLocation(program, "uEnv");
@@ -12199,7 +12202,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
         };
         ptr.current.ctx = { mat, invM, eye: cam.eye.slice() };
         let hitNow = -1;
-        if ((s.active === 3 || s.active === 0) && ptr.current.x >= 0) hitNow = rayPick(invM, ptr.current.x, ptr.current.y);
+        if (pbHoverOn(s.active) && ptr.current.x >= 0) hitNow = rayPick(invM, ptr.current.x, ptr.current.y);
         if (hitNow !== lastHit) {
           lastHit = hitNow;
           if (ptr.current.type === "mouse" && !(ptr.current.pinH >= 0)) s.onHover && s.onHover(hitNow);
@@ -12211,11 +12214,10 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
         }
         let eff = ptr.current.pinH >= 0 ? ptr.current.pinH : hitNow >= 0 && ptr.current.type === "mouse" ? hitNow : s.hoverExt;
         for (let k2 = 0; k2 < 8; k2++) {
-          let tgt = (s.active === 3 || s.active === 0) && k2 === eff ? 1 : 0;
-          if (tgt && !hovOn[k2]) hovStart[k2] = ms2;
+          let tgt = pbHoverOn(s.active) && k2 === eff ? 1 : 0;
           hovOn[k2] = tgt;
           hovAmt[k2] += (tgt - hovAmt[k2]) * Math.min(1, dt3 / (tgt ? 130 : 240));
-          hovPh[k2] = s.lowMotion ? 0.12 : (tgt ? (ms2 - hovStart[k2]) / 1700 : ms2 / 1700 + k2 * 0.2) % 1;
+          hovPh[k2] = s.lowMotion ? 0.12 : (hovPh[k2] + dt3 / 1700 * (1 + hovAmt[k2])) % 1;
         }
         gl2.uniform1f(locMain.uNode, wc.nodeEmit);
         gl2.uniform1f(locMain.uNodeOn, wc.nodeOn);
@@ -12276,7 +12278,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
           lastLabel = ms2;
           let lw = canvas.clientWidth, lh = canvas.clientHeight;
           let points = parts.map((p) => ({ name: p.name, detail: p.detail, ...project([p.x, p.h + 3, p.z], mat, lw, lh) }));
-          if (s.active === 3 || s.active === 0) projectBlocks.forEach((b, k2) => {
+          if (pbHoverOn(s.active)) projectBlocks.forEach((b, k2) => {
             let c = project([b.x, 0.42, b.z], mat, lw, lh), mxy = -1e9, xlo = 1e9, xhi = -1e9;
             for (let xx of [b.x - b.w / 2, b.x + b.w / 2]) for (let zz of [b.z - b.d / 2, b.z + b.d / 2]) {
               let q2 = project([xx, 0.42, zz], mat, lw, lh);
@@ -12587,7 +12589,14 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
     }, onClick: (e2) => {
       if (e2.target.closest && e2.target.closest(".pin")) return;
       let k2 = ptr.current.type === "mouse" ? pickAt(e2) : -1;
-      if (k2 >= 0 && state.current.onPick) state.current.onPick(k2);
+      if (k2 >= 0) {
+        ptr.current.x = -1;
+        ptr.current.y = -1;
+        ptr.current.mh = -1;
+        setHovPB(-1);
+        state.current.onHover && state.current.onHover(-1);
+        state.current.onPick && state.current.onPick(k2);
+      }
     }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("canvas", { ref, className: "board", "aria-label": "Illustrative interactive 3D electronic system" }),
       leaderOn && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("svg", { className: "board-leader", "aria-hidden": "true", children: [
@@ -12607,8 +12616,9 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "CONTACT" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "System visualization unavailable. Navigate through the sections below." })
       ] }),
-      !fallback && labels.map((p, i) => p.visible && p.x > -40 && p.x < (ref.current?.clientWidth || 0) + 40 && p.y > 90 && p.y < (ref.current?.clientHeight || 0) - 90 && safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0) && (state.current.active === 0 && SECTION_NODES.includes(p.name) || state.current.active >= 1 && state.current.active <= 7 && p.name === stages[state.current.active].node || (state.current.active === 3 && state.current.mobile && p.name.startsWith("PB") || state.current.active === 0 && !state.current.mobile && p.name === "PB" + hovPB)) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { title: p.detail, "aria-label": `${p.name}: ${p.detail}`, onClick: () => {
+      !fallback && labels.map((p, i) => p.visible && p.x > -40 && p.x < (ref.current?.clientWidth || 0) + 40 && p.y > 90 && p.y < (ref.current?.clientHeight || 0) - 90 && safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0) && (state.current.active === 0 && SECTION_NODES.includes(p.name) || state.current.active >= 1 && state.current.active <= 7 && p.name === stages[state.current.active].node || (state.current.active === 3 && state.current.mobile && p.name.startsWith("PB") || (state.current.active === 0 || state.current.active === 6) && !state.current.mobile && p.name === "PB" + hovPB)) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { title: p.detail, "aria-label": `${p.name}: ${p.detail}`, onClick: () => {
         if (p.name.startsWith("PB")) {
+          ptr.current.pinH = -1;
           state.current.onPick && state.current.onPick(+p.name.slice(2));
           return;
         }
@@ -12619,7 +12629,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
       } : void 0, onMouseLeave: p.name.startsWith("PB") ? () => {
         ptr.current.pinH = -1;
         state.current.onHover && state.current.onHover(-1);
-      } : void 0, style: p.name.startsWith("PB") ? { left: mobile && pbSpace[p.name]?.x != null ? pbSpace[p.name].x : pbL(p), top: state.current.active === 0 ? p.ry ?? p.y : pbSpace[p.name]?.y ?? p.y, transform: state.current.mobile ? void 0 : "translateX(-50%)", borderColor: `rgb(${projects[+p.name.slice(2)].accent.map((v2) => Math.round(v2 * 255)).join(",")})` } : { left: p.x, top: p.y }, children: [
+      } : void 0, style: p.name.startsWith("PB") ? { left: mobile && pbSpace[p.name]?.x != null ? pbSpace[p.name].x : pbL(p), top: state.current.active === 0 || state.current.active === 6 ? p.ry ?? p.y : pbSpace[p.name]?.y ?? p.y, transform: state.current.mobile ? void 0 : "translateX(-50%)", borderColor: `rgb(${projects[+p.name.slice(2)].accent.map((v2) => Math.round(v2 * 255)).join(",")})` } : { left: p.x, top: p.y }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("b", { children: p.name.startsWith("PB") && mobile ? "0" + (+p.name.slice(2) + 1) : p.label || DISPLAY[p.name] || p.name }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { children: p.name.startsWith("PB") ? "0" + (+p.name.slice(2) + 1) : pinNum(p.name) })
       ] }, p.name))
@@ -12805,7 +12815,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
             " / ",
             stages[active].label
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "desktop-scroll-cue", children: "SCROLL TO EXPLORE \u2193" })
+          progress < 0.9985 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "desktop-scroll-cue", children: "SCROLL TO EXPLORE \u2193" })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "story", children: [
           /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("p", { className: "eyebrow", children: [

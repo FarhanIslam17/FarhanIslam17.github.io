@@ -8163,3 +8163,27 @@ button {
   }
 }
 /*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/
+
+/* i52: keep tall story panels (e.g. Skills) clear of the VISITORS badge / topline zone. */
+@media (min-width: 1051px) {
+  .story {
+    max-height: calc(100svh - 240px);
+  }
+}
+@media (min-width: 1051px) and (max-height: 560px) {
+  .story {
+    max-height: calc(100svh - 170px);
+  }
+}
+
+/* i52: wrap the project selector chips on narrow/touch layouts so all five controls stay
+   fully visible and tappable (the nowrap+fade scroll clipped the fifth chip at tablet widths). */
+@media (max-width: 1050px) {
+  .project-jumps {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+    padding-right: 0;
+  }
+}
