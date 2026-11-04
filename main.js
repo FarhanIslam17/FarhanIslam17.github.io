@@ -11958,7 +11958,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
   function Board({ progress, active, mobile, lowMotion, wire, hoverExt, onHover, onTap, onJump, onPick }) {
     const ref = (0, import_react23.useRef)(null), state = (0, import_react23.useRef)({ progress, active, mobile, lowMotion, wire, hoverExt, onHover, onTap }), ptr = (0, import_react23.useRef)({ x: -1, y: -1, type: "mouse", tap: false, hit: -1, pinH: -1 });
     state.current = { progress, active, mobile, lowMotion, wire, hoverExt, onHover, onTap, onJump, onPick };
-    const [labels, setLabels] = (0, import_react23.useState)([]), [fallback, setFallback] = (0, import_react23.useState)(false);
+    const [labels, setLabels] = (0, import_react23.useState)([]), [fallback, setFallback] = (0, import_react23.useState)(false), [hovPB, setHovPB] = (0, import_react23.useState)(-1);
     (0, import_react23.useEffect)(() => {
       let canvas = ref.current;
       if (!canvas) return;
@@ -12199,7 +12199,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
         };
         ptr.current.ctx = { mat, invM, eye: cam.eye.slice() };
         let hitNow = -1;
-        if (s.active === 3 && ptr.current.x >= 0) hitNow = rayPick(invM, ptr.current.x, ptr.current.y);
+        if ((s.active === 3 || s.active === 0) && ptr.current.x >= 0) hitNow = rayPick(invM, ptr.current.x, ptr.current.y);
         if (hitNow !== lastHit) {
           lastHit = hitNow;
           if (ptr.current.type === "mouse" && !(ptr.current.pinH >= 0)) s.onHover && s.onHover(hitNow);
@@ -12211,7 +12211,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
         }
         let eff = ptr.current.pinH >= 0 ? ptr.current.pinH : hitNow >= 0 && ptr.current.type === "mouse" ? hitNow : s.hoverExt;
         for (let k2 = 0; k2 < 8; k2++) {
-          let tgt = s.active === 3 && k2 === eff ? 1 : 0;
+          let tgt = (s.active === 3 || s.active === 0) && k2 === eff ? 1 : 0;
           if (tgt && !hovOn[k2]) hovStart[k2] = ms2;
           hovOn[k2] = tgt;
           hovAmt[k2] += (tgt - hovAmt[k2]) * Math.min(1, dt3 / (tgt ? 130 : 240));
@@ -12276,7 +12276,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
           lastLabel = ms2;
           let lw = canvas.clientWidth, lh = canvas.clientHeight;
           let points = parts.map((p) => ({ name: p.name, detail: p.detail, ...project([p.x, p.h + 3, p.z], mat, lw, lh) }));
-          if (s.active === 3) projectBlocks.forEach((b, k2) => {
+          if (s.active === 3 || s.active === 0) projectBlocks.forEach((b, k2) => {
             let c = project([b.x, 0.42, b.z], mat, lw, lh), mxy = -1e9, xlo = 1e9, xhi = -1e9;
             for (let xx of [b.x - b.w / 2, b.x + b.w / 2]) for (let zz of [b.z - b.d / 2, b.z + b.d / 2]) {
               let q2 = project([xx, 0.42, zz], mat, lw, lh);
@@ -12284,7 +12284,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
               if (q2.x < xlo) xlo = q2.x;
               if (q2.x > xhi) xhi = q2.x;
             }
-            points.push({ name: "PB" + k2, label: projects[k2].short, detail: projects[k2].heading, x: (xlo + xhi) / 2, y: mxy + 14 + (!s.mobile && k2 % 2 ? 26 : 0), visible: c.visible || s.mobile, bx: c.visible ? c.x : null, by: c.visible ? mxy : null });
+            points.push({ name: "PB" + k2, label: projects[k2].short, detail: projects[k2].heading, x: (xlo + xhi) / 2, y: mxy + 14 + (!s.mobile && k2 % 2 ? 26 : 0), visible: c.visible || s.mobile, bx: c.visible ? c.x : null, by: c.visible ? mxy : null, ry: mxy + 14 + (!s.mobile && k2 % 2 ? 26 : 0) });
           });
           {
             let mob = s.mobile, PHW = mob ? 46 : 62, PHH = mob ? 21 : 12;
@@ -12565,6 +12565,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
         if (h !== ptr.current.mh) {
           ptr.current.mh = h;
           ptr.current.hit = h;
+          setHovPB(h);
           state.current.onHover && state.current.onHover(h);
         }
       }
@@ -12582,6 +12583,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
     }, onPointerLeave: () => {
       ptr.current.x = -1;
       ptr.current.y = -1;
+      setHovPB(-1);
     }, onClick: (e2) => {
       if (e2.target.closest && e2.target.closest(".pin")) return;
       let k2 = ptr.current.type === "mouse" ? pickAt(e2) : -1;
@@ -12605,7 +12607,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "CONTACT" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "System visualization unavailable. Navigate through the sections below." })
       ] }),
-      !fallback && labels.map((p, i) => p.visible && p.x > -40 && p.x < (ref.current?.clientWidth || 0) + 40 && p.y > 90 && p.y < (ref.current?.clientHeight || 0) - 90 && safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0) && (state.current.active === 0 && SECTION_NODES.includes(p.name) || state.current.active >= 1 && state.current.active <= 7 && p.name === stages[state.current.active].node || state.current.active === 3 && state.current.mobile && p.name.startsWith("PB")) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { title: p.detail, "aria-label": `${p.name}: ${p.detail}`, onClick: () => {
+      !fallback && labels.map((p, i) => p.visible && p.x > -40 && p.x < (ref.current?.clientWidth || 0) + 40 && p.y > 90 && p.y < (ref.current?.clientHeight || 0) - 90 && safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0) && (state.current.active === 0 && SECTION_NODES.includes(p.name) || state.current.active >= 1 && state.current.active <= 7 && p.name === stages[state.current.active].node || (state.current.active === 3 && state.current.mobile && p.name.startsWith("PB") || state.current.active === 0 && !state.current.mobile && p.name === "PB" + hovPB)) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { title: p.detail, "aria-label": `${p.name}: ${p.detail}`, onClick: () => {
         if (p.name.startsWith("PB")) {
           state.current.onPick && state.current.onPick(+p.name.slice(2));
           return;
@@ -12617,7 +12619,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
       } : void 0, onMouseLeave: p.name.startsWith("PB") ? () => {
         ptr.current.pinH = -1;
         state.current.onHover && state.current.onHover(-1);
-      } : void 0, style: p.name.startsWith("PB") ? { left: mobile && pbSpace[p.name]?.x != null ? pbSpace[p.name].x : pbL(p), top: pbSpace[p.name]?.y ?? p.y, transform: state.current.mobile ? void 0 : "translateX(-50%)", borderColor: `rgb(${projects[+p.name.slice(2)].accent.map((v2) => Math.round(v2 * 255)).join(",")})` } : { left: p.x, top: p.y }, children: [
+      } : void 0, style: p.name.startsWith("PB") ? { left: mobile && pbSpace[p.name]?.x != null ? pbSpace[p.name].x : pbL(p), top: state.current.active === 0 ? p.ry ?? p.y : pbSpace[p.name]?.y ?? p.y, transform: state.current.mobile ? void 0 : "translateX(-50%)", borderColor: `rgb(${projects[+p.name.slice(2)].accent.map((v2) => Math.round(v2 * 255)).join(",")})` } : { left: p.x, top: p.y }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("b", { children: p.name.startsWith("PB") && mobile ? "0" + (+p.name.slice(2) + 1) : p.label || DISPLAY[p.name] || p.name }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("i", { children: p.name.startsWith("PB") ? "0" + (+p.name.slice(2) + 1) : pinNum(p.name) })
       ] }, p.name))
