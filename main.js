@@ -12308,12 +12308,12 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
                 let nx = band.right + PHW + 10, ny = band.top - (mob ? PHH + 20 : 22);
                 if (okPin(nx, pq.y) && nx + PHW <= lw - 8 && !hitsBand(nx, pq.y)) pq.x = nx;
                 else if (okPin(pq.x, ny) && !hitsBand(pq.x, ny)) pq.y = ny;
-                else if (mob && pq.name !== activeNode && !(s.active === 0 && SECTION_NODES.includes(pq.name))) pq.visible = false;
+                else if (mob && pq.name !== activeNode && !((s.active === 0 || s.active === 6) && SECTION_NODES.includes(pq.name))) pq.visible = false;
               }
             }
             if (mob) for (let pq of points) {
               if (pq.name.startsWith("PB") || !pq.visible) continue;
-              let must = pq.name === activeNode || s.active === 0 && SECTION_NODES.includes(pq.name);
+              let must = pq.name === activeNode || (s.active === 0 || s.active === 6) && SECTION_NODES.includes(pq.name);
               if (!must) continue;
               if (landShort) {
                 pq.x = Math.max(10 + PHW, Math.min(pq.x, lw - 10 - PHW));
@@ -12616,7 +12616,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { children: "CONTACT" }),
         /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("p", { children: "System visualization unavailable. Navigate through the sections below." })
       ] }),
-      !fallback && labels.map((p, i) => p.visible && p.x > -40 && p.x < (ref.current?.clientWidth || 0) + 40 && p.y > 90 && p.y < (ref.current?.clientHeight || 0) - 90 && safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0) && (state.current.active === 0 && SECTION_NODES.includes(p.name) || state.current.active >= 1 && state.current.active <= 7 && p.name === stages[state.current.active].node || (state.current.active === 3 && state.current.mobile && p.name.startsWith("PB") || (state.current.active === 0 || state.current.active === 6) && !state.current.mobile && p.name === "PB" + hovPB)) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { title: p.detail, "aria-label": `${p.name}: ${p.detail}`, onClick: () => {
+      !fallback && labels.map((p, i) => p.visible && p.x > -40 && p.x < (ref.current?.clientWidth || 0) + 40 && p.y > 90 && p.y < (ref.current?.clientHeight || 0) - 90 && safepin(p, state.current.active, state.current.mobile, ref.current?.clientWidth || 0, ref.current?.clientHeight || 0) && ((state.current.active === 0 || state.current.active === 6) && SECTION_NODES.includes(p.name) || state.current.active >= 1 && state.current.active <= 7 && p.name === stages[state.current.active].node || (state.current.active === 3 && state.current.mobile && p.name.startsWith("PB") || (state.current.active === 0 || state.current.active === 6) && !state.current.mobile && p.name === "PB" + hovPB)) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { title: p.detail, "aria-label": `${p.name}: ${p.detail}`, onClick: () => {
         if (p.name.startsWith("PB")) {
           ptr.current.pinH = -1;
           state.current.onPick && state.current.onPick(+p.name.slice(2));
