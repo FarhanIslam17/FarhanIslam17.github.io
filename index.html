@@ -8,7 +8,29 @@
 <meta property="og:image" content="https://farhanislam17.github.io/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="main.css">
-</head><body><div id="root"></div><script>window.instinctFile={initialRoute:"/",route:function(){},navigate:function(p){if(typeof p==="string"&&p){if(/^https?:/.test(p))window.open(p,"_blank","noopener");else window.location.href=p}}}</script>
+<style>
+/* Opening attention cue for the travel-mode switch (top right).
+   Runs briefly when the page opens, then fades; removed on first use. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes tm-attn-ring {
+    0%   { box-shadow: 0 0 0 0 rgba(232,178,111,.55); }
+    70%  { box-shadow: 0 0 0 12px rgba(232,178,111,0); }
+    100% { box-shadow: 0 0 0 0 rgba(232,178,111,0); }
+  }
+  @keyframes tm-attn-lift {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-2px); }
+  }
+}
+.travel-mode.tm-attn {
+  border-color: #c78e51;
+  color: #f4d5ab;
+  animation: tm-attn-ring 1.6s ease-out .8s 4, tm-attn-lift 1.6s ease-in-out .8s 4;
+}
+.travel-mode.tm-attn .tm-pill {
+  border-color: #c78e51;
+}
+</style></head><body><div id="root"></div><script>window.instinctFile={initialRoute:"/",route:function(){},navigate:function(p){if(typeof p==="string"&&p){if(/^https?:/.test(p))window.open(p,"_blank","noopener");else window.location.href=p}}}</script>
 <script src="main.js" defer></script><script>
 (function(){
   var tries=0;
