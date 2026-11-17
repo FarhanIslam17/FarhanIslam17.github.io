@@ -9,4 +9,19 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="main.css">
 </head><body><div id="root"></div><script>window.instinctFile={initialRoute:"/",route:function(){},navigate:function(p){if(typeof p==="string"&&p){if(/^https?:/.test(p))window.open(p,"_blank","noopener");else window.location.href=p}}}</script>
-<script src="main.js" defer></script></body></html>
+<script src="main.js" defer></script><script>
+(function(){
+  var tries=0;
+  var iv=setInterval(function(){
+    var btn=document.querySelector('.travel-mode');
+    if(btn||++tries>40){
+      clearInterval(iv);
+      if(!btn||btn.getAttribute('aria-pressed')==='true')return;
+      btn.classList.add('tm-attn');
+      var stop=function(){btn.classList.remove('tm-attn');};
+      btn.addEventListener('click',stop,{once:true});
+      setTimeout(stop,9000);
+    }
+  },250);
+})();
+</script></body></html>
