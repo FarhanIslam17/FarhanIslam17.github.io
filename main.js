@@ -11338,7 +11338,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/App.tsx
   var import_jsx_runtime21 = __toESM(require_jsx_runtime());
-  var resumePdfUrl = "https://farhanislam17.github.io/Farhan_Islam_Resume.pdf";
+  var resumePdfUrl = "https://farhanislam17.github.io/Farhan_Islam_Resume.pdf?v=2026-11-25-master";
   var openResume = () => window.open(resumePdfUrl, "_blank", "noopener,noreferrer");
   var parts = [
     { name: "INTERN", x: -44, z: -24, w: 21, d: 11, h: 3.2, color: "package", detail: "Internships \xB7 General Motors (incoming) and Reaction Dynamics" },
