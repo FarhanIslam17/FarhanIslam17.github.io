@@ -11332,7 +11332,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     { key: "SINK", short: "CURRENT SINK", accent: [0.66, 0.56, 1], type: "ANALOG ELECTRONICS \xB7 BENCH + SIMULATION", heading: "Transistor characterization and current sink", body: "Bench characterization of 2N3904 and 2N3906 transistors with an Analog Discovery 2, followed by a simulated emitter feedback current sink design.", flow: ["MEASURE", "MODEL", "DESIGN"], url: "https://fancy-brook-b6f.notion.site/transistor-characterization-current-sink" },
     { key: "AMP", short: "CE AMPLIFIER", accent: [1, 0.47, 0.6], type: "ANALOG ELECTRONICS \xB7 SIMULATION VS BENCH", heading: "Single stage amplifier characterization", body: "Common emitter amplifier compared across simulation and bench measurements, with gain and loading sensitivity examined.", flow: ["SIMULATE", "MEASURE", "COMPARE"], url: "https://fancy-brook-b6f.notion.site/common-emitter-amplifier" },
     { key: "XOR", short: "CMOS XOR", accent: [0.4, 0.68, 1], type: "DIGITAL ELECTRONICS \xB7 INDIVIDUAL BUILD", heading: "CMOS XOR gate on a breadboard", body: "Two input XOR gate built from 12 MOSFETs on two MC14007B chips, with the truth table and loaded rise and fall time tested on an Analog Discovery 2.", flow: ["BUILD", "TEST", "MEASURE"], url: "https://fancy-brook-b6f.notion.site/cmos-xor-gate" },
-    { key: "FPGA", short: "FPGA ADC", accent: [1, 0.16, 0.24], type: "DIGITAL DESIGN \xB7 VHDL \xB7 VERIFIED IN SIMULATION", heading: "Dual-channel ADC capture on FPGA", body: "VHDL data acquisition core for a dual-channel SPI ADC with clock-domain crossing, hardware FIR filtering and a CRC-protected UART link, verified with 55 simulation test configurations, mutation testing and open-tool synthesis.", flow: ["SAMPLE", "FILTER", "STREAM"], url: "https://fancy-brook-b6f.notion.site/adc-capture-fpga" }
+    { key: "FPGA", short: "FPGA ADC", accent: [1, 0.16, 0.24], type: "DIGITAL DESIGN \xB7 VHDL \xB7 VERIFIED IN SIMULATION", heading: "Dual-channel ADC capture on FPGA", body: "VHDL data acquisition core for a dual-channel SPI ADC with clock-domain crossing, hardware FIR filtering and a CRC-protected UART link, verified with 55 simulation test configurations, mutation testing and open-tool synthesis.", flow: ["SAMPLE", "FILTER", "STREAM"], url: "https://fancy-brook-b6f.notion.site/adc-capture-fpga" },
+    { key: "CAN", short: "CAN BCM", accent: [1, 0.85, 0.3], type: "EMBEDDED C \xB7 CAN + UDS \xB7 VERIFIED IN SIMULATION", heading: "CAN body controller with A/B bootloader", body: "Body control module firmware in embedded C with an A/B over-the-air bootloader and UDS diagnostics on CAN, verified in Renode emulation with 20 system tests and 89 host checks.", flow: ["UPDATE", "VERIFY", "ROLLBACK"], url: "https://fancy-brook-b6f.notion.site/can-bootloader-uds" }
   ];
 
   // src/App.tsx
@@ -11363,8 +11364,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var RETURN_WAYPOINTS = [[-58, -1], [-62.6, -7.5], [-63.6, -15.5], [-62, -22]];
   var PROJECT_N = projects.length;
   var projectBlocks = projects.map((p, k2) => {
-    let n = PROJECT_N, pitch = 7.2, cx = 44.2;
-    return { x: cx + (k2 - (n - 1) / 2) * pitch, z: -14, w: 6, d: 6, h: 1.7 };
+    // p07: seven blocks in a staggered 4-over-3 arrangement; the front row of
+    // three sits in the gaps of the back row of four.
+    let pitch = 8, cx = 44.2, back = k2 < 4;
+    let x = back ? cx + (k2 - 1.5) * pitch : cx + (k2 - 5) * pitch;
+    return { x, z: back ? -17.2 : -8.8, w: 6, d: 6, h: 1.7 };
   });
   var supportEdges = [
     [[-44, -29.9], [-44.8, -32], [-43.4, -34.2]],
@@ -11372,8 +11376,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     [[46, 27.4], [45.2, 29.6], [46.6, 31.6]]
   ];
   projectBlocks.forEach((b, k2) => {
-    let xp = 43 + (k2 - (PROJECT_N - 1) / 2) * 5.2;
-    supportEdges.push([[xp, -21.4], [xp, -19.8], [b.x, -18.8], [b.x, b.z - b.d / 2 + 0.2]]);
+    // p07: support wires fan out from the PROJ package edge; front-row wires run
+    // straight through the gaps between the back-row blocks.
+    let xp = Math.max(33.5, Math.min(54.5, b.x));
+    if (k2 < 4) supportEdges.push([[xp, -21.4], [xp, -20.6], [b.x, -20.2], [b.x, b.z - b.d / 2 + 0.2]]);
+    else supportEdges.push([[xp, -21.4], [xp, -19.8], [b.x, -18.8], [b.x, b.z - b.d / 2 + 0.2]]);
   });
   var navRoutes = ROUTE_WAYPOINTS.map((w, ri) => ({ pts: densify(w, ri), hold: [0.35, 0.3, 0.3, 0.3, 0.3, 0.3, 0.55][ri] }));
   function sstep(a, b, x) {
@@ -11811,7 +11818,7 @@ precision mediump float;
 #endif
 `;
   var fragUniforms = `uniform float uHotK;uniform float uDir;uniform float uEnv;uniform float uWireBase;uniform float uPulseOn;uniform vec2 uPulseWorld;uniform vec3 uPhoton;uniform float uAll;uniform float uRouteIdx;uniform float uRouteOn;uniform float uNavHead;uniform float uIdleOn;uniform float uIdleHead;uniform float uSpineLen;`;
-  var fragment = fragHead + `varying vec3 col;varying float emit;varying vec3 place;varying vec3 normal;varying vec4 gA;varying float lf;uniform float phase;uniform float uNode;uniform float uNodeOn;uniform float uPerim;uniform float uHov[8];uniform float uPh[8];uniform vec3 uAcc[8];` + fragUniforms + `void main(){vec3 cm=col;float pd=distance(place.xz,uPulseWorld);float boardM=(emit>.002&&emit<.01)?1.:0.;if(boardM>.5){float sn=fract(sin(dot(floor(place.xz*.22),vec2(12.9898,78.233)))*43758.5453);float sn2=fract(sin(dot(floor(place.xz*.055),vec2(39.346,11.135)))*24634.6345);float sn3=fract(sin(dot(floor(place.xz*1.1),vec2(26.651,84.131)))*31459.2653);float mot=.45*sn+.35*sn2+.20*sn3;float ed=mix(.46,1.,uEnv);cm*=1.+(mot-.5)*.34;cm+=(mot-.5)*.05/ed*vec3(.7,1.,.85);cm+=vec3(.9,.52,.18)*uPulseOn*.38*exp(-pd*pd/72.);}float baseTrace=emit>0.&&emit<1.?emit*.13:0.;float nodeGlow=0.;if(uNode>0.&&abs(emit-uNode)<.4)nodeGlow=uNodeOn*(.34+.62*pow(max(0.,sin(phase*2.2)),3.));vec3 amber=vec3(1.,.62,.26);vec3 hot=vec3(1.,.9,.72);vec3 em=vec3(0.);float wire=(gA.y>-.5||gA.y<-1.5)?1.:0.;if(wire>.5&&gA.z<-.5){float nm=(uRouteIdx>-.5&&abs(gA.y-uRouteIdx)<.5)?1.:0.;float dd=gA.w-uNavHead;float bh=exp(-dd*dd/1.7);float tl=(dd*uDir<0.)?exp(dd*uDir/13.):0.;float nav=nm*uRouteOn*(bh*2.4*uHotK+tl*.9+.1);float ds=gA.x-uIdleHead;ds=mod(ds+.5*uSpineLen,uSpineLen)-.5*uSpineLen;float inS=gA.x>-.5?1.:0.;float ih=inS*exp(-ds*ds/1.7);float it=(inS>.5&&ds<0.)?exp(ds/12.):0.;float idle=uIdleOn*(ih*2.4*uHotK+it*.8);vec3 dp=place-uPhoton;float nr=exp(-dot(dp,dp)/60.)*uPulseOn*.4*uHotK;float decK=gA.x<-1.5?.45:1.;em=amber*((uWireBase*.07+uAll*.55)*decK+nav*.75+idle*.75+nr)+hot*((bh*nm*uRouteOn*1.1+ih*uIdleOn*1.1)*uHotK+uAll*.04*decK);}if(gA.z>-.5){float k=floor(gA.z);float sub=gA.z-k;float hv=0.;float ph=0.;vec3 ac=vec3(1.);for(int i=0;i<8;i++){if(float(i)==k){hv=uHov[i];ph=uPh[i];ac=uAcc[i];}}vec3 tgt=ac*.46+vec3(.075,.085,.085);float pa=max(hv,uAll);if(sub<.4){cm=mix(cm,tgt*lf,hv);em+=tgt*(.2*hv+.16*uAll);}else if(sub<.6){cm+=tgt*(.3*hv+.22*uAll);}else{float dq=gA.w-ph;dq=dq-floor(dq+.5);float dl=dq*uPerim;float head=exp(-dl*dl/1.5);float tr=dl<0.?exp(dl/5.):0.;cm=ac*.5*lf;em+=ac*(.2+.5*hv+.24*uAll)+mix(ac,vec3(1.),.55)*pa*head*2.6+ac*pa*tr*.9;}}float envDim=mix(.46,1.,uEnv);vec3 spec=vec3(.18,.22,.18)*pow(max(0.,dot(reflect(normalize(vec3(.55,-.86,-.38)),normalize(normal)),normalize(vec3(.2,.6,.8)))),18.);gl_FragColor=vec4(cm*envDim+spec*.12*(.45+.55*uEnv)+amber*baseTrace+em+vec3(.34,.88,.62)*nodeGlow,1.);}`;
+  var fragment = fragHead + `varying vec3 col;varying float emit;varying vec3 place;varying vec3 normal;varying vec4 gA;varying float lf;uniform float phase;uniform float uNode;uniform float uNodeOn;uniform float uPerim;uniform float uHov[8];uniform float uPh[8];uniform vec3 uAcc[8];` + fragUniforms + `void main(){vec3 cm=col;float pd=distance(place.xz,uPulseWorld);float boardM=(emit>.002&&emit<.01)?1.:0.;if(boardM>.5){float sn=fract(sin(dot(floor(place.xz*.22),vec2(12.9898,78.233)))*43758.5453);float sn2=fract(sin(dot(floor(place.xz*.055),vec2(39.346,11.135)))*24634.6345);float sn3=fract(sin(dot(floor(place.xz*1.1),vec2(26.651,84.131)))*31459.2653);float mot=.45*sn+.35*sn2+.20*sn3;float ed=mix(.46,1.,uEnv);cm*=1.+(mot-.5)*.34;cm+=(mot-.5)*.05/ed*vec3(.7,1.,.85);cm+=vec3(.9,.52,.18)*uPulseOn*.38*exp(-pd*pd/72.);}float baseTrace=emit>0.&&emit<1.?emit*.13:0.;float nodeGlow=0.;if(uNode>0.&&abs(emit-uNode)<.4)nodeGlow=uNodeOn*(.34+.62*pow(max(0.,sin(phase*2.2)),3.));vec3 amber=vec3(1.,.62,.26);vec3 hot=vec3(1.,.9,.72);vec3 em=vec3(0.);float wire=(gA.y>-.5||gA.y<-1.5)?1.:0.;if(wire>.5&&gA.z<-.5){float nm=(uRouteIdx>-.5&&abs(gA.y-uRouteIdx)<.5)?1.:0.;float dd=gA.w-uNavHead;float bh=exp(-dd*dd/1.7);float tl=(dd*uDir<0.)?exp(dd*uDir/13.):0.;float nav=nm*uRouteOn*(bh*2.4*uHotK+tl*.9+.1);float ds=gA.x-uIdleHead;ds=mod(ds+.5*uSpineLen,uSpineLen)-.5*uSpineLen;float inS=gA.x>-.5?1.:0.;float ih=inS*exp(-ds*ds/1.7);float it=(inS>.5&&ds<0.)?exp(ds/12.):0.;float idle=uIdleOn*(ih*2.4*uHotK+it*.8);vec3 dp=place-uPhoton;float nr=exp(-dot(dp,dp)/60.)*uPulseOn*.4*uHotK;float decK=gA.x<-1.5?.45:1.;em=amber*((uWireBase*.07+uAll*.55)*decK+nav*.75+idle*.75+nr)+hot*((bh*nm*uRouteOn*1.1+ih*uIdleOn*1.1)*uHotK+uAll*.04*decK);}if(gA.z>-.5){float k=floor(gA.z);float sub=gA.z-k;float hv=0.;float ph=0.;vec3 ac=vec3(1.);for(int i=0;i<8;i++){if(float(i)==k){hv=uHov[i];ph=uPh[i];ac=uAcc[i];}}vec3 tgt=ac*.46+vec3(.075,.085,.085);float pa=max(hv,uAll);if(sub<.4){cm=mix(cm,tgt*lf,hv);em+=tgt*(.2*hv+.16*uAll);}else if(sub<.6){cm=mix(cm,ac*lf,hv);em+=ac*(.22*hv+.12*uAll);}else{float dq=gA.w-ph;dq=dq-floor(dq+.5);float dl=dq*uPerim;float head=exp(-dl*dl/1.5);float tr=dl<0.?exp(dl/5.):0.;cm=ac*.5*lf;em+=ac*(.2+.5*hv+.24*uAll)+mix(ac,vec3(1.),.55)*pa*head*2.6+ac*pa*tr*.9;}}float envDim=mix(.46,1.,uEnv);vec3 spec=vec3(.18,.22,.18)*pow(max(0.,dot(reflect(normalize(vec3(.55,-.86,-.38)),normalize(normal)),normalize(vec3(.2,.6,.8)))),18.);gl_FragColor=vec4(cm*envDim+spec*.12*(.45+.55*uEnv)+amber*baseTrace+em+vec3(.34,.88,.62)*nodeGlow,1.);}`;
   var haloVS = `attribute vec3 p;attribute vec4 h;uniform mat4 m;varying vec3 pl;varying vec4 hh;void main(){pl=p;hh=h;gl_Position=m*vec4(p,1.);}`;
   var haloFS = fragHead + `varying vec3 pl;varying vec4 hh;` + fragUniforms + `void main(){float fall=exp(-hh.w*hh.w*3.2)*(1.-smoothstep(.75,1.,abs(hh.w)));vec3 amber=vec3(1.,.62,.26);float nm=(uRouteIdx>-.5&&abs(hh.y-uRouteIdx)<.5)?1.:0.;float dd=hh.z-uNavHead;float head=exp(-dd*dd/34.);float tl=(dd*uDir<0.)?exp(dd*uDir/16.):0.;float ds=hh.x-uIdleHead;ds=mod(ds+.5*uSpineLen,uSpineLen)-.5*uSpineLen;float inS=hh.x>-.5?1.:0.;float ih=inS*exp(-ds*ds/34.);float it=(inS>.5&&ds<0.)?exp(ds/14.):0.;vec3 dp=pl-uPhoton;float nr=exp(-dot(dp,dp)/120.)*uPulseOn;float dK=hh.x<-1.5?.4:1.;float I=uAll*.55*dK+(nm*uRouteOn*(head*.8+tl*.4+.05)+uIdleOn*(ih*.8+it*.35)+nr*.45)*uHotK;gl_FragColor=vec4(amber*fall*I*(1.-.4*uEnv),1.);}`;
   var spriteVS = `attribute vec3 p;attribute vec2 q;attribute vec3 sc;uniform mat4 m;varying vec2 uv;varying vec3 scol;void main(){uv=q;scol=sc;gl_Position=m*vec4(p,1.);}`;
@@ -11950,6 +11957,9 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
   }
   function safepin(p, active, mobile, w, h) {
     if (mobile) {
+      // p07: at the 0%/100% endpoints the PROJECTS label sits over the
+      // project blocks, which must stay fully visible and tappable there.
+      if ((active === 0 || active === 6) && p.name === "PROJECTS") return false;
       let storyTop = document.querySelector(".story")?.getBoundingClientRect().top ?? h * 0.6;
       if (w > h && h < 560) return p.x > 4 && p.x < w - 4 && p.y > 80 && p.y < h - 70;
       if (p.name.startsWith("PB")) return p.x > 4 && p.x < w + 30 && p.y > 135 && p.y < h - 150;
@@ -12120,8 +12130,15 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
             // p06: with six project blocks the row extends past the narrow mobile
             // frustum at the Projects stage; ease the look target right while the
             // Projects keys are active so the sixth block stays in frame.
+            // p07: 4-over-3 stagger keeps the same center; bump retuned for the
+            // two-row spread and the look target nudged toward the near row.
             let pBump = smoother((smooth - 0.4) / 0.08) * (1 - smoother((smooth - 0.56) / 0.08));
-            cn.to = [cn.to[0] + 9 * pBump, 0, cn.to[2]];
+            cn.to = [cn.to[0] + 12 * pBump, 0, cn.to[2] + 3 * pBump];
+            // p07: approaching the 100% endpoint the two-row cluster drifts to
+            // the right edge of the narrow mobile frustum; ease the look target
+            // toward it so all seven blocks stay in frame and tappable.
+            let eBump = smoother((smooth - 0.86) / 0.1);
+            cn.to = [cn.to[0] + 16 * eBump, 0, cn.to[2] + 2 * eBump];
           }
         }
         let cam = { eye: [tween(cn.eye[0], wc.eye[0], modeBlend), tween(cn.eye[1], wc.eye[1], modeBlend), tween(cn.eye[2], wc.eye[2], modeBlend)], to: [tween(cn.to[0], wc.to[0], modeBlend), tween(cn.to[1], wc.to[1], modeBlend), tween(cn.to[2], wc.to[2], modeBlend)] };
@@ -12760,6 +12777,12 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
     }, []);
     const pickProject = (k2) => {
       if (k2 < 0) return;
+      // p07: at the 0% and 100% endpoints a project block opens its case study
+      // directly; the focus panel stays for the Projects stage.
+      if (active === 0 || active === 6) {
+        window.open(projects[k2].url, "_blank", "noopener,noreferrer");
+        return;
+      }
       pendingPick.current = k2;
       setTapSel(k2);
       setLastShown(k2);
