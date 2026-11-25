@@ -11355,7 +11355,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     [[-62, -22], [-61.2, -28], [-57.5, -32.6], [-52.4, -33.3], [-49.6, -31.9], [-49, -29.9]],
     [[-33.5, -24], [-27.5, -24.8], [-21.5, -22.8], [-16.5, -25.2], [-12.6, -27.2], [-9.8, -27]],
     [[9.8, -27], [15.5, -27.6], [21.5, -24.4], [27.5, -25.6], [32.6, -26]],
-    [[55, -26], [60.5, -26.4], [64.2, -22], [64.6, -12], [63.6, -1], [61, 8.5], [56.5, 14], [52, 16.4]],
+    [[55, -26], [60.5, -26.4], [68.3, -22], [68.5, -12], [66.6, -1], [61, 8.5], [56.5, 14], [52, 16.4]],
     [[37, 22], [31, 21.2], [25, 23.8], [19, 25.8], [13.5, 26.6], [0, 27.4], [-14, 26.4], [-20, 24.6], [-26, 23.3], [-31, 22.5], [-35.4, 22]],
     [[-44, 16.4], [-44.6, 11.5], [-42, 7.2], [-36.5, 4.6], [-30, 4.2]],
     [[-37, -1], [-43.5, -1.6], [-50, 0.2], [-58, -1]]
@@ -11363,7 +11363,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var RETURN_WAYPOINTS = [[-58, -1], [-62.6, -7.5], [-63.6, -15.5], [-62, -22]];
   var PROJECT_N = projects.length;
   var projectBlocks = projects.map((p, k2) => {
-    let n = PROJECT_N, pitch = 7.2, cx = 40.6;
+    let n = PROJECT_N, pitch = 7.2, cx = 44.2;
     return { x: cx + (k2 - (n - 1) / 2) * pitch, z: -14, w: 6, d: 6, h: 1.7 };
   });
   var supportEdges = [
@@ -11641,8 +11641,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   function createGeometry(mobile) {
     let d = [], dw = [], hl2 = [];
     let add = (v2) => d.push(...v2);
-    add(cube(0, -1.3, 0, 134, 2.2, 84, PALETTE.edge, 0));
-    add(cube(0, -0.13, 0, 132, 0.22, 82, PALETTE.board, 5e-3));
+    add(cube(0, -1.3, 0, 142, 2.2, 84, PALETTE.edge, 0));
+    add(cube(0, -0.13, 0, 140, 0.22, 82, PALETTE.board, 5e-3));
     for (let x of [-61, 61]) for (let z3 of [-35, 35]) {
       add(cylinder(x, 0.22, z3, 2.2, 0.5, PALETTE.metal, 14));
       add(cylinder(x, 0.53, z3, 1.25, 0.16, [0.012, 0.025, 0.025], 14));
@@ -12121,7 +12121,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
             // frustum at the Projects stage; ease the look target right while the
             // Projects keys are active so the sixth block stays in frame.
             let pBump = smoother((smooth - 0.4) / 0.08) * (1 - smoother((smooth - 0.56) / 0.08));
-            cn.to = [cn.to[0] + 5.4 * pBump, 0, cn.to[2]];
+            cn.to = [cn.to[0] + 9 * pBump, 0, cn.to[2]];
           }
         }
         let cam = { eye: [tween(cn.eye[0], wc.eye[0], modeBlend), tween(cn.eye[1], wc.eye[1], modeBlend), tween(cn.eye[2], wc.eye[2], modeBlend)], to: [tween(cn.to[0], wc.to[0], modeBlend), tween(cn.to[1], wc.to[1], modeBlend), tween(cn.to[2], wc.to[2], modeBlend)] };
