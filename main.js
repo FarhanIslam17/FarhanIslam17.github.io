@@ -12117,7 +12117,11 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
             cn.to = [tween(tween(cn.to[0], 2, narrow), cn.to[0], kk), 0, tween(tween(cn.to[2], 0, narrow), cn.to[2], kk)];
           } else {
             cn.eye = [cn.eye[0] * zf, cn.eye[1] * zf, cn.eye[2] * zf];
-            cn.to = [cn.to[0], 0, cn.to[2]];
+            // p06: with six project blocks the row extends past the narrow mobile
+            // frustum at the Projects stage; ease the look target right while the
+            // Projects keys are active so the sixth block stays in frame.
+            let pBump = smoother((smooth - 0.4) / 0.08) * (1 - smoother((smooth - 0.56) / 0.08));
+            cn.to = [cn.to[0] + 9 * pBump, 0, cn.to[2]];
           }
         }
         let cam = { eye: [tween(cn.eye[0], wc.eye[0], modeBlend), tween(cn.eye[1], wc.eye[1], modeBlend), tween(cn.eye[2], wc.eye[2], modeBlend)], to: [tween(cn.to[0], wc.to[0], modeBlend), tween(cn.to[1], wc.to[1], modeBlend), tween(cn.to[2], wc.to[2], modeBlend)] };
