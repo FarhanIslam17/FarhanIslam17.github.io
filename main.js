@@ -11332,7 +11332,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     { key: "SINK", short: "CURRENT SINK", accent: [0.66, 0.56, 1], type: "ANALOG ELECTRONICS \xB7 BENCH + SIMULATION", heading: "Transistor characterization and current sink", body: "Bench characterization of 2N3904 and 2N3906 transistors with an Analog Discovery 2, followed by a simulated emitter feedback current sink design.", flow: ["MEASURE", "MODEL", "DESIGN"], url: "https://fancy-brook-b6f.notion.site/transistor-characterization-current-sink" },
     { key: "AMP", short: "CE AMPLIFIER", accent: [1, 0.47, 0.6], type: "ANALOG ELECTRONICS \xB7 SIMULATION VS BENCH", heading: "Single stage amplifier characterization", body: "Common emitter amplifier compared across simulation and bench measurements, with gain and loading sensitivity examined.", flow: ["SIMULATE", "MEASURE", "COMPARE"], url: "https://fancy-brook-b6f.notion.site/common-emitter-amplifier" },
     { key: "XOR", short: "CMOS XOR", accent: [0.4, 0.68, 1], type: "DIGITAL ELECTRONICS \xB7 INDIVIDUAL BUILD", heading: "CMOS XOR gate on a breadboard", body: "Two input XOR gate built from 12 MOSFETs on two MC14007B chips, with the truth table and loaded rise and fall time tested on an Analog Discovery 2.", flow: ["BUILD", "TEST", "MEASURE"], url: "https://fancy-brook-b6f.notion.site/cmos-xor-gate" },
-    { key: "FPGA", short: "FPGA ADC", accent: [1, 0.62, 0.2], type: "DIGITAL DESIGN \xB7 VHDL \xB7 VERIFIED IN SIMULATION", heading: "Dual-channel ADC capture on FPGA", body: "VHDL data acquisition core for a dual-channel SPI ADC with clock-domain crossing, hardware FIR filtering and a CRC-protected UART link, verified with 55 simulation test configurations, mutation testing and open-tool synthesis.", flow: ["SAMPLE", "FILTER", "STREAM"], url: "https://fancy-brook-b6f.notion.site/adc-capture-fpga" }
+    { key: "FPGA", short: "FPGA ADC", accent: [1, 0.16, 0.24], type: "DIGITAL DESIGN \xB7 VHDL \xB7 VERIFIED IN SIMULATION", heading: "Dual-channel ADC capture on FPGA", body: "VHDL data acquisition core for a dual-channel SPI ADC with clock-domain crossing, hardware FIR filtering and a CRC-protected UART link, verified with 55 simulation test configurations, mutation testing and open-tool synthesis.", flow: ["SAMPLE", "FILTER", "STREAM"], url: "https://fancy-brook-b6f.notion.site/adc-capture-fpga" }
   ];
 
   // src/App.tsx
@@ -11363,7 +11363,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var RETURN_WAYPOINTS = [[-58, -1], [-62.6, -7.5], [-63.6, -15.5], [-62, -22]];
   var PROJECT_N = projects.length;
   var projectBlocks = projects.map((p, k2) => {
-    let n = PROJECT_N, pitch = 7.2, cx = 44.2;
+    let n = PROJECT_N, pitch = 7.2, cx = 40.6;
     return { x: cx + (k2 - (n - 1) / 2) * pitch, z: -14, w: 6, d: 6, h: 1.7 };
   });
   var supportEdges = [
