@@ -11959,7 +11959,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
     if (mobile) {
       // p07: at the 0%/100% endpoints the PROJECTS label sits over the
       // project blocks, which must stay fully visible and tappable there.
-      if ((active === 0 || active === 6) && p.name === "PROJECTS") return false;
+      if ((active === 0 || active === 6) && p.name === "PROJ") return false;
       let storyTop = document.querySelector(".story")?.getBoundingClientRect().top ?? h * 0.6;
       if (w > h && h < 560) return p.x > 4 && p.x < w - 4 && p.y > 80 && p.y < h - 70;
       if (p.name.startsWith("PB")) return p.x > 4 && p.x < w + 30 && p.y > 135 && p.y < h - 150;
@@ -12486,11 +12486,25 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
     let anchor = focusRect ? { x: mobile ? focusRect.right - 26 : focusRect.right, y: mobile ? focusRect.top + 12 : focusRect.top + 95 } : null;
     let leaderBw = ref.current?.clientWidth || 0, leaderBh = ref.current?.clientHeight || 0, leaderOn = !!(active === 3 && featuredPin && featuredPin.visible && anchor && featuredPin.x > -40 && featuredPin.x < leaderBw + 40 && featuredPin.y > 90 && featuredPin.y < leaderBh - 90 && safepin(featuredPin, active, mobile, leaderBw, leaderBh));
     const pbL = (p) => Math.max(innerWidth > 1050 ? 545 : 4, Math.min(p.x, innerWidth > 1050 ? innerWidth - 130 : innerWidth - 30));
-    const pickAt = (e2) => {
+    const pickAt = (e2, fuzz) => {
       let r = ref.current?.getBoundingClientRect(), c = ptr.current.ctx;
       if (!r || !c) return -1;
       let nx = (e2.clientX - r.left) / r.width, ny = (e2.clientY - r.top) / r.height;
-      return c.invM ? rayPick(c.invM, nx, ny) : -1;
+      if (!c.invM) return -1;
+      let hit = rayPick(c.invM, nx, ny);
+      // p07: at the mobile endpoints blocks are ~10px and reviewers missed by
+      // ~2px; on a touch miss only, ring-sample a few px around the tap so a
+      // near-miss selects the neighbouring block. Exact hits and the desktop
+      // mouse path are untouched.
+      if (hit < 0 && fuzz) {
+        let fx = 3 / r.width, fy = 3 / r.height;
+        let ring = [[fx, 0], [-fx, 0], [0, fy], [0, -fy], [fx, fy], [fx, -fy], [-fx, fy], [-fx, -fy], [2 * fx, 0], [-2 * fx, 0], [0, 2 * fy], [0, -2 * fy]];
+        for (let o of ring) {
+          hit = rayPick(c.invM, nx + o[0], ny + o[1]);
+          if (hit >= 0) break;
+        }
+      }
+      return hit;
     };
     const pbSpace = (() => {
       let m = {};
@@ -12601,7 +12615,7 @@ float aa=max(fw,.004);float line=smoothstep(.5-.045-aa,.5,max(g.x,g.y));col+=vec
       ptr.current.type = e2.pointerType || "mouse";
       if (ptr.current.type !== "mouse") {
         ptr.current.tap = false;
-        let h = pickAt(e2);
+        let h = pickAt(e2, true);
         if (state.current.onPick) state.current.onPick(h);
       }
     }, onPointerLeave: () => {
